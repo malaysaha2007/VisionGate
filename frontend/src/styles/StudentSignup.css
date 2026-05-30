@@ -1,0 +1,55 @@
+.student-signup-page{
+  min-height:100vh;
+  background:linear-gradient(
+    180deg,
+    #050c1d,
+    #071126
+  );
+  color:white;
+}
+
+.page-top{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:30px;
+}
+
+.header-left img{
+  width:70px;
+}
+
+.portal-name h1{
+  font-size:34px;
+  margin-bottom:8px;
+}
+
+.portal-name p{
+  color:#9aa8c7;
+}
+
+.signup-box{
+  width:420px;
+  margin:80px auto;
+  background:#121b33;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:40px;
+  text-align:center;
+}
+
+.signup-box h2{
+  font-size:28px;
+  margin-bottom:14px;
+}
+
+.signup-text{
+  color:#9aa8c7;
+  margin-bottom:30px;
+  line-height:1.6;
+}
+
+.google-btn-wrapper{
+  display:flex;
+  justify-content:center;
+}

@@ -1,0 +1,116 @@
+.admin-login-page {
+  min-height: 50vh;
+  background: linear-gradient(
+    180deg,
+    #071126,
+    #071024
+  );
+  color: #e6eef8;
+  font-family: Inter, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-top {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 30px;
+}
+
+.header-left img {
+  width: 55px;
+  height: 55px;
+  border-radius: 8px;
+}
+
+.portal-name h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.portal-name p {
+  margin-top: 6px;
+  color: #98a6bf;
+  font-size: 13px;
+}
+
+.login-container {
+  width: 500px;
+  max-width: 100%;
+  margin: 70px auto;
+  padding: 30px;
+  border-radius: 14px;
+  background: #27242c;
+  border: 2px solid
+    rgba(255,255,255,0.08);
+  box-shadow:
+    0 10px 50px
+    rgba(119,202,202,0.35);
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #06b6d4;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-container input,
+.login-container select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid
+    rgba(255,255,255,0.08);
+  background: #211f1f;
+  color: #e6eef8;
+  outline: none;
+}
+
+.login-container input:focus,
+.login-container select:focus {
+  border-color: #3b82f6;
+}
+
+.login-container button {
+  margin-top: 5px;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  background: linear-gradient(
+    90deg,
+    #3b82f6,
+    #06b6d4
+  );
+  color: #021124;
+  transition: 0.5s;
+}
+
+.login-container button:hover {
+  transform: translateY(-2px);
+}
+
+.login-container button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.admin-login-page footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 20px;
+  color: #98a6bf;
+}
+
+.admin-login-page footer h4 {
+  margin: 0;
+  font-weight: 500;
+}
