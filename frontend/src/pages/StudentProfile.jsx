@@ -1,6 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/StudentProfile.css";
+
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import StudentPortalHeader from "../components/StudentPortalHeader";
+
 
 function StudentProfile() {
 
@@ -21,73 +25,14 @@ function StudentProfile() {
 
   return (
 
+    
     <div className="student-profile-page">
 
-      {/* NAVBAR */}
-      <div className="profile-navbar">
 
-        <div className="profile-brand">
+    <Navbar showLogout={true} />
 
-          <img
-            src="/Iiitdmj_logo.jpg"
-            alt="logo"
-          />
+<StudentPortalHeader />
 
-          <div>
-
-            <h2>
-              PDPM IIITDMJ Entry–Exit Portal
-            </h2>
-
-            <p>
-              Student Monitoring System
-            </p>
-
-          </div>
-
-        </div>
-
-        <div className="profile-nav-links">
-
-          <button>
-            Dashboard
-          </button>
-
-          <button>
-            Rules
-          </button>
-
-          <button
-            className="logout-btn"
-            onClick={() => navigate("/")}
-          >
-            Logout
-          </button>
-
-        </div>
-
-      </div>
-
-      {/* TOP */}
-      <div className="student-top">
-
-        <img
-          src="/student_logo.png"
-          alt="student"
-          className="student-logo"
-        />
-
-        <div>
-
-          <h1>Student Portal</h1>
-
-          <p>
-            Access Your Profile & Activity Logs
-          </p>
-
-        </div>
-
-      </div>
 
       {/* PROFILE */}
       <div className="profile-container">
@@ -243,7 +188,12 @@ function StudentProfile() {
 
       </div>
 
+
+<Footer />
+
+
     </div>
+
 
   );
 

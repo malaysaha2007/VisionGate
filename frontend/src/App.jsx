@@ -1,18 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import Home from "./pages/Home";
-import Login from "./pages/Login";
 import StudentLogin from "./pages/StudentLogin";
 import StudentProfile from "./pages/StudentProfile";
 import Rules from "./pages/Rules";
 import Contact from "./pages/Contact";
+import AboutVisionGate from "./pages/AboutVisionGate";
 import HostelLogin from "./pages/HostelLogin";
-import HostelDashboard from "./pages/HostelDashboard";
 import HostelStudents from "./pages/HostelStudents";
 import StudentStatusPage from "./pages/StudentStatusPage";
 import AddStudents from "./pages/AddStudents";
 import EditStudent from "./pages/EditStudent";
-import StudentSignup from "./pages/StudentSignup";
+import StudentlLogin from "./pages/StudentLogin";
 import FaceRegistration from "./pages/FaceRegistration";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -28,13 +28,9 @@ function App() {
 
         <Route path="/" element={<Home />} />
 
-        <Route path="/login" element={<Login />} />
         <Route path="/studentLogin" element={<StudentLogin />} />
 
-        <Route
-  path="/student-signup"
-  element={<StudentSignup />}
-/>
+      
 
 
 <Route
@@ -51,11 +47,7 @@ function App() {
 
 
         <Route path="/HostelLogin" element={<HostelLogin />} />
-        <Route
-  path="/HostelDashboard"
-  element={<HostelDashboard />}
-/>
-
+      
 <Route
   path="/HostelStudents"
   element={<HostelStudents />}
@@ -99,6 +91,9 @@ function App() {
         <Route path="/rules" element={<Rules />} />
 
         <Route path="/contact" element={<Contact />} />
+
+        <Route path="/AboutVisionGate" element={<AboutVisionGate />} />
+
 
       </Routes>
 

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import HostelPortalHeader from "../components/HostelPortalHeader";
 
 import API from "../services/api";
 
@@ -95,6 +96,8 @@ function EditStudent() {
     <div className="edit-student-page">
 
       <Navbar />
+
+       <HostelPortalHeader />
 
       <div className="edit-container">
 

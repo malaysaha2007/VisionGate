@@ -13,9 +13,9 @@ function Navbar({
 {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    navigate("/AdminLogin");
-  };
+ const handleLogout = () => {
+  navigate("/", { replace: true });
+};
 
   return (
     <div className="navbar-wrap">
@@ -51,6 +51,10 @@ function Navbar({
 
             <Link to="/Contact">
               Contact
+            </Link>
+
+            <Link to="/AboutVisionGate">
+              About Us
             </Link>
 
             {showActivityLogs && (

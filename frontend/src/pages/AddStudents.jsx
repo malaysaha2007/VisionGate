@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import HostelPortalHeader from "../components/HostelPortalHeader";
+
 
 import API from "../services/api";
 
@@ -64,31 +66,13 @@ function AddStudents() {
 
     <div className="add-students-page">
 
-      <Navbar />
+      <Navbar showLogout={true} />
 
       {/* HEADER */}
 
-      <div className="add-header">
+      <HostelPortalHeader />
 
-        <img
-          src="/hostel_logo.jpg"
-          alt="hostel"
-          className="add-logo"
-        />
 
-        <div>
-
-          <h1>
-            Import Students
-          </h1>
-
-          <p>
-            Upload Excel File To Add Students
-          </p>
-
-        </div>
-
-      </div>
 
       {/* MAIN */}
 
@@ -158,7 +142,7 @@ function AddStudents() {
 
               {/* ERROR TABLE */}
 
-              {result.errors.length > 0 && (
+              {result?.errors?.length > 0 && (
 
                 <div className="error-table">
 
@@ -180,7 +164,7 @@ function AddStudents() {
 
                     <tbody>
 
-                      {result.errors.map(
+                      {result?.errors?.map(
                         (error, index) => (
 
                           <tr key={index}>
@@ -220,7 +204,7 @@ function AddStudents() {
 
       <Footer />
 
-    </div>
+   </div>
 
   );
 

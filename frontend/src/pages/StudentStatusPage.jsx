@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import HostelPortalHeader from "../components/HostelPortalHeader";
 
 import API from "../services/api";
 
@@ -190,35 +191,11 @@ function StudentStatusPage() {
     <div className="student-status-page">
 
       {/* NAVBAR */}
-      <Navbar />
+         <Navbar showLogout={true} />
 
-      {/* HEADER */}
-      <div className="status-header">
+          <HostelPortalHeader />
 
-        <div className="status-left">
-
-          <img
-            src="/hostel_logo.jpg"
-            alt="hostel"
-            className="status-logo"
-          />
-
-          <div>
-
-            <h1>
-              Hostel Monitoring
-            </h1>
-
-            <p>
-              Detailed Student Status & Activity
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
+      
       {/* TITLE */}
       <div className="status-title-section">
 

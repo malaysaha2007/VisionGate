@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 import API from "../services/api";
 import "../styles/StudentLogin.css";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import StudentPortalHeader from "../components/StudentPortalHeader";
+
 
 function StudentLogin() {
 
@@ -37,31 +40,112 @@ navigate("/StudentProfile", {
     }
   };
 
+   const handleGoogleSuccess = async (
+
+    credentialResponse
+
+  ) => {
+
+    try {
+
+      const token =
+        credentialResponse.credential;
+
+      const response = await API.post(
+
+        "/student/google-login",
+
+        {
+          token
+        }
+
+      );
+
+      const data = response.data;
+
+      alert(data.message);
+
+      // =========================
+      // REDIRECT LOGIC
+      // =========================
+
+      if (
+
+        data.redirect ===
+        "face_registration"
+
+      ) {
+
+        navigate(
+
+          "/face-registration",
+
+          {
+            state: {
+
+              student:
+                data.student
+
+            }
+          }
+
+        );
+
+      } else {
+
+        navigate(
+
+          "/StudentProfile",
+
+          {
+            state: {
+
+              student:
+                data.student
+
+            }
+          }
+
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+
+        error.response?.data?.detail ||
+
+        "Google Login Failed"
+
+      );
+
+    }
+
+  };
+
+  const handleGoogleError = () => {
+
+    alert(
+
+      "Google Authentication Failed"
+
+    );
+
+  };
+
+
+
   return (
     <div className="student-login-page">
 
-      {/* TOP AREA */}
-      <div className="page-top">
 
-        <div className="header-left">
-          <img
-            src="/student_logo.png"
-            alt="logo"
-          />
-        </div>
+    <Navbar />
+    <StudentPortalHeader />
 
-        <div className="header-center portal-name">
-
-          <h1>Student Portal</h1>
-
-          <p>
-            Access Your Profile & Activity Logs
-          </p>
-
-        </div>
-
-      </div>
-
+     
       {/* LOGIN BOX */}
       <div className="login-box">
 
@@ -114,23 +198,31 @@ navigate("/StudentProfile", {
         </form>
 
         {/* SIGNUP */}
-        <div className="signup-link">
+        <div className="or-divider">
+  <span>OR</span>
+</div>
 
-          <Link to="/student-signup">
-            Sign Up for New Student
-          </Link>
+<div className="google-signup-section">
 
-        </div>
+  <p>
+    New Student Registration
+  </p>
+
+  <div className="google-btn-wrapper">
+
+    <GoogleLogin
+      onSuccess={handleGoogleSuccess}
+      onError={handleGoogleError}
+    />
+
+  </div>
+
+</div>
 
       </div>
 
       {/* FOOTER */}
-      <footer>
-        <h4>
-          &copy; 2026 Student Portal.
-          All Rights Reserved.
-        </h4>
-      </footer>
+      <Footer/>
 
     </div>
   );

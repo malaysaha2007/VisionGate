@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import HostelPortalHeader from "../components/HostelPortalHeader";
 
 import API from "../services/api";
 
@@ -137,35 +138,11 @@ function HostelStudents() {
 
       {/* NAVBAR */}
 
-      <Navbar />
+      <Navbar showLogout={true} />
 
-      {/* HEADER */}
+       <HostelPortalHeader />
 
-      <div className="page-top">
-
-        <div className="header-left">
-
-          <img
-            src="/hostel_logo.jpg"
-            alt="hostel"
-          />
-
-        </div>
-
-        <div className="portal-name">
-
-          <h1>
-            Hostel Portal
-          </h1>
-
-          <p>
-            Manage Students & Monitor Activity
-          </p>
-
-        </div>
-
-      </div>
-
+      
       {/* =========================
           STATS CARDS
       ========================= */}

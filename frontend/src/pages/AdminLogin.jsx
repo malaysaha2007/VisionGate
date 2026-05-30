@@ -5,6 +5,7 @@ import API from "../services/api";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import AdminPortalHeader from "../components/AdminPortalHeader";
 
 import "../styles/AdminLogin.css";
 
@@ -80,33 +81,7 @@ function AdminLogin() {
     
       <Navbar />
 
-      <div className="admin-login-page">
-
-        <div className="page-top">
-
-          <div className="header-left">
-
-            <img
-              src="/student_logo.png"
-              alt="logo"
-            />
-
-          </div>
-
-          <div className="portal-name">
-
-            <h1>
-              Administration Portal
-            </h1>
-
-            <p>
-              Manage Students, Logs &
-              Curfew System
-            </p>
-
-          </div>
-
-        </div>
+     <AdminPortalHeader />
 
         <div className="login-container">
 
@@ -187,8 +162,7 @@ function AdminLogin() {
 
         </div>
 
-      </div>
-
+      
       <Footer />
 
     </>

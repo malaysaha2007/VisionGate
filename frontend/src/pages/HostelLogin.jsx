@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import HostelPortalHeader from "../components/HostelPortalHeader";
 
 import API from "../services/api";
 
@@ -61,31 +62,9 @@ function HostelLogin() {
 
       <Navbar />
 
-      {/* TOP SECTION */}
-      <div className="page-top">
+       <HostelPortalHeader />
 
-        <div className="header-left">
-
-          <img
-            src="/hostel_logo.jpg"
-            alt="logo"
-          />
-
-        </div>
-
-        <div className="header-center portal-name">
-
-          <h1>
-            Hostel Portal
-          </h1>
-
-          <p>
-            Access Student Records & Monitoring
-          </p>
-
-        </div>
-
-      </div>
+      
 
       {/* LOGIN BOX */}
       <div className="login-container">

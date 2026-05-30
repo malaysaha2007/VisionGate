@@ -12,6 +12,8 @@ import {
 import "../styles/AdminDashboard.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import AdminPortalHeader from "../components/AdminPortalHeader";
+
 
 function AdminDashboard() {
   const location = useLocation();
@@ -144,25 +146,7 @@ const fetchDashboard = async () => {
       <>
         <Navbar />
 
-        <div className="admin-hero">
-          <div className="admin-hero-content">
-            <div className="admin-hero-icon">
-              🎓
-            </div>
-
-            <div>
-              <h2>Administration Portal</h2>
-              <p>
-                Manage Students, Logs &
-                Curfew System
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="admin-dashboard-page">
-          <h2>No Admin Data Found</h2>
-        </div>
+        <AdminPortalHeader />
 
         <Footer />
       </>
@@ -178,22 +162,9 @@ return (
   showLogout={true}
 />
 
-    <div className="admin-hero">
-      <div className="admin-hero-content">
-        <div className="admin-hero-icon">
-          🎓
-        </div>
+    <AdminPortalHeader />
 
-        <div>
-          <h2>Administration Portal</h2>
-          <p>
-            Manage Students, Logs &
-            Curfew System
-          </p>
-        </div>
-      </div>
-    </div>
-
+    
     <div
   className={`admin-dashboard-page ${
     refreshing ? "page-refresh" : ""

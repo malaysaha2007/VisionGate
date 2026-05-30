@@ -1,0 +1,87 @@
+.about-page {
+  min-height: 100vh;
+
+  background: #071126;
+
+  color: #e6eef8;
+}
+
+.about-hero {
+  text-align: center;
+
+  padding: 60px 20px;
+}
+
+.about-hero h1 {
+  font-size: 42px;
+
+  color: #3b82f6;
+
+  margin-bottom: 10px;
+}
+
+.about-hero p {
+  color: #9aa8c7;
+}
+
+.about-container {
+  max-width: 1200px;
+
+  margin: auto;
+
+  padding: 30px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(350px, 1fr));
+
+  gap: 24px;
+}
+
+.about-card {
+  background: #121b33;
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  border-radius: 14px;
+
+  padding: 24px;
+}
+
+.about-card h2 {
+  color: #06b6d4;
+
+  margin-bottom: 16px;
+}
+
+.about-card p,
+.about-card li {
+  color: #cbd5e1;
+
+  line-height: 1.7;
+}
+
+.about-card ul {
+  padding-left: 18px;
+}
+
+.tech-grid {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+.tech-grid span {
+  background: #1f2d4f;
+
+  padding: 8px 14px;
+
+  border-radius: 10px;
+
+  color: #3b82f6;
+
+  font-weight: 600;
+}

@@ -12,6 +12,7 @@ import API from "../services/api";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import AdminPortalHeader from "../components/AdminPortalHeader";
 
 import "../styles/AdminDashboard.css";
 import "../styles/CurfewMail.css";
@@ -70,24 +71,8 @@ return (
       showLogout={true}
     />
 
-    <div className="admin-hero">
-      <div className="admin-hero-content">
-        <div className="admin-hero-icon">
-          🎓
-        </div>
+     <AdminPortalHeader />
 
-        <div>
-          <h2>
-            Administration Portal
-          </h2>
-
-          <p>
-            Manage Students, Logs &
-            Curfew System
-          </p>
-        </div>
-      </div>
-    </div>
 
     
 
