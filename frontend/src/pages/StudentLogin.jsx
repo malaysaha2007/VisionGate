@@ -19,15 +19,17 @@ function StudentLogin() {
 
     try {
 
-      const response = await API.post("/student/login", {
-        studentid,
-        password,
-      });
-navigate("/StudentProfile", {
-  state: {
-    student: response.data.student
-  }
+const response = await API.post("/student/login", {
+  studentid,
+  password,
 });
+
+localStorage.setItem(
+  "roll_no",
+  response.data.roll_no
+);
+
+navigate("/StudentProfile");
 
     } catch (error) {
 

@@ -1,19 +1,54 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import "../styles/StudentProfile.css";
+
+import API from "../services/api";
 
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import StudentPortalHeader from "../components/StudentPortalHeader";
 
-
 function StudentProfile() {
 
-  const location = useLocation();
   const navigate = useNavigate();
+const rollNo = localStorage.getItem("roll_no");
 
-  const student = location.state?.student;
+  const [student, setStudent] = useState(null);
+  const [logs, setLogs] = useState([]);
 
-  if (!student) {
+  
+
+  useEffect(() => {
+
+    const fetchProfile = async () => {
+
+      try {
+
+        const res = await API.get(
+          `/student/profile/${rollNo}`
+        );
+
+        console.log("PROFILE RESPONSE:", res.data);
+
+        setStudent(res.data.student || null);
+        setLogs(res.data.logs || []);
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    };
+
+    if (rollNo) {
+      fetchProfile();
+    }
+
+  }, [rollNo]);
+
+  if (!rollNo) {
     return (
       <div className="student-profile-page">
         <h2>No Student Data Found</h2>
@@ -21,20 +56,22 @@ function StudentProfile() {
     );
   }
 
-  const logs = student.logs || [];
+  if (!student) {
+    return (
+      <div className="student-profile-page">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
 
   return (
 
-    
     <div className="student-profile-page">
 
+      <Navbar showLogout={true} />
 
-    <Navbar showLogout={true} />
+      <StudentPortalHeader />
 
-<StudentPortalHeader />
-
-
-      {/* PROFILE */}
       <div className="profile-container">
 
         <h2 className="details-title">
@@ -44,156 +81,124 @@ function StudentProfile() {
         <div className="profile-grid">
 
           <p>
-            <strong>Name :</strong>
-            {" "}
-            {student.name}
+            <strong>Name :</strong> {student.name}
           </p>
 
           <p>
-            <strong>Roll No :</strong>
-            {" "}
-            {student.roll_no}
+            <strong>Roll No :</strong> {student.roll}
           </p>
 
           <p>
-            <strong>Branch :</strong>
-            {" "}
-            {student.branch}
+            <strong>Branch :</strong> {student.branch}
           </p>
 
           <p>
-            <strong>Degree :</strong>
-            {" "}
-            {student.degree}
+            <strong>Hostel :</strong> {student.hostel}
           </p>
 
           <p>
-            <strong>Hostel :</strong>
-            {" "}
-            {student.hostel}
+            <strong>Room :</strong> {student.room}
           </p>
 
           <p>
-            <strong>Room :</strong>
-            {" "}
-            {student.room}
+            <strong>Student Contact :</strong>{" "}
+            {student.contact?.student_no}
           </p>
 
-         <p>
-  <strong>Student Contact :</strong>
-  {" "}
-  {student.contact?.student_no}
-</p>
+          <p>
+            <strong>Parent Contact :</strong>{" "}
+            {student.contact?.parent_no}
+          </p>
 
-<p>
-  <strong>Parent Contact :</strong>
-  {" "}
-  {student.contact?.parent_no}
-</p>
+          <p>
+            <strong>Email :</strong>{" "}
+            {student.contact?.email}
+          </p>
 
-<p>
-  <strong>Email :</strong>
-  {" "}
-  {student.contact?.email}
-</p>
         </div>
 
-        {/* MOVEMENT LOG */}
         <h2 className="table-title">
           Movement Log
         </h2>
 
         <table>
 
-          <thead>
-
-            <tr>
-
-              <th>Type</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Purpose</th>
-
-            </tr>
-
-          </thead>
+         <thead>
+  <tr>
+    <th>Date</th>
+    <th>Purpose</th>
+    <th>Out Time</th>
+    <th>In Time</th>
+  </tr>
+</thead>
 
           <tbody>
+{logs.length === 0 ? (
 
-            {logs.length === 0 ? (
+  <tr>
+    <td colSpan="4">
+      No movement records found.
+    </td>
+  </tr>
 
-              <tr>
-                <td colSpan="4">
-                  No movement records found.
-                </td>
-              </tr>
+) : (
 
-            ) : (
+  [...logs]
+    .sort((a, b) => {
 
-              logs.map((log, index) => {
+      const aTime = new Date(
+        a.outTime || a.inTime || 0
+      );
 
-                const outParts = log.outTime
-                  ? log.outTime.split(" ")
-                  : [];
+      const bTime = new Date(
+        b.outTime || b.inTime || 0
+      );
 
-                const inParts = log.inTime
-                  ? log.inTime.split(" ")
-                  : [];
+      return bTime - aTime;
 
-                return (
+    })
+    .map((log, index) => {
 
-                  <>
-                    {log.outTime && (
+      const date =
+        log.outTime
+          ? log.outTime.split(" ")[0]
+          : log.inTime
+          ? log.inTime.split(" ")[0]
+          : "-";
 
-                      <tr key={`out-${index}`} className="out-row">
+      const outTime =
+        log.outTime
+          ? log.outTime.split(" ")[1]
+          : "-";
 
-                        <td>OUT</td>
+      const inTime =
+        log.inTime
+          ? log.inTime.split(" ")[1]
+          : "-";
 
-                        <td>{outParts[0]}</td>
+      return (
 
-                        <td>{outParts[1]}</td>
+        <tr key={index}>
+          <td>{date}</td>
+          <td>{log.purpose}</td>
+          <td>{outTime}</td>
+          <td>{inTime}</td>
+        </tr>
 
-                        <td>{log.purpose}</td>
+      );
 
-                      </tr>
+    })
 
-                    )}
-
-                    {log.inTime && (
-
-                      <tr key={`in-${index}`} className="in-row">
-
-                        <td>IN</td>
-
-                        <td>{inParts[0]}</td>
-
-                        <td>{inParts[1]}</td>
-
-                        <td>{log.purpose}</td>
-
-                      </tr>
-
-                    )}
-                  </>
-
-                );
-
-              })
-
-            )}
-
+)}
           </tbody>
 
         </table>
 
       </div>
 
-
-<Footer />
-
+      <Footer />
 
     </div>
-
 
   );
 

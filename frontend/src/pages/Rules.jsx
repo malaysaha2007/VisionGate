@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import "../styles/Rules.css";
 import Footer from "../components/Footer";
+import RulesPortalHeader from "../components/RulesPortalHeader";
 
 function Rules() {
 
@@ -10,29 +11,10 @@ function Rules() {
 
       <Navbar />
 
-      {/* HEADER */}
-      <div className="rules-header">
+      
+      <RulesPortalHeader />
 
-        <img
-          src="/rules_logo.jpg"
-          alt="logo"
-          className="rules-logo"
-        />
 
-        <div className="rules-title-section">
-
-          <h1>
-            Rules & Regulations
-          </h1>
-
-          <p>
-            Please adhere to the following guidelines
-            for a seamless hostel experience.
-          </p>
-
-        </div>
-
-      </div>
 
       {/* CONTENT */}
       <div className="rules-container">

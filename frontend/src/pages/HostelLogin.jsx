@@ -36,6 +36,17 @@ function HostelLogin() {
 
       console.log(response.data);
 
+      localStorage.setItem(
+  "hostelUser",
+  JSON.stringify({
+    name: username,
+    designation: role,
+    hostel: hostel
+  })
+);
+
+
+
       alert("Login Successful");
 
       navigate("/HostelStudents", {

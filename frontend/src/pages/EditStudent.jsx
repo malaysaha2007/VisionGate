@@ -18,38 +18,35 @@ function EditStudent() {
   const navigate = useNavigate();
 
   const student = location.state?.student;
+  console.log(student);
 
-  const [formData, setFormData] = useState({
+ const [formData, setFormData] = useState({
+  name: "",
+  roll_no: "",
+  room: "",
+  hostel: "",
+  email: "",
+  student_no: "",
+  parent_no: ""
+});
 
-    name: "",
-    roll_no: "",
-    room: "",
-    hostel: "",
-    email: "",
-    phone: "",
-    year: ""
+useEffect(() => {
 
-  });
+  if (student) {
 
-  useEffect(() => {
+setFormData({
+  name: student.name || "",
+  roll_no: student.roll_no || "",
+  room: student.room || "",
+  hostel: student.hostel || "",
+  email: student.email || "",
+  student_no: student.student_no || "",
+  parent_no: student.parent_no || ""
+});
 
-    if (student) {
+  }
 
-      setFormData({
-
-        name: student.name || "",
-        roll_no: student.roll_no || "",
-        room: student.room || "",
-        hostel: student.hostel || "",
-        email: student.email || "",
-        phone: student.phone || "",
-        year: student.year || ""
-
-      });
-
-    }
-
-  }, [student]);
+}, [student]);
 
   const handleChange = (e) => {
 
@@ -107,71 +104,71 @@ function EditStudent() {
             Edit Student
           </h1>
 
-          <form onSubmit={handleSubmit}>
+<form onSubmit={handleSubmit}>
 
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-            />
+  <input
+    type="text"
+    name="name"
+    placeholder="Name"
+    value={formData.name}
+    readOnly
+  />
 
-            <input
-              type="text"
-              name="roll_no"
-              placeholder="Roll Number"
-              value={formData.roll_no}
-              onChange={handleChange}
-            />
+  <input
+    type="text"
+    name="roll_no"
+    placeholder="Roll Number"
+    value={formData.roll_no}
+    readOnly
+  />
 
-            <input
-              type="text"
-              name="room"
-              placeholder="Room"
-              value={formData.room}
-              onChange={handleChange}
-            />
+  <input
+    type="email"
+    name="email"
+    placeholder="Email"
+    value={formData.email}
+    readOnly
+  />
 
-            <input
-              type="text"
-              name="hostel"
-              placeholder="Hostel"
-              value={formData.hostel}
-              onChange={handleChange}
-            />
+  <input
+    type="text"
+    name="hostel"
+    placeholder="Hostel"
+    value={formData.hostel}
+    onChange={handleChange}
+  />
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
+  <input
+    type="text"
+    name="room"
+    placeholder="Room"
+    value={formData.room}
+    onChange={handleChange}
+  />
 
-            <input
-              type="text"
-              name="phone"
-              placeholder="Phone"
-              value={formData.phone}
-              onChange={handleChange}
-            />
+  <input
+    type="text"
+    name="student_no"
+    placeholder="Student Number"
+    value={formData.student_no}
+    onChange={handleChange}
+  />
 
-            <input
-              type="text"
-              name="year"
-              placeholder="Year"
-              value={formData.year}
-              onChange={handleChange}
-            />
+  <input
+    type="text"
+    name="parent_no"
+    placeholder="Parent Number"
+    value={formData.parent_no}
+    onChange={handleChange}
+  />
 
-            <button type="submit">
+  <button type="submit">
+    Update Student
+  </button>
 
-              Update Student
+</form>
 
-            </button>
-
-          </form>
+          
 
         </div>
 

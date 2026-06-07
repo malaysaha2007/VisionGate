@@ -151,66 +151,6 @@ function HostelStudents() {
 
         {/* CARD 1 */}
 
-        <div className="stat-card">
-
-          <p>
-            Hostel Staff
-          </p>
-
-          <h2>
-            {user.role}
-          </h2>
-
-          <span className="card-sub">
-            {user.hostel}
-          </span>
-
-        </div>
-
-        {/* CARD 2 */}
-
-        <div
-          className="stat-card clickable-card"
-          onClick={() =>
-
-            navigate("/student-status/inside", {
-
-              state: {
-
-                title:
-                  "Students Inside Campus",
-
-                students: students.filter(
-
-                  (s) => s.status !== "OUT"
-
-                ),
-
-                hostel: user.hostel
-
-              }
-
-            })
-
-          }
-        >
-
-          <p>
-            Total Students In Campus
-          </p>
-
-          <h2>
-            {totalStudents - outsideCount}
-          </h2>
-
-          <span className="card-sub">
-            View Full Details
-          </span>
-
-        </div>
-
-        {/* CARD 3 */}
-
         <div
           className="stat-card clickable-card"
           onClick={() =>
@@ -247,7 +187,7 @@ function HostelStudents() {
 
         </div>
 
-        {/* CARD 4 */}
+        {/* CARD 2 */}
 
         <div
           className="stat-card clickable-card danger-card"
@@ -285,7 +225,7 @@ function HostelStudents() {
 
         </div>
 
-        {/* CARD 5 */}
+        {/* CARD 3 */}
 
         <div
           className="stat-card clickable-card special-card"
@@ -431,8 +371,6 @@ function HostelStudents() {
 
                   <th>Room</th>
 
-                  <th>Status</th>
-
                   <th>Actions</th>
 
                 </tr>
@@ -473,21 +411,7 @@ function HostelStudents() {
 
                       <td>
 
-                        <span
-                          className={
-
-                            student.status === "OUT"
-
-                              ? "status-out"
-
-                              : "status-in"
-
-                          }
-                        >
-
-                          {student.status || "IN"}
-
-                        </span>
+                        
 
                       </td>
 

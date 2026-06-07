@@ -39,78 +39,9 @@ async def student_login(data: StudentLogin):
             detail="Invalid Roll Number or Password"
         )
 
-    logs_cursor = db.entry_exit_logs.find(
-        {
-            "$or": [
-                {"roll": data.studentid},
-                {"roll_no": data.studentid}
-            ]
-        }
-    ).sort("outTime", -1)
-
-    logs = []
-
-    for log in logs_cursor:
-
-        logs.append({
-
-            "purpose": log.get(
-                "purpose",
-                ""
-            ),
-
-            "outTime": str(
-                log.get(
-                    "outTime",
-                    ""
-                )
-            ),
-
-            "inTime": str(
-                log.get(
-                    "inTime",
-                    ""
-                )
-            )
-
-        })
-
     return {
-
         "message": "Login Successful",
-
-        "student": {
-
-            "name":
-                student.get("name"),
-
-            "roll_no":
-                student.get("roll_no"),
-
-            "branch":
-                student.get("branch"),
-
-            "degree":
-                student.get(
-                    "degree",
-                    "B.Tech"
-                ),
-
-            "hostel":
-                student.get("hostel"),
-
-            "room":
-                student.get("room"),
-
-            "contact":
-                student.get(
-                    "contact",
-                    {}
-                ),
-
-            "logs":
-                logs
-
-        }
-
+        "roll_no": student.get("roll_no"),
+        "_id": str(student["_id"])
     }
+    
