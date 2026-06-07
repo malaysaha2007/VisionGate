@@ -5,19 +5,20 @@ function AdminPortalHeader() {
     <div className="portal-hero">
       <div className="portal-hero-content">
 
-        <div className="portal-hero-icon">
-          🎓
-        </div>
+        <div className="portal-info">
 
-        <div>
-          <h2>
-            Administration Portal
-          </h2>
+          <div className="portal-hero-icon">
+            🎓
+          </div>
 
-          <p>
-            Manage Students, Logs &
-            Curfew System
-          </p>
+          <div>
+            <h2>Administration Portal</h2>
+
+            <p>
+              Manage Students, Logs & Curfew System
+            </p>
+          </div>
+
         </div>
 
       </div>
