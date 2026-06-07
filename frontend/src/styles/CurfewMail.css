@@ -1,51 +1,35 @@
 @import "./AdminDashboard.css";
-.curfew-page{
-  min-height:100vh;
+
+.curfew-page {
+  min-height: 100vh;
 }
 
-.curfew-actions{
-  display:flex;
-
-  justify-content:flex-end;
-
-  padding:20px 24px;
-    gap: 10px;
+.curfew-actions {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 24px;
+  gap: 10px;
 }
-
 
 .refresh-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-
-  background: linear-gradient(
-    135deg,
-    #4f8cff,
-    #2563eb
-  );
-
+  background: linear-gradient(135deg, #4f8cff, #2563eb);
   color: white;
   border: none;
   border-radius: 12px;
-
   padding: 10px 20px;
-
   font-size: 15px;
   font-weight: 600;
-
   cursor: pointer;
-
   transition: all 0.3s ease;
-
-  box-shadow:
-    0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .refresh-btn:hover {
   transform: translateY(-2px);
-
-  box-shadow:
-    0 8px 18px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.4);
 }
 
 .refresh-btn:active {
@@ -56,51 +40,34 @@
   font-size: 16px;
 }
 
-.send-mail-btn{
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
-  padding:10px 20px;
-
-  border:none;
-
-  border-radius:12px;
-
-  background:#2563eb;
-
-  color:white;
-
-  font-size:15px;
-
-  font-weight:600;
-
-  cursor:pointer;
-
-  transition:0.2s;
+.send-mail-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.send-mail-btn:hover{
-  background:#1d4ed8;
-
-  transform:translateY(-2px);
+.send-mail-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
 }
-
 
 .mail-popup-overlay {
   position: fixed;
   inset: 0;
-
   background: rgba(0, 0, 0, 0.75);
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   z-index: 9999;
-
   backdrop-filter: blur(4px);
 }
 
@@ -108,47 +75,24 @@
   width: 92%;
   max-width: 1200px;
   height: 82vh;
-
-  background: linear-gradient(
-    135deg,
-    #071327 0%,
-    #0b1f3f 50%,
-    #10264d 100%
-  );
-
+  background: linear-gradient(135deg, #071327 0%, #0b1f3f 50%, #10264d 100%);
   border: 1px solid rgba(59, 130, 246, 0.25);
-
   border-radius: 22px;
-
   padding: 28px;
-
   color: white;
-
   display: flex;
   flex-direction: column;
-
-  box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.55),
-    0 0 30px rgba(37, 99, 235, 0.15);
-
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 0 0 30px rgba(37, 99, 235, 0.15);
   overflow: hidden;
 }
 
-
-
-
 .mail-popup h2 {
   text-align: center;
-
   margin-bottom: 25px;
-
   color: #ffffff;
-
   font-size: 28px;
-
   font-weight: 700;
 }
-
 
 .student-details {
   display: flex;
@@ -166,128 +110,64 @@
   font-size: 14px;
 }
 
-
 .mail-popup-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding-bottom: 20px;
-
-  border-bottom: 1px solid rgba(
-    255,
-    255,
-    255,
-    0.08
-  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
-
-
 
 .mail-popup-header h2 {
   margin: 0;
-
   color: #ffffff;
-
   font-size: 34px;
-
   font-weight: 700;
-
   letter-spacing: 0.5px;
 }
 
 .cancel-btn {
   min-width: 150px;
   height: 48px;
-
   border: none;
-
   border-radius: 12px;
-
   background: rgba(167, 40, 40, 0.08);
-
   color: rgb(255, 7, 7);
-
   font-size: 15px;
   font-weight: 600;
-
   cursor: pointer;
-
   transition: all 0.25s ease;
 }
 
 .cancel-btn:hover {
-  background: rgba(
-    255,
-    255,
-    255,
-    0.15
-  );
-
-  transform: translateY(-2px);
-}
-
-.cancel-btn:hover {
   background: #2b393c;
+  transform: translateY(-2px);
 }
 
 .send-selected-btn {
   min-width: 220px;
   height: 48px;
-
   border: none;
-
   border-radius: 12px;
-
-  background: linear-gradient(
-    135deg,
-    #3b82f6,
-    #2563eb
-  );
-
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
-
   font-size: 15px;
   font-weight: 600;
-
   cursor: pointer;
-
   transition: all 0.25s ease;
-
-  box-shadow:
-    0 8px 18px rgba(
-      37,
-      99,
-      235,
-      0.35
-    );
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
 }
 
 .send-selected-btn:hover {
   transform: translateY(-2px);
-
-  box-shadow:
-    0 12px 24px rgba(
-      37,
-      99,
-      235,
-      0.5
-    );
-}
-
-.send-selected-btn:hover {
-  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.5);
 }
 
 .mail-table {
   width: 100%;
-
   border-collapse: collapse;
-
   margin-top: 20px;
-
   overflow: hidden;
-
   border-radius: 16px;
 }
 
@@ -297,65 +177,38 @@
 
 .mail-table th {
   color: #dbeafe;
-
   font-size: 15px;
-
   font-weight: 600;
-
   padding: 18px;
-
   text-align: left;
 }
 
 .mail-table tbody tr {
-  background: rgba(
-    255,
-    255,
-    255,
-    0.03
-  );
-
+  background: rgba(255, 255, 255, 0.03);
   transition: 0.25s;
 }
 
 .mail-table tbody tr:hover {
-  background: rgba(
-    59,
-    130,
-    246,
-    0.12
-  );
+  background: rgba(59, 130, 246, 0.12);
 }
 
 .mail-table td {
   padding: 18px;
-
   color: white;
-
-  border-top: 1px solid rgba(
-    255,
-    255,
-    255,
-    0.05
-  );
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .mail-table input[type="checkbox"] {
   width: 22px;
   height: 22px;
-
   cursor: pointer;
-
   accent-color: #3b82f6;
 }
 
 .student-list {
   flex: 1;
-
   margin-top: 20px;
-
   overflow-y: auto;
-
   border-radius: 16px;
 }
 
@@ -368,111 +221,58 @@
 }
 
 .student-list::-webkit-scrollbar-thumb {
-  background: rgba(
-    59,
-    130,
-    246,
-    0.4
-  );
-
+  background: rgba(59, 130, 246, 0.4);
   border-radius: 20px;
 }
 
 .student-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(
-    59,
-    130,
-    246,
-    0.7
-  );
+  background: rgba(59, 130, 246, 0.7);
 }
 
-
-
 .mail-result-popup {
-
   width: 700px;
-
   max-height: 80vh;
-
   overflow-y: auto;
-
-  background: linear-gradient(
-    135deg,
-    #071327,
-    #10264d
-  );
-
+  background: linear-gradient(135deg, #071327, #10264d);
   color: white;
-
   padding: 30px;
-
   border-radius: 20px;
-
-  border: 1px solid rgba(
-    59,
-    130,
-    246,
-    0.3
-  );
+  border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 .mail-result-popup h2 {
-
   text-align: center;
-
   margin-bottom: 25px;
 }
 
 .success-section {
-
   margin-bottom: 30px;
 }
 
 .success-section h3 {
-
   color: #22c55e;
 }
 
 .failed-section h3 {
-
   color: #ef4444;
 }
 
 .success-section p,
 .failed-section p {
-
   margin: 8px 0;
-
   padding: 10px;
-
   border-radius: 8px;
-
-  background: rgba(
-    255,
-    255,
-    255,
-    0.05
-  );
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .close-result-btn {
-
   width: 100%;
-
   margin-top: 20px;
-
   height: 48px;
-
   border: none;
-
   border-radius: 12px;
-
   background: #2563eb;
-
   color: white;
-
   font-weight: 600;
-
   cursor: pointer;
 }
