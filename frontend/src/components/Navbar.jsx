@@ -74,29 +74,32 @@ function Navbar({
   Dashboard
 </Link>
             )}
+{showLogin && (
+  <div className="dropdown">
 
-            {showLogin && (
-              <div className="dropdown">
-                <a href="#">
-                  Login
-                  <span className="arrow"></span>
-                </a>
+    <a href="#">
+      Login
+      <span className="arrow"></span>
+    </a>
 
-                <div className="dropdown-menu">
-                  <Link to="/StudentLogin">
-                    Student Login
-                  </Link>
+    <div className="dropdown-menu">
 
-                  <Link to="/HostelLogin">
-                    Hostel Login
-                  </Link>
+      <Link to="/StudentLogin">
+        Student Login
+      </Link>
 
-                  <Link to="/AdminLogin">
-                    Admin Login
-                  </Link>
-                </div>
-              </div>
-            )}
+      <Link to="/HostelLogin">
+        Hostel Login
+      </Link>
+
+      <Link to="/AdminLogin">
+        Admin Login
+      </Link>
+
+    </div>
+
+  </div>
+)}
           </nav>
         </div>
 

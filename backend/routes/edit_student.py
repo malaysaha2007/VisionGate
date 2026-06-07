@@ -7,53 +7,30 @@ router = APIRouter()
 
 
 @router.put("/student/edit/{student_id}")
-
 async def edit_student(
-
     student_id: str,
-
     data: dict
-
 ):
 
-    db.student_data.update_one(
-
+    result = db.student_auth_data.update_one(
         {
             "_id": ObjectId(student_id)
         },
-
         {
             "$set": {
-
-                "name":
-                    data.get("name", ""),
-
-                "roll_no":
-                    data.get("roll_no", ""),
-
-                "room":
-                    data.get("room", ""),
-
-                "hostel":
-                    data.get("hostel", ""),
-
-                "email":
-                    data.get("email", ""),
-
-                "phone":
-                    data.get("phone", ""),
-
-                "year":
-                    data.get("year", "")
-
+                "hostel": data.get("hostel", ""),
+                "room": data.get("room", ""),
+                "contact.student_no": data.get("student_no", ""),
+                "contact.parent_no": data.get("parent_no", "")
             }
         }
-
     )
 
+    if result.matched_count == 0:
+        return {
+            "message": "Student Not Found"
+        }
+
     return {
-
-        "message":
-            "Student Updated Successfully"
-
+        "message": "Student Updated Successfully"
     }

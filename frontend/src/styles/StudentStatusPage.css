@@ -1,120 +1,101 @@
 .student-status-page{
   min-height:100vh;
-
   background:linear-gradient(
     180deg,
     #050c1d,
     #071126
   );
-
   color:#e6eef8;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 .status-header{
   width:100%;
-
   padding:22px 30px;
-
   border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 .status-left{
   display:flex;
-
   align-items:center;
-
   gap:18px;
 }
 
 .status-logo{
   width:58px;
   height:58px;
-
   object-fit:contain;
 }
 
 .status-left h1{
   font-size:36px;
-
   margin-bottom:4px;
 }
 
 .status-left p{
   color:#9aa8c7;
-
   font-size:15px;
 }
 
-/* TITLE */
+/* =========================
+   TITLE
+========================= */
 
 .status-title-section{
   text-align:center;
-
   margin-top:60px;
 }
 
 .status-title-section h1{
   font-size:48px;
-
   margin-bottom:12px;
 }
 
 .status-title-section p{
   color:#9aa8c7;
-
   font-size:18px;
 }
 
-/* MAIN */
+/* =========================
+   MAIN
+========================= */
 
 .status-container{
   width:100%;
-
   display:flex;
-
   justify-content:center;
-
   padding:50px 20px 80px;
 }
 
 .status-card{
   width:100%;
   max-width:1200px;
-
   background:#121b33;
-
   border:1px solid rgba(255,255,255,0.10);
-
   border-radius:20px;
-
   padding:28px;
 }
 
-/* TOPBAR */
+/* =========================
+   TOPBAR
+========================= */
 
 .status-topbar{
   display:flex;
-
   gap:16px;
-
   margin-bottom:24px;
 }
 
 .status-topbar input{
   flex:1;
-
   background:#192544;
-
   border:1px solid rgba(255,255,255,0.08);
-
   border-radius:12px;
-
   padding:14px 18px;
-
   color:white;
-
   font-size:15px;
 }
 
@@ -124,19 +105,12 @@
 
 .status-topbar button{
   background:#10213f;
-
   border:none;
-
   color:white;
-
   padding:14px 24px;
-
   border-radius:12px;
-
   font-size:15px;
-
   cursor:pointer;
-
   transition:0.2s;
 }
 
@@ -144,77 +118,91 @@
   background:#16305d;
 }
 
-/* COUNT */
+/* =========================
+   COUNT
+========================= */
 
 .status-count{
   margin-bottom:20px;
-
   color:#9aa8c7;
-
   font-size:15px;
 }
 
-/* TABLE */
+/* =========================
+   TABLE
+========================= */
+.table-wrapper{
+  width:100%;
+  overflow-x:auto;
+}
 
 table{
   width:100%;
-
   border-collapse:collapse;
+  table-layout:fixed;
 }
 
 thead{
-  background:#1a2e5d;
+  background:#223b75;
+}
+
+th,
+td{
+  padding:18px 10px;
+
+  text-align:center;
+
+  vertical-align:middle;
+
+  white-space:nowrap;
 }
 
 th{
-  padding:16px;
-
+  color:#dbeafe;
   font-size:15px;
-
-  color:#d9e6ff;
-
-  text-align:center;
+  font-weight:600;
 }
 
 td{
-  padding:18px 16px;
-
-  text-align:center;
-
-  border-bottom:1px solid rgba(255,255,255,0.06);
-
-  color:#dce7ff;
+  color:#ffffff;
+  font-size:15px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-tr:hover{
-  background:rgba(255,255,255,0.03);
+tbody tr:hover{
+  background:rgba(59,130,246,0.08);
 }
 
-/* STATUS */
+/* =========================
+   STATUS BADGE
+========================= */
 
 .status-badge{
   display:inline-flex;
 
   align-items:center;
-
   justify-content:center;
 
-  padding:7px 14px;
+  min-width:95px;
+
+  height:34px;
 
   border-radius:999px;
 
   background:rgba(6,182,212,0.15);
 
+  border:1px solid rgba(6,182,212,0.35);
+
   color:#06b6d4;
 
-  font-size:13px;
+  font-size:12px;
 
-  font-weight:600;
-
-  border:1px solid rgba(6,182,212,0.3);
+  font-weight:700;
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(max-width:900px){
 

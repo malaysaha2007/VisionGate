@@ -8,7 +8,7 @@ router = APIRouter()
 
 async def get_hostel_students(hostel_name: str):
 
-    student_collection = db.student_data
+    student_collection = db.student_auth_data
 
     students = list(
         student_collection.find(
@@ -24,24 +24,24 @@ async def get_hostel_students(hostel_name: str):
 
         final_students.append({
 
-            "_id": str(student["_id"]),
+        "_id": str(student["_id"]),
 
-            "name": student.get("name", ""),
+        "name": student.get("name", ""),
 
-            "roll_no": student.get("roll_no", ""),
+        "roll_no": student.get("roll_no", ""),
 
-            "room": student.get("room", ""),
+        "room": student.get("room", ""),
 
-            "hostel": student.get("hostel", ""),
+        "hostel": student.get("hostel", ""),
 
-            "phone": student.get("phone", ""),
+        "email": student.get("contact", {}).get("email", ""),
 
-            "email": student.get("email", ""),
+        "student_no": student.get("contact", {}).get("student_no", ""),
 
-            "department": student.get("department", ""),
+        "parent_no": student.get("contact", {}).get("parent_no", ""),
 
-            "year": student.get("year", "")
+        "branch": student.get("branch", "")
 
-        })
+    })
 
     return final_students

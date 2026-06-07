@@ -40,51 +40,12 @@ function StudentStatusPage() {
 
       const data = response.data;
 
-      // =========================
-      // INSIDE
-      // =========================
-
-      if (type === "inside") {
-
-        const insideCount =
-          data.studentsInCampus;
-
-        const outsideRolls =
-          data.outsideStudents.map(
-            (s) => s.roll
-          );
-
-        const insideStudents = [];
-
-        for (let i = 1; i <= insideCount; i++) {
-
-          insideStudents.push({
-
-            name: `Student ${i}`,
-
-            roll: `ROLL-${i}`,
-
-            room: `Room-${i}`,
-
-            purpose: "Inside Campus",
-
-            outTime: "-",
-
-            status: "INSIDE"
-
-          });
-
-        }
-
-        setStudents(insideStudents);
-
-      }
 
       // =========================
       // OUTSIDE
       // =========================
 
-      else if (type === "outside") {
+      if (type === "outside") {
 
         const outsideData =
           data.outsideStudents.map(
@@ -167,9 +128,7 @@ function StudentStatusPage() {
 
   const getTitle = () => {
 
-    if (type === "inside") {
-      return "Students Inside Campus";
-    }
+  
 
     if (type === "outside") {
       return "Students Outside Campus";
@@ -234,109 +193,126 @@ function StudentStatusPage() {
             Showing {students.length} Students
 
           </div>
+{/* TABLE */}
 
-          {/* TABLE */}
-          <table>
+<div className="table-wrapper">
 
-            <thead>
+  <table>
 
-              <tr>
+    <thead>
 
-                <th>Name</th>
+      <tr>
 
-                <th>Roll No</th>
+        <th>Name</th>
 
-                <th>Room</th>
+        <th>Roll No</th>
 
-                <th>Purpose</th>
+        <th>Room</th>
 
-                <th>OUT Time</th>
+        <th>Purpose</th>
 
-                <th>Status</th>
+        <th>OUT Time</th>
 
-              </tr>
+        <th>IN Time</th>
 
-            </thead>
+        <th>Status</th>
 
-            <tbody>
+      </tr>
 
-              {loading ? (
+    </thead>
 
-                <tr>
+    <tbody>
 
-                  <td colSpan="6">
+      {loading ? (
 
-                    Loading...
+        <tr>
 
-                  </td>
+          <td colSpan="7">
 
-                </tr>
+            Loading...
 
-              ) : students.length === 0 ? (
+          </td>
 
-                <tr>
+        </tr>
 
-                  <td colSpan="6">
+      ) : students.length === 0 ? (
 
-                    No Students Found
+        <tr>
 
-                  </td>
+          <td colSpan="7">
 
-                </tr>
+            No Students Found
 
-              ) : (
+          </td>
 
-                students.map((student, index) => (
+        </tr>
 
-                  <tr key={index}>
+      ) : (
 
-                    <td>
-                      {student.name}
-                    </td>
+        students.map((student, index) => (
 
-                    <td>
-                      {student.roll}
-                    </td>
+          <tr key={index}>
 
-                    <td>
-                      {student.room}
-                    </td>
+            <td>
+              {student.name}
+            </td>
 
-                    <td>
-                      {student.purpose || "-"}
-                    </td>
+            <td>
+              {student.roll}
+            </td>
 
-                    <td>
-                      {student.outTime || "-"}
-                    </td>
+            <td>
+              {student.room}
+            </td>
 
-                    <td>
+            <td>
+              {student.purpose || "-"}
+            </td>
 
-                      <span className="status-badge">
+            <td>
+              {student.outTime || "-"}
+            </td>
 
-                        {student.status}
+            <td>
+              {student.inTime || "-"}
+            </td>
 
-                      </span>
+            <td>
 
-                    </td>
+              <span
+                className={`status-badge ${
+                  student.status === "OUTSIDE"
+                    ? "status-out"
+                    : student.status === "CURFEW"
+                    ? "status-curfew"
+                    : "status-leave"
+                }`}
+              >
+                {student.status}
+              </span>
 
-                  </tr>
+            </td>
 
-                ))
+          </tr>
 
-              )}
+        ))
 
-            </tbody>
+      )}
 
-          </table>
+    </tbody>
 
-        </div>
+  </table>
+
+</div>
+      </div>
 
       </div>
 
       <Footer />
 
-    </div>
+    
+
+     </div>
 
   );
 

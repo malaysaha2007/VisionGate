@@ -3,11 +3,13 @@
 
   padding: 16px 24px;
 
-  background: #081126;
+ background:#050c1d,#071126;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  /* border-top: 1px solid rgba(255, 255, 255, 0.06);
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06); */
+
+   margin-bottom: 30px;
 }
 
 .portal-hero-content {
@@ -55,6 +57,147 @@
   font-size: 15px;
 }
 
+.portal-hero-content {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.portal-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+.portal-user {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 10px 18px;
+
+  background: rgba(59,130,246,0.12);
+
+  border: 1px solid rgba(59,130,246,0.25);
+
+  border-radius: 50px;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+
+  min-width: 180px;
+}
+
+
+.portal-user-info {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.portal-user-info h4 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  line-height: 1.2;
+}
+
+.portal-user-info p {
+  margin: 0;
+
+  color: #cbd5e1;
+
+  font-size: 13px;
+
+  line-height: 1.2;
+}
+
+
+.portal-user:hover {
+  background: rgba(59,130,246,0.18);
+}
+
+.portal-avatar {
+  width: 42px;
+
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #3b82f6;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-weight: 700;
+
+  font-size: 18px;
+}
+
+
+.portal-user-wrapper {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+}
+
+.portal-dropdown {
+  position: absolute;
+
+  top: 65px;
+
+  right: 0;
+
+  width: 180px;
+
+  background: #121b33;
+
+  border: 1px solid rgba(59,130,246,0.25);
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 14px 16px;
+
+  cursor: pointer;
+
+  color: #e6eef8;
+
+  transition: 0.2s;
+}
+
+.dropdown-item:hover {
+  background: rgba(59,130,246,0.15);
+}
+
+.logout {
+  color: #ef4444;
+}
+
+
 @media (max-width: 768px) {
 
   .portal-hero {
@@ -79,5 +222,22 @@
   .portal-hero-content p {
     font-size: 13px;
   }
+
+  .portal-user {
+  padding: 8px 12px;
+}
+
+.portal-avatar {
+  width: 36px;
+  height: 36px;
+}
+
+.portal-user h4 {
+  font-size: 14px;
+}
+
+.portal-user p {
+  font-size: 12px;
+}
 
 }
