@@ -3,6 +3,10 @@ import { useLocation } from "react-router-dom";
 
 import API from "../services/api";
 
+import {
+  FaSyncAlt,
+} from "react-icons/fa";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AdminPortalHeader from "../components/AdminPortalHeader";
@@ -14,6 +18,7 @@ function ActivityLogs() {
 
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const location = useLocation();
 const admin = location.state?.admin;
 
@@ -28,6 +33,7 @@ const admin = location.state?.admin;
     useState("");
 
   const fetchLogs = async () => {
+    setRefreshing(true);
 
     try {
 
@@ -47,6 +53,10 @@ const admin = location.state?.admin;
     } finally {
 
       setLoading(false);
+
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 300);
 
     }
 
@@ -175,7 +185,9 @@ return (
 
   <AdminPortalHeader admin={admin} />
 
-  <div className="admin-dashboard-page">
+  <div className={`admin-dashboard-page ${
+    refreshing ? "page-refresh" : ""
+    }`}>
 
      
 
@@ -258,9 +270,11 @@ return (
 
             <button
               onClick={fetchLogs}
+              title="Refresh"
+              className="icon-btn"
             >
-              Refresh
-            </button>
+            <FaSyncAlt />
+          </button>
 
           </div>
 
