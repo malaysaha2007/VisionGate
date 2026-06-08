@@ -125,23 +125,6 @@ const response =
 
       <AdminPortalHeader />
 
-      {/* STATS */}
-
-      <div className="stats-grid">
-
-        <div className="stat-card">
-
-          <p>
-            Curfew Violations
-          </p>
-
-          <h2>
-            {students.length}
-          </h2>
-
-        </div>
-
-      </div>
 
       {/* ACTIONS */}
 
