@@ -43,56 +43,61 @@ body{
 /* PROFILE CONTAINER */
 
 .profile-container{
-  max-width:1100px;
+  max-width: 1250px;
 
-  margin:30px auto;
+  margin: 30px auto;
 
-  background:var(--bg-card);
+  background: var(--bg-card);
 
-  border-radius:16px;
+  border-radius: 16px;
 
-  border:1px solid var(--border-light);
+  border: 1px solid var(--border-light);
 
-  padding:30px;
+  padding: 35px;
 }
 
 /* DETAILS */
 
 .details-title{
   text-align:center;
-
   margin-bottom:28px;
-
   color:var(--accent-secondary);
-
   font-size:30px;
 }
-
-.profile-grid{
-  display:grid;
-
-  grid-template-columns:repeat(3,1fr);
-
-  gap:18px 28px;
-
+.student-profile-grid{
+   display:grid;
+  grid-template-columns:repeat(2, 550px);
+  gap:20px;
+  justify-content:center;
   margin-bottom:40px;
 }
 
-.profile-grid p{
-  background:rgba(255,255,255,0.03);
+.student-profile-grid p{
+  display:flex;
+  align-items:center;
 
+  background:rgba(255,255,255,0.03);
   border:1px solid rgba(255,255,255,0.05);
 
-  padding:14px 16px;
+  padding:18px 20px;
 
-  border-radius:10px;
+  min-height:80px;   /* same height for all */
 
-  font-size:15px;
+  border-radius:8px; /* less rounded */
+
+  font-size:17px;
+  line-height:1.5;
+
+  transition:all 0.25s ease;
 }
 
-.profile-grid strong{
+.student-profile-grid strong{
   color:var(--accent-secondary);
+  margin-right:8px;
+  white-space:nowrap;
 }
+
+
 
 /* TABLES */
 
@@ -148,29 +153,21 @@ td{
 
 /* MOBILE */
 
-@media(max-width:950px){
+
+@media (max-width: 900px){
+
+  .profile-container{
+    padding:25px;
+  }
 
   .profile-grid{
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:1fr 1fr;
+    gap:15px;
   }
 
 }
 
-@media(max-width:768px){
-
-  .profile-navbar{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .profile-nav-links{
-    width:100%;
-    flex-wrap:wrap;
-  }
-
-  .student-top{
-    flex-direction:column;
-  }
+@media (max-width: 768px){
 
   .profile-grid{
     grid-template-columns:1fr;
@@ -184,8 +181,28 @@ td{
     font-size:20px;
   }
 
-  table{
-    font-size:13px;
+  .profile-grid p{
+    font-size:16px;
+  }
+
+}
+
+@media (max-width:768px){
+  .student-profile-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width: 480px){
+
+  .profile-container{
+    padding:18px;
+    margin:15px;
+  }
+
+  .profile-grid p{
+    padding:14px;
+    font-size:15px;
   }
 
 }

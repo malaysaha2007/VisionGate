@@ -1,28 +1,159 @@
 import "../styles/AllPortalHeader.css";
+import {
+  useState,
+  useEffect,
+  useRef
+} from "react";
 
-function AdminPortalHeader() {
+function AdminPortalHeader({ admin }) {
+
+  const [showMenu, setShowMenu] =
+    useState(false);
+
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+
+    const handleClickOutside = (event) => {
+
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target)
+      ) {
+        setShowMenu(false);
+      }
+
+    };
+
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+    return () => {
+
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+
+    };
+
+  }, []);
+
   return (
+
     <div className="portal-hero">
+
       <div className="portal-hero-content">
 
-        <div className="portal-hero-icon">
-          🎓
+        {/* LEFT SIDE */}
+
+        <div className="portal-info">
+
+          <div className="portal-hero-icon">
+            🎓
+          </div>
+
+          <div>
+
+            <h2>
+              Administration Portal
+            </h2>
+
+            <p>
+              Manage Students, Logs & Curfew System
+            </p>
+
+          </div>
+
         </div>
 
-        <div>
-          <h2>
-            Administration Portal
-          </h2>
+        {/* RIGHT SIDE */}
 
-          <p>
-            Manage Students, Logs &
-            Curfew System
-          </p>
+        <div
+          className="portal-user-wrapper"
+          ref={menuRef}
+        >
+
+          <div
+            className="portal-user"
+            onClick={() =>
+              setShowMenu(!showMenu)
+            }
+          >
+
+            <div className="profile-card">
+
+              <div className="profile-details">
+
+                <div className="profile-name">
+                  {admin?.username ||
+                    "Administrator"}
+                </div>
+
+                <div className="profile-role">
+                  {admin?.role ||
+                    admin?.level ||
+                    "Admin"}
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {showMenu && (
+
+            <div className="portal-dropdown">
+
+              <div
+                className="dropdown-item"
+                onClick={() => {
+
+                  alert(
+                    "Profile Page Coming Soon"
+                  );
+
+                }}
+              >
+                👤 Profile
+              </div>
+
+              <div
+                className="dropdown-item logout"
+                onClick={() => {
+
+                  localStorage.removeItem(
+                    "admin"
+                  );
+
+                  sessionStorage.clear();
+
+                  setShowMenu(false);
+
+                  window.location.replace(
+                    "/AdminLogin"
+                  );
+
+                }}
+              >
+                🚪 Logout
+              </div>
+
+            </div>
+
+          )}
+
         </div>
 
       </div>
+
     </div>
+
   );
+
 }
 
 export default AdminPortalHeader;
