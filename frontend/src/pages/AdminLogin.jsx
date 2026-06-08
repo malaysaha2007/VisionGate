@@ -48,14 +48,6 @@ function AdminLogin() {
         response.data.message
       );
 
-      localStorage.setItem(
-        "adminUser", 
-        JSON.stringify({
-          username: username,
-          level: level
-        })
-      );
-
       navigate(
         "/admin-dashboard",
         {
