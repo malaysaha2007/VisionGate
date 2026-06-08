@@ -70,7 +70,8 @@ const rollNo = localStorage.getItem("roll_no");
 
       <Navbar showLogout={true} />
 
-      <StudentPortalHeader />
+<StudentPortalHeader student={student} />
+
 
       <div className="profile-container">
 
@@ -78,7 +79,7 @@ const rollNo = localStorage.getItem("roll_no");
           Student Details
         </h2>
 
-        <div className="profile-grid">
+        <div className="student-profile-grid">
 
           <p>
             <strong>Name :</strong> {student.name}

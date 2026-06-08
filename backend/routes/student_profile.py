@@ -56,6 +56,9 @@ async def get_student_profile(roll_no: str):
             "hostel": student.get("hostel", ""),
 
             "room": student.get("room", ""),
+            
+            "face_images": student.get("face_images", []),
+
 
             "contact": {
 
