@@ -108,26 +108,28 @@ function HostelPortalHeader() {
               }
             >
 
-              <div className="portal-avatar">
+           
 
-                {user.name
-                  ? user.name.charAt(0).toUpperCase()
-                  : "W"}
+  
 
-              </div>
 
-              <div className="portal-user-info">
+<div className="profile-card">
 
-                <h4>
-                  {user.name || "Warden"}
-                </h4>
+ 
 
-                <p>
-                  {user.designation || "Hostel Staff"}
-                </p>
+  <div className="profile-details">
 
-              </div>
+    <div className="profile-name">
+      {user?.name}
+    </div>
 
+    <div className="profile-role">
+      {user?.designation}
+    </div>
+
+  </div>
+
+</div>
             </div>
 
             {showMenu && (

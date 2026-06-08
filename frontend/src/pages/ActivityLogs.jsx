@@ -173,7 +173,7 @@ return (
     showLogout={true}
   />
 
-  <AdminPortalHeader />
+  <AdminPortalHeader admin={admin} />
 
   <div className="admin-dashboard-page">
 
