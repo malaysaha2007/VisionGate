@@ -162,18 +162,8 @@ return (
   showLogout={true}
 />
 
- {/* HEADER and PROFILE-CARD */}
-<div className="dashboard-header-row">
   <AdminPortalHeader />
-  <div className="profile-grid">
-    <div className="profile-card">
-      <h2>{admin?.level || "Admin"}</h2>
-      <span className="profile-username">{admin?.username}</span>
-    </div>
-  </div>
-</div>
 
-    
     <div
   className={`admin-dashboard-page ${
     refreshing ? "page-refresh" : ""
