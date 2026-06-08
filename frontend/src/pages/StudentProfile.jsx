@@ -70,7 +70,10 @@ const rollNo = localStorage.getItem("roll_no");
 
       <Navbar showLogout={true} />
 
-<StudentPortalHeader student={student} />
+<StudentPortalHeader
+  student={student}
+  logs={logs}
+/>
 
 
       <div className="profile-container">

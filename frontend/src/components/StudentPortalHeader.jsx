@@ -32,8 +32,15 @@ function StudentPortalHeader({ student, logs = [] }) {
 
     })[0];
 
-    isInsideCampus = !!latestLog.inTime;
+    console.log("All Logs:", logs);
+console.log("Latest Log:", latestLog);
+
+    isInsideCampus =
+  latestLog.inTime &&
+  latestLog.inTime.trim() !== "-";
   }
+
+  
 
   useEffect(() => {
 
