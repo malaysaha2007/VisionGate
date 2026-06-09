@@ -6,7 +6,7 @@
 
 .curfew-actions {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end; /* This pushes the buttons back to the right */
   padding: 20px 24px;
   gap: 10px;
 }
