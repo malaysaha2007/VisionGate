@@ -262,6 +262,44 @@ function HostelStudents() {
           </span>
 
         </div>
+        
+        {/* CARD 4 */}
+
+        <div
+          className="stat-card clickable-card special-card"
+          onClick={() =>
+
+            navigate("/student-status/leave", {
+
+              state: {
+
+                title:
+                  "Vacation Applications",
+
+                students: leaveStudents,
+
+                hostel: user.hostel
+
+              }
+
+            })
+
+          }
+        >
+
+          <p>
+            Vacation Applications
+          </p>
+
+          <h2>
+            {leaveCount}
+          </h2>
+
+          <span className="card-sub">
+            View all Vacation Applications
+          </span>
+
+        </div>
 
       </div>
 
