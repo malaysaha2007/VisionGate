@@ -145,7 +145,7 @@ navigate("/StudentProfile");
 
 
     <Navbar />
-    <StudentPortalHeader />
+    <StudentPortalHeader showProfile={false} />
 
      
       {/* LOGIN BOX */}

@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from "react";
 
 import "../styles/AllPortalHeader.css";
 
-function StudentPortalHeader({ student, logs = [] }) {
+function StudentPortalHeader({
+  student,
+  logs = [],
+  showProfile = true
+})
+
+{
 
   const [showMenu, setShowMenu] =
     useState(false);
@@ -101,6 +107,9 @@ console.log("Latest Log:", latestLog);
 
         </div>
 
+
+        {showProfile && (
+
         <div
           className="student-avatar-wrapper"
           ref={menuRef}
@@ -138,6 +147,8 @@ console.log("Latest Log:", latestLog);
             />
           </div>
 
+        
+
           {showMenu && (
 
             <div className="student-dropdown">
@@ -172,6 +183,8 @@ console.log("Latest Log:", latestLog);
           )}
 
         </div>
+
+        )}
 
       </div>
 
