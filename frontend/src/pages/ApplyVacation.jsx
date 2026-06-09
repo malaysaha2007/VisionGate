@@ -44,14 +44,12 @@ const [logs, setLogs] = useState([]);
 
 }, [rollNo]);
 
-  const [formData, setFormData] = useState({
-    reason: "",
-    destination: "",
-    leaveDate: "",
-    returnDate: "",
-    parentContact: "",
-    emergencyContact: ""
-  });
+const [formData, setFormData] = useState({
+  reason: "",
+  destination: "",
+  leaveDate: "",
+  returnDate: ""
+});
 
   const handleChange = (e) => {
 
@@ -103,7 +101,7 @@ const [logs, setLogs] = useState([]);
 
     <>
 
-      <Navbar />
+     <Navbar showLogout={true} />
 
      <StudentPortalHeader
   student={student}
@@ -120,131 +118,108 @@ const [logs, setLogs] = useState([]);
             Apply For Vacation
           </h1>
 
+          <div className="vacation-student-info">
+
+  <div className="student-info-card">
+    <strong>Name :</strong> {student?.name}
+  </div>
+
+  <div className="student-info-card">
+    <strong>Roll No :</strong> {student?.roll}
+  </div>
+
+</div>
+
           <form onSubmit={handleSubmit}>
 
-            <div className="form-group">
+  <div className="form-group">
 
-              <label>
-                Destination
-              </label>
+    <label>
+      Destination
+    </label>
 
-              <input
-                type="text"
-                name="destination"
-                value={formData.destination}
-                onChange={handleChange}
-                placeholder="Enter destination"
-                required
-              />
+    <input
+      type="text"
+      name="destination"
+      value={formData.destination}
+      onChange={handleChange}
+      placeholder="Enter destination"
+      required
+    />
 
-            </div>
+  </div>
 
-            <div className="form-group">
+  <div className="form-group">
 
-              <label>
-                Leave Date
-              </label>
+    <label>
+      Leave Date
+    </label>
 
-              <input
-                type="date"
-                name="leaveDate"
-                value={formData.leaveDate}
-                onChange={handleChange}
-                required
-              />
+    <input
+      type="date"
+      name="leaveDate"
+      value={formData.leaveDate}
+      onChange={handleChange}
+      required
+    />
 
-            </div>
+  </div>
 
-            <div className="form-group">
+  <div className="form-group">
 
-              <label>
-                Return Date
-              </label>
+    <label>
+      Return Date
+    </label>
 
-              <input
-                type="date"
-                name="returnDate"
-                value={formData.returnDate}
-                onChange={handleChange}
-                required
-              />
+    <input
+      type="date"
+      name="returnDate"
+      value={formData.returnDate}
+      onChange={handleChange}
+      required
+    />
 
-            </div>
+  </div>
 
-            <div className="form-group">
+  <div className="form-group">
 
-              <label>
-                Parent Contact
-              </label>
+    <label>
+      Reason
+    </label>
 
-              <input
-                type="text"
-                name="parentContact"
-                value={formData.parentContact}
-                onChange={handleChange}
-                placeholder="Enter parent contact"
-                required
-              />
+    <textarea
+      rows="5"
+      name="reason"
+      value={formData.reason}
+      onChange={handleChange}
+      placeholder="Enter reason for vacation"
+      required
+    />
 
-            </div>
+  </div>
 
-            <div className="form-group">
+  <div className="button-group">
 
-              <label>
-                Emergency Contact
-              </label>
+    <button
+      type="button"
+      className="cancel-btn"
+      onClick={() =>
+        navigate("/StudentProfile")
+      }
+    >
+      Cancel
+    </button>
 
-              <input
-                type="text"
-                name="emergencyContact"
-                value={formData.emergencyContact}
-                onChange={handleChange}
-                placeholder="Enter emergency contact"
-                required
-              />
+    <button
+      type="submit"
+      className="submit-btn"
+    >
+      Submit Request
+    </button>
 
-            </div>
+  </div>
 
-            <div className="form-group">
-
-              <label>
-                Reason
-              </label>
-
-              <textarea
-                rows="5"
-                name="reason"
-                value={formData.reason}
-                onChange={handleChange}
-                placeholder="Enter reason for vacation"
-                required
-              />
-
-            </div>
-
-            <div className="button-group">
-
-              <button
-                type="button"
-                className="cancel-btn"
-                onClick={() =>
-                  navigate("/StudentProfile")
-                }
-              >
-                Cancel
-              </button>
-
-              <button
-                type="submit"
-                className="submit-btn"
-              >
-                Submit Request
-              </button>
-
-            </div>
-
-          </form>
-
+</form>
         </div>
 
       </div>
