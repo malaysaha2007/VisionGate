@@ -98,6 +98,21 @@ function StudentPortalHeader({ student, logs = [] }) {
           className="student-avatar-wrapper"
           ref={menuRef}
         >
+          {/* Apply vacation and Avatar */}
+          <div className="vacation-avatar">
+
+            <div className="vacation-bothButtons">
+
+              <button className="vacation">
+              Apply for Vacation  
+            </button>
+
+            <button className="vacation">
+              Vacation Status
+            </button>
+
+            </div>
+            
 
           <div
             className="student-header-avatar"
@@ -129,6 +144,7 @@ function StudentPortalHeader({ student, logs = [] }) {
                   : "status-red"
               }`}
             />
+          </div>
           </div>
 
           {showMenu && (
