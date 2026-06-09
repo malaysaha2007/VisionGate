@@ -11,6 +11,9 @@ import API from "../services/api";
 
 import "../styles/HostelStudents.css";
 
+import { FaSyncAlt, FaEnvelope, FaFileCsv } from "react-icons/fa";
+
+
 function HostelStudents() {
 
   const location = useLocation();
@@ -23,6 +26,8 @@ function HostelStudents() {
 
   const [search, setSearch] = useState("");
 
+  const [refreshing, setRefreshing] = useState(false);
+
   useEffect(() => {
 
     if (user) {
@@ -34,23 +39,68 @@ function HostelStudents() {
   }, []);
 
   const fetchStudents = async () => {
+  setRefreshing(true);
 
-    try {
+  try {
+    const response = await API.get(
+      `/hostel/students/${user.hostel}`
+    );
 
-      const response = await API.get(
+    setStudents(response.data || []);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 300);
+  }
+};
 
-        `/hostel/students/${user.hostel}`
-
-      );
-
-      setStudents(response.data);
-
-    } catch (error) {
-
-      console.error(error);
-
+  const exportCSV = () => {
+    if (filteredStudents.length === 0) {
+      alert("No students to export");
+      return;
     }
 
+    const headers = [
+      "Name",
+      "Roll Number",
+      "Room",
+      "Status"
+    ];
+
+    const rows = filteredStudents.map(student => [
+      student.name || "",
+      student.roll_no || "",
+      student.room || "",
+      student.status || ""
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.join(","))
+    ].join("\n");
+
+    const blob = new Blob(
+      [csvContent],
+      { type: "text/csv;charset=utf-8;" }
+    );
+
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+
+    link.download = `${user.hostel}_students.csv`;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    window.URL.revokeObjectURL(url);
   };
 
   if (!user) {
@@ -134,7 +184,11 @@ function HostelStudents() {
 
   return (
 
-    <div className="hostel-students-page">
+    <div
+      className={`hostel-students-page ${
+        refreshing ? "page-refresh" : ""
+      }`}
+    >
 
       {/* NAVBAR */}
 
@@ -328,20 +382,23 @@ function HostelStudents() {
               }
             />
 
-            <button
-              className="small-btn"
-              onClick={fetchStudents}
-            >
+            <div className="action-buttons">
+              <button
+                onClick={fetchStudents}
+                title="Refresh"
+                className="icon-btn"
+              >
+                <FaSyncAlt />
+              </button>
 
-              Refresh
-
-            </button>
-
-            <button className="small-btn">
-
-              Print
-
-            </button>
+              <button
+                className="icon-btn"
+                onClick={exportCSV}
+                title="Export CSV"
+              >
+                <FaFileCsv />
+              </button>
+            </div>
 
           </div>
 
