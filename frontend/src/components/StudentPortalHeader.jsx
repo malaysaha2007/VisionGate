@@ -1,15 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/AllPortalHeader.css";
 
 function StudentPortalHeader({
   student,
   logs = [],
-  showProfile = true
+  showProfile = true,
+  showVacationButtons = true
+
 })
 
 {
 
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] =
     useState(false);
 
@@ -110,97 +114,107 @@ console.log("Latest Log:", latestLog);
 
         {showProfile && (
 
-        <div
-          className="student-avatar-wrapper"
-          ref={menuRef}
-        >
-          {/* Apply vacation and Avatar */}
-          <div className="vacation-avatar">
+  <div
+    className="student-avatar-wrapper"
+    ref={menuRef}
+  >
 
-            <div className="vacation-bothButtons">
+    {/* Apply vacation and Avatar */}
+    <div className="vacation-avatar">
 
-              <button className="vacation">
-              Apply for Vacation  
-            </button>
+      {showVacationButtons && (
 
-            <button className="vacation">
-              Vacation Status
-            </button>
+  <div className="vacation-bothButtons">
 
-            </div>
-            
+    <button
+      className="vacation"
+      onClick={() => navigate("/student/apply-vacation")}
+    >
+      Apply for Vacation
+    </button>
 
-          <div
-            className="student-header-avatar"
-            onClick={() =>
-              setShowMenu(!showMenu)
-            }
-          >
+    <button
+      className="vacation"
+      onClick={() => navigate("/student/vacation-status")}
+    >
+      Vacation Status
+    </button>
 
-            {studentImage ? (
+  </div>
 
-              <img
-                src={studentImage}
-                alt="Student"
-                className="student-header-image"
-              />
+)}
 
-            ) : (
+      <div
+        className="student-header-avatar"
+        onClick={() =>
+          setShowMenu(!showMenu)
+        }
+      >
 
-              <div className="student-header-fallback">
-                👤
-              </div>
+        {studentImage ? (
 
-            )}
+          <img
+            src={studentImage}
+            alt="Student"
+            className="student-header-image"
+          />
 
-            <span
-              className={`status-dot ${
-                isInsideCampus
-                  ? "status-green"
-                  : "status-red"
-              }`}
-            />
-          </div>
+        ) : (
+
+          <div className="student-header-fallback">
+            👤
           </div>
 
-        
+        )}
 
-          {showMenu && (
+        <span
+          className={`status-dot ${
+            isInsideCampus
+              ? "status-green"
+              : "status-red"
+          }`}
+        />
 
-            <div className="student-dropdown">
+      </div>
 
-              <div className="student-status">
+    </div>
 
-                <span
-                  className={`status-indicator ${
-                    isInsideCampus
-                      ? "status-green"
-                      : "status-red"
-                  }`}
-                />
+    {showMenu && (
 
-                {isInsideCampus
-                  ? "Inside Campus"
-                  : "Outside Campus"}
+      <div className="student-dropdown">
 
-              </div>
+        <div className="student-status">
 
-              <div
-                className="dropdown-item"
-                onClick={
-                  handleChangePassword
-                }
-              >
-                Change Password
-              </div>
+          <span
+            className={`status-indicator ${
+              isInsideCampus
+                ? "status-green"
+                : "status-red"
+            }`}
+          />
 
-            </div>
-
-          )}
+          {isInsideCampus
+            ? "Inside Campus"
+            : "Outside Campus"}
 
         </div>
 
-        )}
+        <div
+          className="dropdown-item"
+          onClick={handleChangePassword}
+        >
+          Change Password
+        </div>
+
+      </div>
+
+    )}
+
+  </div>
+
+)}
+
+       
 
       </div>
 
