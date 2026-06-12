@@ -1,191 +1,148 @@
+/* =========================
+   HEADER WRAPPER
+========================= */
 .portal-hero {
-  width: 100%;
-
+  margin: 20px;
   padding: 16px 24px;
-
- background:#050c1d,#071126;
-
-  /* border-top: 1px solid rgba(255, 255, 255, 0.06);
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06); */
-
-   margin-bottom: 30px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #07153b, #13104d);
+  border: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 30px;
+  overflow: visible; /* <--- THIS FIXES THE CLIPPED MENU! */
 }
 
 .portal-hero-content {
   display: flex;
-
+  justify-content: space-between;
   align-items: center;
+}
 
+.portal-info {
+  display: flex;
+  align-items: center;
   gap: 16px;
 }
 
 .portal-hero-icon {
   width: 54px;
   height: 54px;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   font-size: 28px;
-
   background: rgba(255, 255, 255, 0.95);
-
   border-radius: 12px;
-
   flex-shrink: 0;
 }
 
 .portal-hero-content h2 {
   margin: 0;
-
   color: #ffffff;
-
   font-size: 18px;
-
   font-weight: 700;
 }
 
 .portal-hero-content p {
   margin-top: 4px;
   margin-bottom: 0;
-
   color: #cbd5e1;
-
   font-size: 15px;
 }
 
-.portal-hero-content {
+/* =========================
+   USER PROFILE BUTTON
+========================= */
+.portal-user-wrapper {
+  position: relative;
   display: flex;
-
-  justify-content: space-between;
-
   align-items: center;
 }
 
-.portal-info {
-  display: flex;
-
-  align-items: center;
-
-  gap: 16px;
-}
 .portal-user {
   display: flex;
-
   align-items: center;
-
-  gap: 12px;
-
-  padding: 10px 18px;
-
-  background: rgba(59,130,246,0.12);
-
-  border: 1px solid rgba(59,130,246,0.25);
-
-  border-radius: 50px;
-
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  min-width: auto;
   cursor: pointer;
-
   transition: 0.25s;
-
-  min-width: 180px;
 }
 
-
-.portal-user-info {
+.profile-card {
   display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.25);
+  border-radius: 16px;
+  min-width: 220px;
+  transition: 0.25s;
 }
 
-.portal-user-info h4 {
-  margin: 0;
-
-  color: #ffffff;
-
-  font-size: 16px;
-
-  line-height: 1.2;
-}
-
-.portal-user-info p {
-  margin: 0;
-
-  color: #cbd5e1;
-
-  font-size: 13px;
-
-  line-height: 1.2;
-}
-
-
-.portal-user:hover {
+.portal-user:hover .profile-card {
   background: rgba(59,130,246,0.18);
 }
 
-.portal-avatar {
+.profile-card::before {
+  content: "👤";
   width: 42px;
-
   height: 42px;
-
   border-radius: 50%;
-
-  background: #3b82f6;
-
-  color: white;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
-  font-weight: 700;
-
+  background: rgba(59,130,246,0.18);
+  border: 1px solid rgba(59,130,246,0.25);
+  flex-shrink: 0;
   font-size: 18px;
 }
 
-
-.portal-user-wrapper {
-  position: relative;
-
+.profile-details {
   display: flex;
-
-  align-items: center;
+  flex-direction: column;
+  align-items: center; 
 }
 
+.profile-name {
+  color: rgb(8, 0, 255);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.profile-role {
+  color: #94a3b8;
+  font-size: 12px;
+  margin-top: 2px;
+  line-height: 1.2;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* =========================
+   DROPDOWN MENU
+========================= */
 .portal-dropdown {
   position: absolute;
-
-  top: 65px;
-
+  top: 75px; /* Pushed down slightly so it doesn't overlap the button */
   right: 0;
-
   width: 180px;
-
   background: #121b33;
-
   border: 1px solid rgba(59,130,246,0.25);
-
   border-radius: 12px;
-
-  overflow: hidden;
-
+  overflow: hidden; /* This keeps hover effects inside the rounded corners */
   z-index: 1000;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5); /* Added shadow so it floats visually */
 }
 
 .dropdown-item {
   padding: 14px 16px;
-
   cursor: pointer;
-
   color: #e6eef8;
-
   transition: 0.2s;
 }
 
@@ -197,10 +154,132 @@
   color: #ef4444;
 }
 
+/* =========================
+   VACATION BUTTONS (From original file)
+========================= */
+.vacation-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.vacation {
+  margin-left: 5px;
+  padding: 9px 16px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+  width: 150px;
+  height: 40px;
+}
+
+.vacation:hover {
+  background: #2563eb;
+}
+
+.vacation-bothButtons {
+  display: flex;
+  margin-right: 30px;
+  gap: 16px;
+}
+
+/* =========================
+   STUDENT HEADER SPECIFICS
+========================= */
+.student-portal-hero-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-avatar-wrapper {
+  position: relative;
+}
+
+.student-header-avatar {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.student-header-image {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.student-header-fallback {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: white;
+}
+
+.status-dot {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.status-green {
+  background: #22c55e;
+}
+
+.status-red {
+  background: #ef4444;
+}
+
+.student-dropdown {
+  position: absolute;
+  top: 85px;
+  right: 0;
+  width: 220px;
+  background: #121b33;
+  border: 1px solid rgba(59,130,246,0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.student-status {
+  padding: 14px 16px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 768px) {
-
   .portal-hero {
+    margin: 10px;
     padding: 14px 16px;
   }
 
@@ -211,7 +290,6 @@
   .portal-hero-icon {
     width: 48px;
     height: 48px;
-
     font-size: 24px;
   }
 
@@ -224,20 +302,19 @@
   }
 
   .portal-user {
-  padding: 8px 12px;
-}
+    padding: 8px 12px;
+  }
 
-.portal-avatar {
-  width: 36px;
-  height: 36px;
-}
+  .portal-avatar {
+    width: 36px;
+    height: 36px;
+  }
 
-.portal-user h4 {
-  font-size: 14px;
-}
+  .portal-user h4 {
+    font-size: 14px;
+  }
 
-.portal-user p {
-  font-size: 12px;
-}
-
+  .portal-user p {
+    font-size: 12px;
+  }
 }
