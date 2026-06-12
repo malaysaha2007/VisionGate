@@ -3,24 +3,32 @@ import "../styles/AllPortalHeader.css";
 function RulesPortalHeader() {
   return (
     <div className="portal-hero">
+
       <div className="portal-hero-content">
 
-        <div className="portal-hero-icon">
-          📋
-        </div>
+        <div className="portal-info">
 
-        <div>
-          <h2>
-            Rules & Guidelines
-          </h2>
+          <div className="portal-hero-icon">
+            📋
+          </div>
 
-          <p>
-            Campus Entry–Exit Policies
-            & Regulations
-          </p>
+          <div>
+
+            <h2>
+              Rules & Guidelines
+            </h2>
+
+            <p>
+              Campus Entry–Exit Policies
+              & Regulations
+            </p>
+
+          </div>
+
         </div>
 
       </div>
+
     </div>
   );
 }

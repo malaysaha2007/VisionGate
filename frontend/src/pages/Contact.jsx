@@ -16,100 +16,176 @@ function Contact() {
 
       <div className="contact-container">
 
-        <div className="contact-card">
+  {/* Institute */}
 
-          <h2>
-            Developer Information
-          </h2>
+  <div className="contact-card institute-card">
 
-          <p>
-            <strong>Name:</strong>
-            {" "}
-            Malay Saha
-          </p>
+    <div className="card-header">
 
-          <p>
-            <strong>Department:</strong>
-            {" "}
-            Computer Science & Engineering
-          </p>
+      <div className="card-icon">
+        🏛️
+      </div>
 
-          <p>
-            <strong>Institute:</strong>
-            {" "}
-            PDPM IIITDM Jabalpur
-          </p>
+      <h2>
+        Institute Information
+      </h2>
 
-          <p>
-            <strong>Email:</strong>
-            {" "}
-            your-email@iiitdmj.ac.in
-          </p>
+    </div>
 
-        </div>
+    <div className="card-divider"></div>
 
-        <div className="contact-card">
+    <p>
+      <strong>
+        PDPM IIITDM Jabalpur
+      </strong>
+    </p>
 
-          <h2>
-            Institute Information
-          </h2>
+    <p>
+      Indian Institute of Information
+      Technology, Design and Manufacturing,
+      Jabalpur
+    </p>
 
-          <p>
-            PDPM Indian Institute of
-            Information Technology,
-            Design and Manufacturing,
-            Jabalpur
-          </p>
+    <p>
+      Dumna Airport Road,
+      Jabalpur, Madhya Pradesh
+    </p>
 
-          <p>
-            Dumna Airport Road,
-            Jabalpur,
-            Madhya Pradesh
-          </p>
+    <p>
+      PIN Code: 482005
+    </p>
 
-          <p>
-            PIN: 482005
-          </p>
+  </div>
 
-        </div>
+  {/* Hostel */}
 
-        <div className="contact-card">
+  <div className="contact-card hostel-card">
 
-          <h2>
-            VisionGate Support
-          </h2>
+    <div className="card-header">
 
-          <p>
-            For technical issues,
-            login problems,
-            face registration errors,
-            or portal related queries,
-            contact the project team.
-          </p>
+      <div className="card-icon">
+        🏠
+      </div>
 
-        </div>
+      <h2>
+        Hostel Information
+      </h2>
 
-        <div className="contact-card">
+    </div>
 
-          <h2>
-            Emergency Contact
-          </h2>
+    <div className="card-divider"></div>
 
-          <p>
-            Hostel Office
-          </p>
+    <div className="info-block">
 
-          <p>
-            Security Control Room
-          </p>
+      <h3>
+        Hostel Administration Office
+      </h3>
 
-          <p>
-            Administration Office
-          </p>
+      <p>
+        For hostel accommodation,
+        room allocation and student
+        support services.
+      </p>
 
-        </div>
+    </div>
+
+    <div className="info-block">
+
+      <h3>
+        Warden / Caretaker
+      </h3>
+
+      <p>
+        Available for student support,
+        discipline and daily operations.
+      </p>
+
+    </div>
+
+    <div className="info-block">
+
+      <h3>
+        Main Gate Security
+      </h3>
+
+      <p>
+        Handles entry-exit related
+        monitoring and assistance.
+      </p>
+
+    </div>
+
+  </div>
+
+  {/* Support */}
+
+  <div className="contact-card support-card">
+
+    <div className="card-header">
+
+      <div className="card-icon">
+        🎧
+      </div>
+
+      <h2>
+        VisionGate Support
+      </h2>
+
+    </div>
+
+    <div className="card-divider"></div>
+
+    <p>
+
+      For technical issues,
+      login problems,
+      face registration errors
+      or portal-related queries,
+      contact the VisionGate team.
+
+    </p>
+
+    <div className="support-box">
+
+      <p>
+        ✉ support@visiongate.in
+      </p>
+
+      <p>
+        ☎ +91 90000 00000
+      </p>
+
+      <p>
+        🕒 Mon - Sat | 9 AM - 6 PM
+      </p>
+
+    </div>
+
+  </div>
 
       </div>
+      <div className="help-banner">
+
+  <div className="help-icon">
+    i
+  </div>
+
+  <div>
+
+    <h3>
+      Need Help?
+    </h3>
+
+    <p>
+      Our team is here to help you.
+      Reach out through the details above
+      and we'll get back to you as soon
+      as possible.
+    </p>
+
+  </div>
+
+</div>
 
       <Footer />
 

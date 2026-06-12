@@ -3,24 +3,32 @@ import "../styles/AllPortalHeader.css";
 function ContactPortalHeader() {
   return (
     <div className="portal-hero">
+
       <div className="portal-hero-content">
 
-        <div className="portal-hero-icon">
-          📞
-        </div>
+        <div className="portal-info">
 
-        <div>
-          <h2>
-            Contact Portal
-          </h2>
+          <div className="portal-hero-icon">
+            📞
+          </div>
 
-          <p>
-            Get In Touch With The
-            VisionGate Team
-          </p>
+          <div>
+
+            <h2>
+              Contact Portal
+            </h2>
+
+            <p>
+              Get In Touch With The
+              VisionGate Team
+            </p>
+
+          </div>
+
         </div>
 
       </div>
+
     </div>
   );
 }

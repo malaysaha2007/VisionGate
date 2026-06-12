@@ -475,3 +475,25 @@
 }
 
 }
+
+
+
+
+
+.portal-hero {
+  margin: 20px;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #07153b,
+      #13104d
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  overflow: hidden;
+}

@@ -1,3 +1,5 @@
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,6 +21,8 @@ function AdminLogin() {
   const [password, setPassword] =
     useState("");
 
+  const [showPassword, setShowPassword] =
+    useState(false);
   const [level, setLevel] =
     useState("");
 
@@ -105,8 +109,14 @@ function AdminLogin() {
               required
             />
 
+            <div className="password-wrapper">
+
             <input
-              type="password"
+              type={
+                showPassword
+                  ? "text"
+                  : "password"
+              }
               placeholder="Password"
               value={password}
               onChange={(e) =>
@@ -116,6 +126,21 @@ function AdminLogin() {
               }
               required
             />
+
+            <span
+              className="eye-btn"
+              onClick={() =>
+                setShowPassword(
+                  !showPassword
+                )
+              }
+            >
+              {showPassword
+                ? <FaEyeSlash />
+                : <FaEye />}
+            </span>
+
+          </div>
 
             <select
               value={level}

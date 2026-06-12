@@ -1,3 +1,5 @@
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
@@ -13,6 +15,8 @@ function StudentLogin() {
   const navigate = useNavigate();   
   const [studentid, setStudentid] = useState("");
   const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -167,13 +171,34 @@ navigate("/StudentProfile");
 
           <label>Password</label>
 
-          <input
-            type="password"
-            placeholder="Your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+            <div className="password-wrapper">
+
+              <input
+                type={
+                  showPassword
+                    ? "text"
+                    : "password"
+                }
+                placeholder="Your password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
+                required
+              />
+
+              <span
+                className="eye-btn"
+                onClick={() =>
+                  setShowPassword(!showPassword)
+                }
+              >
+                {showPassword
+                  ? <FaEyeSlash />
+                  : <FaEye />}
+              </span>
+
+            </div>
 
           <div className="actions">
 
