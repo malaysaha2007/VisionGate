@@ -169,7 +169,7 @@ function HostelStudents() {
         <div
           className="stat-card clickable-card special-card"
           onClick={() =>
-            navigate("/student-status/leave", {
+            navigate("/student-status/vacation", {
               state: {
                 title: "Vacation Applications",
                 students: leaveStudents,

@@ -68,7 +68,29 @@ const [formData, setFormData] = useState({
 
       console.log(formData);
 
-      // API CALL HERE
+      console.log(student);
+
+      await API.post(
+  "/vacation/apply",
+  {
+    roll_no: student.roll,
+
+    hostel:
+      student.hostel,
+
+    destination:
+      formData.destination,
+
+    leave_date:
+      formData.leaveDate,
+
+    return_date:
+      formData.returnDate,
+
+    reason:
+      formData.reason
+  }
+);
 
       alert(
         "Vacation request submitted successfully!"

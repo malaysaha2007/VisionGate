@@ -20,6 +20,7 @@ import ActivityLogs from "./pages/ActivityLogs";
 import CurfewMail from "./pages/CurfewMail";
 import ApplyVacation from "./pages/ApplyVacation";
 // import VacationStatus from "./pages/VacationStatus";
+import VacationRequests from "./pages/VacationRequests";
 
 
 function App() {
@@ -105,6 +106,11 @@ function App() {
   path="/student/vacation-status"
   element={<VacationStatus />}
 /> */}
+
+<Route
+  path="/vacation-requests"
+  element={<VacationRequests />}
+/>
 
 
       </Routes>
