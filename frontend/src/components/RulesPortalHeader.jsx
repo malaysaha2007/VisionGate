@@ -1,35 +1,12 @@
-import "../styles/AllPortalHeader.css";
+import PortalHeader from "./PortalHeader";
 
 function RulesPortalHeader() {
   return (
-    <div className="portal-hero">
-
-      <div className="portal-hero-content">
-
-        <div className="portal-info">
-
-          <div className="portal-hero-icon">
-            📋
-          </div>
-
-          <div>
-
-            <h2>
-              Rules & Guidelines
-            </h2>
-
-            <p>
-              Campus Entry–Exit Policies
-              & Regulations
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
+    <PortalHeader
+      icon="📋"
+      title="Rules & Guidelines"
+      subtitle="Campus Entry–Exit Policies & Regulations"
+    />
   );
 }
 

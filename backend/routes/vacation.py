@@ -78,7 +78,6 @@ async def approve_vacation(
     }
     
     
-    
 @router.put("/vacation/deny/{roll_no}")
 async def deny_vacation(
     roll_no: str,
@@ -101,6 +100,24 @@ async def deny_vacation(
     return {
         "message": "Vacation Denied"
     }
+
+
+@router.get("/vacation/student/{roll_no}")
+async def get_student_vacations(
+    roll_no: str
+):
+    vacations = list(
+        db.vacation_application.find(
+            {
+                "roll_no": roll_no
+            },
+            {
+                "_id": 0
+            }
+        )
+    )
+
+    return vacations
 
 
 @router.get("/vacation/{hostel}")
