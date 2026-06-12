@@ -1,3 +1,5 @@
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +19,8 @@ function HostelLogin() {
   const [hostel, setHostel] = useState("");
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
 
@@ -163,15 +167,30 @@ function HostelLogin() {
 
           </select>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-            required
-          />
+          <div className="password-wrapper">
+
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+              required
+            />
+
+            <span
+              className="eye-btn"
+              onClick={() =>
+                setShowPassword(!showPassword)
+              }
+            >
+              {showPassword
+                ? <FaEyeSlash />
+                : <FaEye />}
+            </span>
+
+          </div>
 
           <button type="submit">
             Login

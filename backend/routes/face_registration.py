@@ -134,7 +134,7 @@ async def register_student(
 
     response = requests.post(
 
-        "https://prbackend-production-b19a.up.railway.app/generate-embedding",
+        "https://web-production-06939.up.railway.app/generate-embedding",
 
         json={
 

@@ -70,8 +70,9 @@ function CurfewMail() {
         showLogout={true}
       />
 
-      <AdminPortalHeader />
+      <AdminPortalHeader admin={admin} />
 
+      
       {/* ACTIONS */}
       <div className="curfew-actions">
         <button

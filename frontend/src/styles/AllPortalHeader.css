@@ -10,17 +10,150 @@
   margin-bottom: 30px;
   overflow: visible; /* <--- THIS FIXES THE CLIPPED MENU! */
 }
-
-.portal-hero-content {
+.vacation-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vacation {
+  margin-left: 5px;
+  padding: 9px 16px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+  width: 150px;
+  height: 40px;
+}
+.vacation:hover {
+  background: #2563eb;
+}
+.vacation-bothButtons {
+  display: flex;
+  margin-right: 30px;
+  gap: 16px;
+}
+.student-portal-hero-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.portal-info {
+.student-header-avatar {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+}
+
+.student-header-image {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  border: 3px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.student-header-fallback {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-avatar-wrapper {
+  position: relative;
+}
+
+.student-header-avatar {
+  position: relative;
+  cursor: pointer;
+}
+
+.student-header-image {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.15);
+}
+
+.student-header-fallback {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.status-dot {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.status-green {
+  background: #22c55e;
+}
+
+.status-red {
+  background: #ef4444;
+}
+
+.student-dropdown {
+  position: absolute;
+  top: 85px;
+  right: 0;
+  width: 220px;
+  background: #121b33;
+  border: 1px solid rgba(59,130,246,0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.student-status {
+  padding: 14px 16px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dropdown-item {
+  padding: 14px 16px;
+  color: #e6eef8;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dropdown-item:hover {
+  background: rgba(59,130,246,0.15);
 }
 
 .portal-hero-icon {
@@ -69,17 +202,27 @@
   cursor: pointer;
   transition: 0.25s;
 }
-
-.profile-card {
+.portal-user {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 20px;
-  background: rgba(59,130,246,0.12);
-  border: 1px solid rgba(59,130,246,0.25);
-  border-radius: 16px;
-  min-width: 220px;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: none;
+
+  border-radius: 0;
+
+  min-width: auto;
+
+  cursor: pointer;
+
   transition: 0.25s;
+}
+
+.portal-user:hover {
+  background: transparent;
 }
 
 .portal-user:hover .profile-card {
@@ -276,7 +419,6 @@
 
 /* =========================
    RESPONSIVE
-========================= */
 @media (max-width: 768px) {
   .portal-hero {
     margin: 10px;
