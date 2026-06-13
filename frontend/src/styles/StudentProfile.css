@@ -1,18 +1,13 @@
 :root{
   --bg-main:#071126;
   --bg-secondary:#071024;
-
   --bg-card:#121b33;
-
   --accent-primary:#3b82f6;
   --accent-secondary:#06b6d4;
-
   --text-primary:#e6eef8;
   --text-muted:#98a6bf;
-
   --success:#10b981;
   --danger:#ef4444;
-
   --border-light:rgba(255,255,255,0.08);
 }
 
@@ -27,43 +22,34 @@ body{
 }
 
 /* PAGE */
-
 .student-profile-page{
   min-height:100vh;
-
   background:linear-gradient(
     180deg,
     var(--bg-main),
     var(--bg-secondary)
   );
-
   color:var(--text-primary);
 }
 
 /* PROFILE CONTAINER */
-
 .profile-container{
   max-width: 1250px;
-
   margin: 30px auto;
-
   background: var(--bg-card);
-
   border-radius: 16px;
-
   border: 1px solid var(--border-light);
-
   padding: 35px;
 }
 
 /* DETAILS */
-
 .details-title{
   text-align:center;
   margin-bottom:28px;
   color:var(--accent-secondary);
   font-size:30px;
 }
+
 .student-profile-grid{
    display:grid;
   grid-template-columns:repeat(2, 550px);
@@ -75,19 +61,13 @@ body{
 .student-profile-grid p{
   display:flex;
   align-items:center;
-
   background:rgba(255,255,255,0.03);
   border:1px solid rgba(255,255,255,0.05);
-
   padding:18px 20px;
-
-  min-height:80px;   /* same height for all */
-
-  border-radius:8px; /* less rounded */
-
+  min-height:80px; 
+  border-radius:8px; 
   font-size:17px;
   line-height:1.5;
-
   transition:all 0.25s ease;
 }
 
@@ -97,27 +77,44 @@ body{
   white-space:nowrap;
 }
 
-
-
-/* TABLES */
-
-.table-title{
-  margin-bottom:18px;
-
-  color:var(--accent-secondary);
-
-  font-size:24px;
+/* =========================
+   NEW: COLLAPSIBLE HEADERS
+========================= */
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
 }
 
+.collapsible-header:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.table-title {
+  margin-bottom: 0; /* Removed bottom margin since the flex container handles spacing */
+  color: var(--accent-secondary);
+  font-size: 24px;
+}
+
+.toggle-icon {
+  font-size: 18px;
+  color: var(--accent-secondary);
+  user-select: none; /* Prevents text highlighting when double-clicking */
+}
+
+/* TABLES */
 table{
   width:100%;
-
   border-collapse:collapse;
-
   margin-bottom:40px;
-
   overflow:hidden;
-
   border-radius:12px;
 }
 
@@ -127,19 +124,14 @@ th{
     var(--accent-primary),
     var(--accent-secondary)
   );
-
   color:#021124;
-
   padding:14px;
-
   font-size:15px;
 }
 
 td{
   padding:14px;
-
   text-align:center;
-
   border-top:1px solid rgba(255,255,255,0.05);
 }
 
@@ -152,57 +144,38 @@ td{
 }
 
 /* MOBILE */
-
-
 @media (max-width: 900px){
-
   .profile-container{
     padding:25px;
   }
-
-  .profile-grid{
+  .student-profile-grid{
     grid-template-columns:1fr 1fr;
     gap:15px;
   }
-
 }
 
 @media (max-width: 768px){
-
-  .profile-grid{
+  .student-profile-grid{
     grid-template-columns:1fr;
   }
-
   .details-title{
     font-size:24px;
   }
-
   .table-title{
     font-size:20px;
   }
-
-  .profile-grid p{
+  .student-profile-grid p{
     font-size:16px;
-  }
-
-}
-
-@media (max-width:768px){
-  .student-profile-grid{
-    grid-template-columns:1fr;
   }
 }
 
 @media (max-width: 480px){
-
   .profile-container{
     padding:18px;
     margin:15px;
   }
-
-  .profile-grid p{
+  .student-profile-grid p{
     padding:14px;
     font-size:15px;
   }
-
 }

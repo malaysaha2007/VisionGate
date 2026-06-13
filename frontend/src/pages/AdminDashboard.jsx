@@ -22,7 +22,7 @@ function AdminDashboard() {
   const [search, setSearch] = useState("");
   const [logs, setLogs] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [leaveCount, setLeaveCount] = useState(0);
+  const [studentsInside, setStudentsInside] = useState(0);
   const [studentsOutside, setStudentsOutside] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedHostel, setSelectedHostel] = useState("All");
@@ -88,8 +88,7 @@ function AdminDashboard() {
       "Purpose",
       "Out Time",
       "In Time",
-      "Status",
-      "Comment",
+      "Status"
     ];
 
     const rows = filteredLogs.map((log) => [
@@ -99,8 +98,7 @@ function AdminDashboard() {
       log.purpose,
       log.outTime,
       log.inTime || "-",
-      log.inTime ? "IN" : "OUT",
-      log.comment_text || "-",
+      log.inTime ? "IN" : "OUT"
     ]);
 
     const csvContent = [
@@ -263,7 +261,6 @@ function AdminDashboard() {
                 <th>Out Time</th>
                 <th>In Time</th>
                 <th>Status</th>
-                <th>Comment</th>
               </tr>
             </thead>
 
@@ -271,7 +268,7 @@ function AdminDashboard() {
               {loading ? (
                 <tr>
                   <td
-                    colSpan="8"
+                    colSpan="7"
                     className="empty-row"
                   >
                     Loading...
@@ -280,7 +277,7 @@ function AdminDashboard() {
               ) : filteredLogs.length === 0 ? (
                 <tr>
                   <td
-                    colSpan="8"
+                    colSpan="7"
                     className="empty-row"
                   >
                     No Records Found
@@ -302,9 +299,6 @@ function AdminDashboard() {
                         {log.inTime
                           ? "IN"
                           : "OUT"}
-                      </td>
-                      <td>
-                        {log.comment_text || "-"}
                       </td>
                     </tr>
                   )
