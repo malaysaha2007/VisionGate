@@ -27,7 +27,7 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [selectedHostel, setSelectedHostel] = useState("All");
   const [refreshing, setRefreshing] = useState(false);
-  const [studentsInside, setStudentsInside] = useState(0);
+  
 
   const hostels = [
     "All",
