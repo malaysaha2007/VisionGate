@@ -27,6 +27,7 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [selectedHostel, setSelectedHostel] = useState("All");
   const [refreshing, setRefreshing] = useState(false);
+  const [studentsInside, setStudentsInside] = useState(0);
 
   const hostels = [
     "All",
@@ -38,25 +39,46 @@ function AdminDashboard() {
   ];
 
   const fetchDashboard = async () => {
-    setRefreshing(true);
+  setRefreshing(true);
 
-    try {
-      const response = await API.get("/admin/dashboard");
+  try {
+    const response = await API.get("/admin/dashboard");
 
-      setLogs(response.data.logs || []);
-      setTotalRecords(response.data.total_records || 0);
-      setStudentsInside(response.data.students_inside || 0);
-      setStudentsOutside(response.data.students_outside || 0);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+    const dashboardLogs = response.data.logs || [];
 
-      setTimeout(() => {
-        setRefreshing(false);
-      }, 300);
-    }
-  };
+    setLogs(dashboardLogs);
+
+    setTotalRecords(
+      response.data.total_records || 0
+    );
+
+    setStudentsInside(
+      response.data.students_inside || 0
+    );
+
+    setStudentsOutside(
+      response.data.students_outside || 0
+    );
+
+    const leaveStudents = dashboardLogs.filter(
+      (log) =>
+        log.purpose === "Hospital" ||
+        log.purpose === "Medical" ||
+        log.purpose === "Leave" ||
+        log.purpose === "Special Leave"
+    );
+
+    setLeaveCount(leaveStudents.length);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 300);
+  }
+};
 
   const exportCSV = () => {
     const headers = [
