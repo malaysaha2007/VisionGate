@@ -8,12 +8,10 @@ import {
   FaFileCsv
 } from "react-icons/fa";
 
-
 import "../styles/AdminDashboard.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import AdminPortalHeader from "../components/AdminPortalHeader";
-
 
 function AdminDashboard() {
   const location = useLocation();
@@ -39,12 +37,20 @@ function AdminDashboard() {
     "Hostel 5",
   ];
 
-const fetchDashboard = async () => {
-  setRefreshing(true);
+  const fetchDashboard = async () => {
+    setRefreshing(true);
 
-  try {
-    const response = await API.get("/admin/dashboard");
+    try {
+      const response = await API.get("/admin/dashboard");
 
+      setLogs(response.data.logs || []);
+      setTotalRecords(response.data.total_records || 0);
+      setStudentsInside(response.data.students_inside || 0);
+      setStudentsOutside(response.data.students_outside || 0);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     const dashboardLogs =
       response.data.logs || [];
 
@@ -75,68 +81,57 @@ const fetchDashboard = async () => {
   } finally {
     setLoading(false);
 
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 300);
-  }
-};
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 300);
+    }
+  };
 
   const exportCSV = () => {
-  const headers = [
-    "Name",
-    "Roll",
-    "Hostel",
-    "Room",
-    "Phone",
-    "Purpose",
-    "Out Time",
-    "In Time",
-    "Status",
-    "Comment",
-  ];
+    const headers = [
+      "Name",
+      "Roll",
+      "Room",
+      "Purpose",
+      "Out Time",
+      "In Time",
+      "Status",
+      "Comment",
+    ];
 
-  const rows = filteredLogs.map((log) => [
-    log.name,
-    log.roll,
-    log.hostel,
-    log.room,
-    log.phone,
-    log.purpose,
-    log.outTime,
-    log.inTime || "-",
-    log.inTime ? "IN" : "OUT",
-    log.comment_text || "-",
-  ]);
+    const rows = filteredLogs.map((log) => [
+      log.name,
+      log.roll,
+      log.room,
+      log.purpose,
+      log.outTime,
+      log.inTime || "-",
+      log.inTime ? "IN" : "OUT",
+      log.comment_text || "-",
+    ]);
 
-  const csvContent = [
-    headers.join(","),
-    ...rows.map((row) => row.join(",")),
-  ].join("\n");
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) => row.join(",")),
+    ].join("\n");
 
-  const blob = new Blob(
-    [csvContent],
-    { type: "text/csv;charset=utf-8;" }
-  );
+    const blob = new Blob(
+      [csvContent],
+      { type: "text/csv;charset=utf-8;" }
+    );
 
-  const url =
-    window.URL.createObjectURL(blob);
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
 
-  const link =
-    document.createElement("a");
-
-  link.href = url;
-  link.download = "student_records.csv";
-
-  link.click();
-
-  window.URL.revokeObjectURL(url);
-};
+    link.href = url;
+    link.download = "student_records.csv";
+    link.click();
+    window.URL.revokeObjectURL(url);
+  };
 
   useEffect(() => {
     fetchDashboard();
   }, []);
-
-  
 
   const filteredLogs = logs.filter((log) => {
     const matchesHostel =
@@ -146,18 +141,9 @@ const fetchDashboard = async () => {
     const query = search.toLowerCase();
 
     const matchesSearch =
-      (log.name || "")
-        .toLowerCase()
-        .includes(query) ||
-      (log.roll || "")
-        .toLowerCase()
-        .includes(query) ||
-      (log.phone || "")
-        .toLowerCase()
-        .includes(query) ||
-      (log.purpose || "")
-        .toLowerCase()
-        .includes(query);
+      (log.name || "").toLowerCase().includes(query) ||
+      (log.roll || "").toLowerCase().includes(query) ||
+      (log.purpose || "").toLowerCase().includes(query);
 
     return matchesHostel && matchesSearch;
   });
@@ -166,204 +152,179 @@ const fetchDashboard = async () => {
     return (
       <>
         <Navbar />
-
         <AdminPortalHeader />
-
         <Footer />
       </>
     );
   }
 
+  return (
+    <>
+      <Navbar
+        admin={admin}
+        showActivityLogs={true}
+        showLogout={true}
+      />
 
-return (
-  <>
- <Navbar
-  admin={admin}
-  showActivityLogs={true}
-  showLogout={true}
-/>
+      <AdminPortalHeader admin={admin} />
 
- {/* HEADER and PROFILE-CARD */}
+      <div
+        className={`admin-dashboard-page ${
+          refreshing ? "page-refresh" : ""
+        }`}
+      >
+        <div className="stats-grid">
+          <div className="stat-card">
+            <p>Total Records</p>
+            <h2>{totalRecords}</h2>
+          </div>
 
-  <AdminPortalHeader admin={admin} />
+          <div className="stat-card">
+            <p>Students Inside</p>
+            <h2 className="inside">
+              {studentsInside}
+            </h2>
+          </div>
 
-
-    
-    <div
-  className={`admin-dashboard-page ${
-    refreshing ? "page-refresh" : ""
-  }`}
->
-
-      <div className="stats-grid">
-        <div className="stat-card">
-          <p>Total Records</p>
-          <h2>{totalRecords}</h2>
+          <div className="stat-card">
+            <p>Students Outside</p>
+            <h2 className="outside">
+              {studentsOutside}
+            </h2>
+          </div>
         </div>
 
-        <div className="stat-card">
+        <div className="filter-card">
+          <div className="filter-top">
+            <div>
+              <h3>Filter by Hostel</h3>
+              <div className="hostel-buttons">
+                {hostels.map((hostel) => (
+                  <button
+                    key={hostel}
+                    className={
+                      selectedHostel === hostel
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setSelectedHostel(hostel)
+                    }
+                  >
+                    {hostel}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <p>
-            Leave / Special Purpose
-          </p>
+            <div className="action-buttons">
+              <button
+                onClick={fetchDashboard}
+                title="Refresh"
+                className="icon-btn"
+              >
+                <FaSyncAlt />
+              </button>
 
-          <h2 className="leave">
-            {leaveCount}
-          </h2>
+              <button
+                onClick={() =>
+                  navigate("/curfew-mail", {
+                    state: { admin }
+                  })
+                }
+                title="Send Mail"
+                className="icon-btn"
+              >
+                <FaEnvelope />
+              </button>
 
-        </div>
+              <button
+                onClick={exportCSV}
+                title="Export CSV"
+                className="icon-btn"
+              >
+                <FaFileCsv />
+              </button>
+            </div>
+          </div>
 
-        <div className="stat-card">
-          <p>Students Outside</p>
-          <h2 className="outside">
-            {studentsOutside}
-          </h2>
-        </div>
-      </div>
-
-<div className="filter-card">
-  <div className="filter-top">
-
-    <div>
-      <h3>Filter by Hostel</h3>
-
-      <div className="hostel-buttons">
-        {hostels.map((hostel) => (
-          <button
-            key={hostel}
-            className={
-              selectedHostel === hostel
-                ? "active"
-                : ""
+          <input
+            type="text"
+            placeholder="Search by Name, Roll Number, or Purpose..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
             }
-            onClick={() =>
-              setSelectedHostel(hostel)
-            }
-          >
-            {hostel}
-          </button>
-        ))}
-      </div>
-    </div>
+            className="search-box"
+          />
+        </div>
 
-    <div className="action-buttons">
-
-      <button
-        onClick={fetchDashboard}
-        title="Refresh"
-        className="icon-btn"
-      >
-        <FaSyncAlt />
-      </button>
-
-      <button
-        onClick={() =>
-          navigate("/curfew-mail", {
-            state: { admin }
-          })
-        }
-        title="Send Mail"
-        className="icon-btn"
-      >
-        <FaEnvelope />
-      </button>
-
-      <button
-        onClick={exportCSV}
-        title="Export CSV"
-        className="icon-btn"
-      >
-        <FaFileCsv />
-      </button>
-
-    </div>
-
-  </div>
-
-  <input
-    type="text"
-    placeholder="Search by Name, Roll Number, Hostel, Phone or Purpose..."
-    value={search}
-    onChange={(e) =>
-      setSearch(e.target.value)
-    }
-    className="search-box"
-  />
-</div>
-
-      <div className="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Roll</th>
-              <th>Hostel</th>
-              <th>Room</th>
-              <th>Phone</th>
-              <th>Purpose</th>
-              <th>Out Time</th>
-              <th>In Time</th>
-              <th>Status</th>
-              <th>Comment</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {loading ? (
+        <div className="table-container">
+          <table>
+            <thead>
               <tr>
-                <td
-                  colSpan="10"
-                  className="empty-row"
-                >
-                  Loading...
-                </td>
+                <th>Name</th>
+                <th>Roll</th>
+                <th>Room</th>
+                <th>Purpose</th>
+                <th>Out Time</th>
+                <th>In Time</th>
+                <th>Status</th>
+                <th>Comment</th>
               </tr>
-            ) : filteredLogs.length === 0 ? (
-              <tr>
-                <td
-                  colSpan="10"
-                  className="empty-row"
-                >
-                  No Records Found
-                </td>
-              </tr>
-            ) : (
-              filteredLogs.map(
-                (log, index) => (
-                  <tr key={index}>
-                    <td>{log.name}</td>
-                    <td>{log.roll}</td>
-                    <td>{log.hostel}</td>
-                    <td>{log.room}</td>
-                    <td>{log.phone}</td>
-                    <td>{log.purpose}</td>
-                    <td>{log.outTime}</td>
-                    <td>
-                      {log.inTime || "-"}
-                    </td>
-                    <td>
-                      {log.inTime
-                        ? "IN"
-                        : "OUT"}
-                    </td>
-                    <td>
-                      {log.comment_text || "-"}
-                    </td>
-                  </tr>
+            </thead>
+
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan="8"
+                    className="empty-row"
+                  >
+                    Loading...
+                  </td>
+                </tr>
+              ) : filteredLogs.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan="8"
+                    className="empty-row"
+                  >
+                    No Records Found
+                  </td>
+                </tr>
+              ) : (
+                filteredLogs.map(
+                  (log, index) => (
+                    <tr key={index}>
+                      <td>{log.name}</td>
+                      <td>{log.roll}</td>
+                      <td>{log.room}</td>
+                      <td>{log.purpose}</td>
+                      <td>{log.outTime}</td>
+                      <td>
+                        {log.inTime || "-"}
+                      </td>
+                      <td>
+                        {log.inTime
+                          ? "IN"
+                          : "OUT"}
+                      </td>
+                      <td>
+                        {log.comment_text || "-"}
+                      </td>
+                    </tr>
+                  )
                 )
-              )
-            )}
-          </tbody>
-        </table>
-           </div>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-    </div>
-
-    <Footer />
-  </>
-);
-
-
+      <Footer />
+    </>
+  );
 }
 
 export default AdminDashboard;
