@@ -18,6 +18,9 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ActivityLogs from "./pages/ActivityLogs";
 import CurfewMail from "./pages/CurfewMail";
+import ApplyVacation from "./pages/ApplyVacation";
+// import VacationStatus from "./pages/VacationStatus";
+import VacationRequests from "./pages/VacationRequests";
 
 
 function App() {
@@ -94,8 +97,25 @@ function App() {
 
         <Route path="/AboutVisionGate" element={<AboutVisionGate />} />
 
+        <Route
+  path="/student/apply-vacation"
+  element={<ApplyVacation />}
+/>
+
+{/* <Route
+  path="/student/vacation-status"
+  element={<VacationStatus />}
+/> */}
+
+<Route
+  path="/vacation-requests"
+  element={<VacationRequests />}
+/>
+
 
       </Routes>
+
+      
 
     </BrowserRouter>
   );

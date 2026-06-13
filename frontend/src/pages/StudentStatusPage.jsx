@@ -25,6 +25,18 @@ function StudentStatusPage() {
   const [refreshing, setRefreshing] =
     useState(false);
 
+  const [showDenyBox, setShowDenyBox] =
+  useState(false);
+
+const [denyReason, setDenyReason] =
+  useState("");
+
+  const [vacationFilter, setVacationFilter] =
+  useState("Pending");
+
+  const [selectedRequest, setSelectedRequest] =
+  useState(null);
+
   useEffect(() => {
 
     loadStudents();
@@ -109,6 +121,39 @@ function StudentStatusPage() {
 
       }
 
+
+
+      // =========================
+      // VACATION
+      // =========================
+
+
+
+      else if (type === "vacation") {
+
+const response = await API.get(
+`/vacation/${hostel}`
+);
+
+const vacationData =
+response.data.map(
+(request) => ({
+
+
+    ...request,
+
+    status:
+      request.status
+
+  })
+);
+
+
+setStudents(vacationData);
+
+}
+
+
       else {
 
         setStudents([]);
@@ -153,8 +198,76 @@ function StudentStatusPage() {
       return "Leave / Special Purpose";
     }
 
+    if (type === "vacation") {
+return "Vacation Applications";
+}
+
+
     return "Student Status";
   };
+
+  const handleApprove = async (rollNo) => {
+
+try {
+
+
+await API.put(
+  `/vacation/approve/${rollNo}`
+);
+
+setSelectedRequest(null);
+setShowDenyBox(false);
+setDenyReason("");
+
+loadStudents();
+
+} catch (error) {
+
+
+console.error(error);
+
+
+}
+
+};
+const handleDeny = async (rollNo) => {
+
+  if (!denyReason.trim()) {
+    alert("Please enter a rejection reason");
+    return;
+  }
+
+  try {
+
+    await API.put(
+      `/vacation/deny/${rollNo}`,
+      {
+        denialReason: denyReason
+      }
+    );
+
+    setSelectedRequest(null);
+    setShowDenyBox(false);
+    setDenyReason("");
+
+    loadStudents();
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+};
+
+const filteredStudents =
+  type === "vacation"
+    ? students.filter(
+        (request) =>
+          request.status === vacationFilter
+      )
+    : students;
+
 
   return (
 
@@ -218,9 +331,60 @@ function StudentStatusPage() {
           {/* COUNT */}
           <div className="status-count">
 
-            Showing {students.length} Students
+  Showing {
+    type === "vacation"
+      ? filteredStudents.length
+      : students.length
+  } Students
 
-          </div>
+</div>
+
+{type === "vacation" && (
+
+  <div className="vacation-filters">
+
+    <button
+      className={
+        vacationFilter === "Pending"
+          ? "active-filter"
+          : ""
+      }
+      onClick={() =>
+        setVacationFilter("Pending")
+      }
+    >
+      Pending
+    </button>
+
+    <button
+      className={
+        vacationFilter === "Approved"
+          ? "active-filter"
+          : ""
+      }
+      onClick={() =>
+        setVacationFilter("Approved")
+      }
+    >
+      Approved
+    </button>
+
+    <button
+      className={
+        vacationFilter === "Denied"
+          ? "active-filter"
+          : ""
+      }
+      onClick={() =>
+        setVacationFilter("Denied")
+      }
+    >
+      Denied
+    </button>
+
+  </div>
+
+)}
 {/* TABLE */}
 
 <div className="table-wrapper">
@@ -229,105 +393,184 @@ function StudentStatusPage() {
 
     <thead>
 
-      <tr>
+    {type === "vacation" ? (
 
-        <th>Name</th>
+<tr>
 
-        <th>Roll No</th>
+  <th>Roll No</th>
 
-        <th>Room</th>
+  <th>Destination</th>
 
-        <th>Purpose</th>
+  <th>Leave Date</th>
 
-        <th>OUT Time</th>
+  <th>Return Date</th>
 
-        <th>IN Time</th>
+  <th>Reason</th>
 
-        <th>Status</th>
+  <th>Status</th>
+</tr>
 
-      </tr>
+
+) : (
+
+
+<tr>
+
+  <th>Name</th>
+
+  <th>Roll No</th>
+
+  <th>Room</th>
+
+  <th>Purpose</th>
+
+  <th>OUT Time</th>
+
+  <th>IN Time</th>
+
+  <th>Status</th>
+
+</tr>
+
+
+)}
+
 
     </thead>
 
     <tbody>
 
-      {loading ? (
 
-        <tr>
+{loading ? (
 
-          <td colSpan="7">
+  <tr>
 
-            Loading...
 
-          </td>
+<td colSpan={type === "vacation" ? 6 : 7}>
+  Loading...
 
-        </tr>
+</td>
 
-      ) : students.length === 0 ? (
 
-        <tr>
+  </tr>
 
-          <td colSpan="7">
+) : students.length === 0 ? (
 
-            No Students Found
+  <tr>
 
-          </td>
 
-        </tr>
+<td colSpan={type === "vacation" ? 6 : 7}>
+  No Data Found
 
-      ) : (
+</td>
 
-        students.map((student, index) => (
 
-          <tr key={index}>
+  </tr>
 
-            <td>
-              {student.name}
-            </td>
+) : type === "vacation" ? (
 
-            <td>
-              {student.roll}
-            </td>
+filteredStudents.map((request, index) => (
+  
 
-            <td>
-              {student.room}
-            </td>
+<tr
+  key={index}
+ onClick={() => {
+  setSelectedRequest(request);
+  setShowDenyBox(false);
+  setDenyReason("");
+}}
+  style={{
+    cursor: "pointer"
+  }}
+>
 
-            <td>
-              {student.purpose || "-"}
-            </td>
+  <td>
+    {request.roll_no}
+  </td>
 
-            <td>
-              {student.outTime || "-"}
-            </td>
+  <td>
+    {request.destination}
+  </td>
 
-            <td>
-              {student.inTime || "-"}
-            </td>
+  <td>
+    {request.leave_date}
+  </td>
 
-            <td>
+  <td>
+    {request.return_date}
+  </td>
 
-              <span
-                className={`status-badge ${
-                  student.status === "OUTSIDE"
-                    ? "status-out"
-                    : student.status === "CURFEW"
-                    ? "status-curfew"
-                    : "status-leave"
-                }`}
-              >
-                {student.status}
-              </span>
+  <td>
+    {request.reason}
+  </td>
 
-            </td>
+  <td>
 
-          </tr>
+    <span
+      className={`status-badge ${
+        request.status === "Approved"
+          ? "status-approved"
+          : request.status === "Denied"
+          ? "status-denied"
+          : "status-pending"
+      }`}
+    >
+      {request.status}
+    </span>
 
-        ))
+  </td>
 
-      )}
+</tr>
 
-    </tbody>
+
+))
+
+) : (
+
+students.map((student, index) => (
+
+
+<tr key={index}>
+
+  <td>{student.name}</td>
+
+  <td>{student.roll}</td>
+
+  <td>{student.room}</td>
+
+  <td>{student.purpose || "-"}</td>
+
+  <td>{student.outTime || "-"}</td>
+
+  <td>{student.inTime || "-"}</td>
+
+  <td>
+
+    <span
+      className={`status-badge ${
+        student.status === "OUTSIDE"
+          ? "status-out"
+          : student.status === "CURFEW"
+          ? "status-curfew"
+          : "status-leave"
+      }`}
+    >
+      {student.status}
+    </span>
+
+  </td>
+
+</tr>
+
+
+))
+
+)}
+
+</tbody>
+
+
+   
 
   </table>
 
@@ -336,11 +579,130 @@ function StudentStatusPage() {
 
       </div>
 
+
+      {selectedRequest && (
+
+  <div className="vacation-modal-overlay">
+
+    <div className="vacation-modal">
+
+  <h2>
+    {selectedRequest.roll_no}
+  </h2>
+
+  <div className="vacation-modal-details">
+
+    <div className="detail-card">
+      <strong>Destination</strong>
+      <span>{selectedRequest.destination}</span>
+    </div>
+
+   
+
+    <div className="detail-card">
+      <strong>Leave Date</strong>
+      <span>{selectedRequest.leave_date}</span>
+    </div>
+
+    <div className="detail-card">
+      <strong>Return Date</strong>
+      <span>{selectedRequest.return_date}</span>
+    </div>
+
+    <div
+      className="detail-card"
+      style={{ gridColumn: "1 / -1" }}
+    >
+      <strong>Reason</strong>
+      <span>{selectedRequest.reason}</span>
+    </div>
+
+  </div>
+
+  {showDenyBox && (
+
+  <div className="deny-section">
+
+    <label>
+      Reason for Rejection
+    </label>
+
+    <textarea
+      value={denyReason}
+      onChange={(e) =>
+        setDenyReason(
+          e.target.value
+        )
+      }
+      placeholder="Write reason..."
+    />
+
+    <button
+      className="confirm-deny-btn"
+      onClick={() =>
+        handleDeny(
+          selectedRequest.roll_no
+          
+        )
+      }
+    >
+      Confirm Rejection
+    </button>
+
+  </div>
+
+)}
+
+
+<div className="vacation-modal-actions">
+
+  {selectedRequest.status !== "Approved" && (
+    <button
+      className="approve-btn"
+      onClick={() =>
+        handleApprove(
+          selectedRequest.roll_no
+        )
+      }
+    >
+      Approve
+    </button>
+  )}
+
+  {selectedRequest.status !== "Denied" && (
+    <button
+      className="deny-btn"
+      onClick={() =>
+        setShowDenyBox(true)
+      }
+    >
+      Deny
+    </button>
+  )}
+
+  <button
+    className="close-btn"
+    onClick={() => {
+      setSelectedRequest(null);
+      setShowDenyBox(false);
+      setDenyReason("");
+    }}
+  >
+    Close
+  </button>
+
+</div>
+  </div>
+
+</div>
+)}
+
       <Footer />
 
     
 
      </div>
+     
 
   );
 

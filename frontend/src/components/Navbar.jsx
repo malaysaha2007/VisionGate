@@ -20,30 +20,36 @@ function Navbar({
   return (
     <div className="navbar-wrap">
       <div className="navbar">
-        <div className="brand">
-          <div className="brand-logo">
-            <img
-              src="/Iiitdmj_logo.jpg"
-              alt="College Logo"
-            />
-          </div>
+        <Link to="/" className="brand-link">
 
-          <div className="brand-text">
-            <div className="brand-title">
-              VisionGate
-            </div>
+  <div className="brand">
 
-            <div className="brand-subtitle">
-              Smart Entry–Exit Monitoring System
-            </div>
-          </div>
-        </div>
+    <div className="brand-logo">
+      <img
+        src="/Iiitdmj_logo.jpg"
+        alt="College Logo"
+      />
+    </div>
+
+    <div className="brand-text">
+
+      <div className="brand-title">
+        VisionGate
+      </div>
+
+      <div className="brand-subtitle">
+        Smart Entry–Exit Monitoring System
+      </div>
+
+    </div>
+
+  </div>
+
+</Link>
 
         <div className="nav-center">
           <nav className="nav-links">
-            <Link to="/">
-              Home
-            </Link>
+            
 
             <Link to="/Rules">
               Rules

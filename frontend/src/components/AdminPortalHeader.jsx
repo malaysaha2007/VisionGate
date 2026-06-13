@@ -1,28 +1,22 @@
+import { useState, useEffect, useRef } from "react";
+
 import "../styles/AllPortalHeader.css";
-import {
-  useState,
-  useEffect,
-  useRef
-} from "react";
+import PortalHeader from "./PortalHeader";
 
 function AdminPortalHeader({ admin }) {
-
   const [showMenu, setShowMenu] =
     useState(false);
 
   const menuRef = useRef(null);
 
   useEffect(() => {
-
     const handleClickOutside = (event) => {
-
       if (
         menuRef.current &&
         !menuRef.current.contains(event.target)
       ) {
         setShowMenu(false);
       }
-
     };
 
     document.addEventListener(
@@ -31,58 +25,29 @@ function AdminPortalHeader({ admin }) {
     );
 
     return () => {
-
       document.removeEventListener(
         "mousedown",
         handleClickOutside
       );
-
     };
-
   }, []);
 
   return (
-
-    <div className="portal-hero">
-
-      <div className="portal-hero-content">
-
-        {/* LEFT SIDE */}
-
-        <div className="portal-info">
-
-          <div className="portal-hero-icon">
-            🎓
-          </div>
-
-          <div>
-
-            <h2>
-              Administration Portal
-            </h2>
-
-            <p>
-              Manage Students, Logs & Curfew System
-            </p>
-
-          </div>
-
-        </div>
-
-        {/* RIGHT SIDE */}
-
+    <PortalHeader
+      icon="🛡️"
+      title="Administration Portal"
+      subtitle="Manage Students, Logs & Curfew System"
+      rightContent={
         <div
           className="portal-user-wrapper"
           ref={menuRef}
         >
-
           <div
             className="portal-user"
             onClick={() =>
               setShowMenu(!showMenu)
             }
           >
-
             <div className="profile-card">
 
               <div className="profile-details">
@@ -101,21 +66,17 @@ function AdminPortalHeader({ admin }) {
               </div>
 
             </div>
-
           </div>
 
           {showMenu && (
-
             <div className="portal-dropdown">
 
               <div
                 className="dropdown-item"
                 onClick={() => {
-
                   alert(
                     "Profile Page Coming Soon"
                   );
-
                 }}
               >
                 👤 Profile
@@ -136,24 +97,17 @@ function AdminPortalHeader({ admin }) {
                   window.location.replace(
                     "/AdminLogin"
                   );
-
                 }}
               >
                 🚪 Logout
               </div>
 
             </div>
-
           )}
-
         </div>
-
-      </div>
-
-    </div>
-
+      }
+    />
   );
-
 }
 
 export default AdminPortalHeader;
