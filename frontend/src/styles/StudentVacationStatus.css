@@ -117,3 +117,54 @@
 .deny-box strong {
   color: #f87171;
 }
+/* =========================
+   TABLE
+========================= */
+.table-title {
+  text-align: center;
+  color: white;
+  font-size: 48px;
+  margin-bottom: 40px;
+}
+
+.table-wrapper{
+  width:100%;
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+
+thead{
+  background:#223b75;
+}
+
+th,
+td{
+  padding:18px 10px;
+
+  text-align:center;
+
+  vertical-align:middle;
+
+  white-space:nowrap;
+}
+
+th{
+  color:#dbeafe;
+  font-size:15px;
+  font-weight:600;
+}
+
+td{
+  color:#ffffff;
+  font-size:15px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+tbody tr:hover{
+  background:rgba(59,130,246,0.08);
+}
