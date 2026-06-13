@@ -498,6 +498,32 @@ color:#ef4444;
 }
 
 
+.vacation-filters{
+  display:flex;
+  gap:12px;
+  margin:20px 0;
+}
+
+.vacation-filters button{
+  padding:10px 22px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:#1c2d5a;
+  color:white;
+  font-weight:600;
+  transition:.2s;
+}
+
+.vacation-filters button:hover{
+  transform:translateY(-2px);
+}
+
+.active-filter{
+  background:#2563eb !important;
+}
+
+
 
 
 /* =========================
@@ -525,3 +551,40 @@ color:#ef4444;
 }
 
 
+
+
+
+.page-refresh {
+  animation:
+    refreshPulse 0.4s ease;
+}
+
+@keyframes refreshPulse {
+
+  0% {
+    opacity: 0.85;
+    transform: scale(0.995);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+.spin-icon {
+  animation:
+    spin 1s linear infinite;
+}
+
+@keyframes spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}

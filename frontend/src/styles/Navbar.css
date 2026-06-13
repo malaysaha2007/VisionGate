@@ -44,6 +44,22 @@
   color: #9aa8c7;
 }
 
+.brand-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.brand-link:hover {
+  opacity: 0.95;
+}
+
+.brand-link .brand-title,
+.brand-link .brand-subtitle {
+  cursor: pointer;
+}
+
 /* Center Navigation */
 
 .nav-center {

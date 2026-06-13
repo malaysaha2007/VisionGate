@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
+import { FaSyncAlt } from "react-icons/fa";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -21,12 +22,17 @@ function StudentStatusPage() {
   const [students, setStudents] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] =
+    useState(false);
 
   const [showDenyBox, setShowDenyBox] =
   useState(false);
 
 const [denyReason, setDenyReason] =
   useState("");
+
+  const [vacationFilter, setVacationFilter] =
+  useState("Pending");
 
   const [selectedRequest, setSelectedRequest] =
   useState(null);
@@ -39,9 +45,11 @@ const [denyReason, setDenyReason] =
 
   const loadStudents = async () => {
 
-    try {
+  try {
 
-      setLoading(true);
+    setLoading(true);
+
+    setRefreshing(true);
 
       const response = await API.get(
         `/hostel/logs/${hostel}`
@@ -160,7 +168,13 @@ setStudents(vacationData);
 
       setLoading(false);
 
-    }
+      setTimeout(() => {
+
+        setRefreshing(false);
+
+      }, 300);
+
+}
 
   };
 
@@ -246,10 +260,24 @@ const handleDeny = async (rollNo) => {
 
 };
 
+const filteredStudents =
+  type === "vacation"
+    ? students.filter(
+        (request) =>
+          request.status === vacationFilter
+      )
+    : students;
+
 
   return (
 
-    <div className="student-status-page">
+    <div
+      className={`student-status-page ${
+        refreshing
+          ? "page-refresh"
+          : ""
+      }`}
+    >
 
       {/* NAVBAR */}
          <Navbar showLogout={true} />
@@ -283,8 +311,19 @@ const handleDeny = async (rollNo) => {
               placeholder="Search by Name, Roll Number or Room..."
             />
 
-            <button onClick={loadStudents}>
-              Refresh
+            <button
+              className="icon-btn"
+              onClick={loadStudents}
+              disabled={refreshing}
+              title="Refresh"
+            >
+              <FaSyncAlt
+                className={
+                  refreshing
+                    ? "spin-icon"
+                    : ""
+                }
+              />
             </button>
 
           </div>
@@ -292,9 +331,60 @@ const handleDeny = async (rollNo) => {
           {/* COUNT */}
           <div className="status-count">
 
-            Showing {students.length} Students
+  Showing {
+    type === "vacation"
+      ? filteredStudents.length
+      : students.length
+  } Students
 
-          </div>
+</div>
+
+{type === "vacation" && (
+
+  <div className="vacation-filters">
+
+    <button
+      className={
+        vacationFilter === "Pending"
+          ? "active-filter"
+          : ""
+      }
+      onClick={() =>
+        setVacationFilter("Pending")
+      }
+    >
+      Pending
+    </button>
+
+    <button
+      className={
+        vacationFilter === "Approved"
+          ? "active-filter"
+          : ""
+      }
+      onClick={() =>
+        setVacationFilter("Approved")
+      }
+    >
+      Approved
+    </button>
+
+    <button
+      className={
+        vacationFilter === "Denied"
+          ? "active-filter"
+          : ""
+      }
+      onClick={() =>
+        setVacationFilter("Denied")
+      }
+    >
+      Denied
+    </button>
+
+  </div>
+
+)}
 {/* TABLE */}
 
 <div className="table-wrapper">
@@ -379,7 +469,7 @@ const handleDeny = async (rollNo) => {
 
 ) : type === "vacation" ? (
 
-students.map((request, index) => (
+filteredStudents.map((request, index) => (
   
 
 <tr

@@ -22,7 +22,7 @@ function AdminDashboard() {
   const [search, setSearch] = useState("");
   const [logs, setLogs] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [studentsInside, setStudentsInside] = useState(0);
+  const [leaveCount, setLeaveCount] = useState(0);
   const [studentsOutside, setStudentsOutside] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedHostel, setSelectedHostel] = useState("All");
@@ -51,6 +51,35 @@ function AdminDashboard() {
       console.error(error);
     } finally {
       setLoading(false);
+    const dashboardLogs =
+      response.data.logs || [];
+
+    setLogs(dashboardLogs);
+
+    setTotalRecords(
+      response.data.total_records || 0
+    );
+
+    setStudentsOutside(
+      response.data.students_outside || 0
+    );
+
+    const leaveStudents =
+      dashboardLogs.filter(
+        (log) =>
+          log.purpose === "Hospital" ||
+          log.purpose === "Medical" ||
+          log.purpose === "Leave" ||
+          log.purpose === "Special Leave"
+      );
+
+    setLeaveCount(
+      leaveStudents.length
+    );
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
 
       setTimeout(() => {
         setRefreshing(false);
