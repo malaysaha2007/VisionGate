@@ -27,7 +27,6 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [selectedHostel, setSelectedHostel] = useState("All");
   const [refreshing, setRefreshing] = useState(false);
-  const [studentsInside, setStudentsInside] = useState(0);
 
   const hostels = [
     "All",
@@ -52,9 +51,7 @@ function AdminDashboard() {
       response.data.total_records || 0
     );
 
-    setStudentsInside(
-      response.data.students_inside || 0
-    );
+   
 
     setStudentsOutside(
       response.data.students_outside || 0
@@ -170,19 +167,21 @@ function AdminDashboard() {
             <h2>{totalRecords}</h2>
           </div>
 
-          <div className="stat-card">
-            <p>Students Inside</p>
-            <h2 className="inside">
-              {studentsInside}
-            </h2>
-          </div>
+        
 
           <div className="stat-card">
             <p>Students Outside</p>
             <h2 className="outside">
               {studentsOutside}
             </h2>
-          </div>
+          </div> 
+          
+          <div className="stat-card">
+  <p>Leave / Special Purpose</p>
+  <h2 className="leave-count">
+    {leaveCount}
+  </h2>
+</div>
         </div>
 
         <div className="filter-card">
