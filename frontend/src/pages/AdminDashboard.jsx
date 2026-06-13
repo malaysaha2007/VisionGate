@@ -24,7 +24,7 @@ function AdminDashboard() {
   const [search, setSearch] = useState("");
   const [logs, setLogs] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [studentsInside, setStudentsInside] = useState(0);
+  const [leaveCount, setLeaveCount] = useState(0);
   const [studentsOutside, setStudentsOutside] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedHostel, setSelectedHostel] = useState("All");
@@ -45,10 +45,31 @@ const fetchDashboard = async () => {
   try {
     const response = await API.get("/admin/dashboard");
 
-    setLogs(response.data.logs || []);
-    setTotalRecords(response.data.total_records || 0);
-    setStudentsInside(response.data.students_inside || 0);
-    setStudentsOutside(response.data.students_outside || 0);
+    const dashboardLogs =
+      response.data.logs || [];
+
+    setLogs(dashboardLogs);
+
+    setTotalRecords(
+      response.data.total_records || 0
+    );
+
+    setStudentsOutside(
+      response.data.students_outside || 0
+    );
+
+    const leaveStudents =
+      dashboardLogs.filter(
+        (log) =>
+          log.purpose === "Hospital" ||
+          log.purpose === "Medical" ||
+          log.purpose === "Leave" ||
+          log.purpose === "Special Leave"
+      );
+
+    setLeaveCount(
+      leaveStudents.length
+    );
   } catch (error) {
     console.error(error);
   } finally {
@@ -181,10 +202,15 @@ return (
         </div>
 
         <div className="stat-card">
-          <p>Students Inside</p>
-          <h2 className="inside">
-            {studentsInside}
+
+          <p>
+            Leave / Special Purpose
+          </p>
+
+          <h2 className="leave">
+            {leaveCount}
           </h2>
+
         </div>
 
         <div className="stat-card">

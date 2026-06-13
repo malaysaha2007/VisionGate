@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
+import { FaSyncAlt } from "react-icons/fa";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -21,6 +22,8 @@ function StudentStatusPage() {
   const [students, setStudents] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] =
+    useState(false);
 
   const [showDenyBox, setShowDenyBox] =
   useState(false);
@@ -42,9 +45,11 @@ const [denyReason, setDenyReason] =
 
   const loadStudents = async () => {
 
-    try {
+  try {
 
-      setLoading(true);
+    setLoading(true);
+
+    setRefreshing(true);
 
       const response = await API.get(
         `/hostel/logs/${hostel}`
@@ -163,7 +168,13 @@ setStudents(vacationData);
 
       setLoading(false);
 
-    }
+      setTimeout(() => {
+
+        setRefreshing(false);
+
+      }, 300);
+
+}
 
   };
 
@@ -260,7 +271,13 @@ const filteredStudents =
 
   return (
 
-    <div className="student-status-page">
+    <div
+      className={`student-status-page ${
+        refreshing
+          ? "page-refresh"
+          : ""
+      }`}
+    >
 
       {/* NAVBAR */}
          <Navbar showLogout={true} />
@@ -294,8 +311,19 @@ const filteredStudents =
               placeholder="Search by Name, Roll Number or Room..."
             />
 
-            <button onClick={loadStudents}>
-              Refresh
+            <button
+              className="icon-btn"
+              onClick={loadStudents}
+              disabled={refreshing}
+              title="Refresh"
+            >
+              <FaSyncAlt
+                className={
+                  refreshing
+                    ? "spin-icon"
+                    : ""
+                }
+              />
             </button>
 
           </div>
