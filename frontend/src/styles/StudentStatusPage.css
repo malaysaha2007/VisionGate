@@ -223,3 +223,42 @@ tbody tr:hover{
   }
 
 }
+
+
+
+
+
+.page-refresh {
+  animation:
+    refreshPulse 0.4s ease;
+}
+
+@keyframes refreshPulse {
+
+  0% {
+    opacity: 0.85;
+    transform: scale(0.995);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+.spin-icon {
+  animation:
+    spin 1s linear infinite;
+}
+
+@keyframes spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
