@@ -28,6 +28,9 @@ function StudentStatusPage() {
 const [denyReason, setDenyReason] =
   useState("");
 
+  const [vacationFilter, setVacationFilter] =
+  useState("Pending");
+
   const [selectedRequest, setSelectedRequest] =
   useState(null);
 
@@ -246,6 +249,14 @@ const handleDeny = async (rollNo) => {
 
 };
 
+const filteredStudents =
+  type === "vacation"
+    ? students.filter(
+        (request) =>
+          request.status === vacationFilter
+      )
+    : students;
+
 
   return (
 
@@ -292,9 +303,60 @@ const handleDeny = async (rollNo) => {
           {/* COUNT */}
           <div className="status-count">
 
-            Showing {students.length} Students
+  Showing {
+    type === "vacation"
+      ? filteredStudents.length
+      : students.length
+  } Students
 
-          </div>
+</div>
+
+{type === "vacation" && (
+
+  <div className="vacation-filters">
+
+    <button
+      className={
+        vacationFilter === "Pending"
+          ? "active-filter"
+          : ""
+      }
+      onClick={() =>
+        setVacationFilter("Pending")
+      }
+    >
+      Pending
+    </button>
+
+    <button
+      className={
+        vacationFilter === "Approved"
+          ? "active-filter"
+          : ""
+      }
+      onClick={() =>
+        setVacationFilter("Approved")
+      }
+    >
+      Approved
+    </button>
+
+    <button
+      className={
+        vacationFilter === "Denied"
+          ? "active-filter"
+          : ""
+      }
+      onClick={() =>
+        setVacationFilter("Denied")
+      }
+    >
+      Denied
+    </button>
+
+  </div>
+
+)}
 {/* TABLE */}
 
 <div className="table-wrapper">
@@ -379,7 +441,7 @@ const handleDeny = async (rollNo) => {
 
 ) : type === "vacation" ? (
 
-students.map((request, index) => (
+filteredStudents.map((request, index) => (
   
 
 <tr
