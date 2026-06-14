@@ -83,6 +83,7 @@ function App() {
   path="/activity-logs"
   element={<ActivityLogs />}
 />
+<Route path="/student/vacation-status" element={<VacationStatus />} />
 
 <Route
   path="/curfew-mail"

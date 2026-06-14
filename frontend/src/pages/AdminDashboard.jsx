@@ -28,6 +28,7 @@ function AdminDashboard() {
   const [refreshing, setRefreshing] = useState(false);
   const [leaveCount, setLeaveCount] = useState(0);
   const [leaveFilter, setLeaveFilter] = useState("Pending");
+  
 
   const hostels = [
     "All",
