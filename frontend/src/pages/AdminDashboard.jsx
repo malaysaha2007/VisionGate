@@ -22,11 +22,12 @@ function AdminDashboard() {
   const [search, setSearch] = useState("");
   const [logs, setLogs] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [studentsInside, setStudentsInside] = useState(0);
   const [studentsOutside, setStudentsOutside] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedHostel, setSelectedHostel] = useState("All");
   const [refreshing, setRefreshing] = useState(false);
+  const [leaveCount, setLeaveCount] = useState(0);
+  const [leaveFilter, setLeaveFilter] = useState("Pending");
 
   const hostels = [
     "All",
@@ -176,8 +177,15 @@ function AdminDashboard() {
             </h2>
           </div> 
           
-          <div className="stat-card">
-  <p>Leave / Special Purpose</p>
+          <div
+  className="stat-card"
+  onClick={() =>
+   navigate("/admin-vacations")
+  }
+  style={{ cursor: "pointer" }}
+>
+  <p>View all Vacation Applications</p>
+
   <h2 className="leave-count">
     {leaveCount}
   </h2>

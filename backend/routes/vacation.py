@@ -5,6 +5,8 @@ from database.mongodb import db
 
 from pydantic import BaseModel
 
+from bson import ObjectId
+
 class DenyVacationRequest(
     BaseModel):
     
@@ -19,6 +21,7 @@ class VacationApplication(BaseModel):
     destination: str
     leave_date: str
     return_date: str
+    leave_campus_time: str
     reason: str
 
 
@@ -35,9 +38,12 @@ async def apply_vacation(
             "hostel": data.hostel,
             "destination": data.destination,
             "leave_date": data.leave_date,
+            "leave_campus_time": data.leave_campus_time,
             "return_date": data.return_date,
             "reason": data.reason,
-            "status": "Pending"
+            "hostel_status": "Pending",
+            "gate_status": "Not Requested",
+            "vacation_status": "NOT_STARTED"
 
         })
 
@@ -54,53 +60,6 @@ async def apply_vacation(
         )
 
 
-@router.put("/vacation/approve/{roll_no}")
-async def approve_vacation(
-    roll_no: str
-):
-
-    db.vacation_application.update_one(
-        {
-            "roll_no": roll_no
-        },
-        {
-            "$set": {
-                "status": "Approved"
-            },
-            "$unset": {
-                "denialReason": ""
-            }
-        }
-    )
-
-    return {
-        "message": "Vacation Approved"
-    }
-    
-    
-@router.put("/vacation/deny/{roll_no}")
-async def deny_vacation(
-    roll_no: str,
-    request: DenyVacationRequest
-):
-
-    db.vacation_application.update_one(
-        {
-            "roll_no": roll_no
-        },
-        {
-            "$set": {
-                "status": "Denied",
-                "denialReason":
-                    request.denialReason
-            }
-        }
-    )
-
-    return {
-        "message": "Vacation Denied"
-    }
-
 
 @router.get("/vacation/student/{roll_no}")
 async def get_student_vacations(
@@ -110,14 +69,16 @@ async def get_student_vacations(
         db.vacation_application.find(
             {
                 "roll_no": roll_no
-            },
-            {
-                "_id": 0
             }
         )
     )
 
+    for vacation in vacations:
+        vacation["_id"] = str(vacation["_id"])
+
     return vacations
+
+
 
 
 @router.get("/vacation/{hostel}")
@@ -129,11 +90,134 @@ async def get_vacation_requests(
         db.vacation_application.find(
             {
                 "hostel": hostel
-            },
-            {
-                "_id": 0
             }
         )
     )
 
+    for request in requests:
+        request["_id"] = str(request["_id"])
+
     return requests
+
+
+
+
+@router.put("/vacation/approve/{application_id}")
+async def approve_vacation(application_id: str):
+
+    result = db.vacation_application.update_one(
+        {
+            "_id": ObjectId(application_id)
+        },
+        {
+            "$set": {
+                "hostel_status": "Approved"
+            },
+            "$unset": {
+                "denialReason": ""
+            }
+        }
+    )
+
+    print("Matched:", result.matched_count)
+    print("Modified:", result.modified_count)
+
+    return {
+        "message": "Vacation Approved"
+    }
+    
+    
+    
+    
+    
+    
+@router.put("/vacation/deny/{application_id}")
+async def deny_vacation(
+    application_id: str,
+    request: DenyVacationRequest
+):
+
+    result = db.vacation_application.update_one(
+        {
+            "_id": ObjectId(application_id)
+        },
+        {
+            "$set": {
+                "hostel_status": "Denied",
+                "denialReason": request.denialReason
+            }
+        }
+    )
+
+    print("Matched:", result.matched_count)
+    print("Modified:", result.modified_count)
+
+    return {
+        "message": "Vacation Denied"
+    }
+    
+    
+    
+    
+@router.get("/vacation/gate-pending")
+async def get_gate_pending_requests():
+
+    requests = list(
+        db.vacation_application.find(
+            {
+                "gate_status": "Pending"
+            }
+        )
+    )
+
+    for request in requests:
+        request["_id"] = str(request["_id"])
+
+    return requests
+
+
+
+
+
+
+
+
+
+@router.put("/vacation/gate-approve/{application_id}")
+async def gate_approve_vacation(application_id: str):
+
+    result = db.vacation_application.update_one(
+        {
+            "_id": ObjectId(application_id),
+            "hostel_status": "Approved"
+        },
+        {
+            "$set": {
+                "gate_status": "Approved"
+            }
+        }
+    )
+
+    return {
+        "message": "Gate Approval Granted"
+    }
+    
+    
+    
+@router.put("/vacation/gate-deny/{application_id}")
+async def gate_deny_vacation(application_id: str):
+
+    result = db.vacation_application.update_one(
+        {
+            "_id": ObjectId(application_id)
+        },
+        {
+            "$set": {
+                "gate_status": "Denied"
+            }
+        }
+    )
+
+    return {
+        "message": "Gate Approval Denied"
+    }

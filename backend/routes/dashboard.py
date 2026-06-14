@@ -5,6 +5,19 @@ from database.mongodb import db
 router = APIRouter()
 
 
+@router.get("/vacation")
+async def get_all_vacations():
+
+    vacations = list(
+        db.vacation_application.find({})
+    )
+
+    for vacation in vacations:
+        vacation["_id"] = str(vacation["_id"])
+
+    return vacations
+
+
 @router.get("/admin/dashboard")
 async def get_dashboard_data():
 
@@ -90,3 +103,6 @@ async def get_dashboard_data():
         "logs": logs
 
     }
+    
+    
+    

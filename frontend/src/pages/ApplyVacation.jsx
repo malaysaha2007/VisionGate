@@ -48,6 +48,7 @@ const [formData, setFormData] = useState({
   reason: "",
   destination: "",
   leaveDate: "",
+  leaveCampusTime: "", 
   returnDate: ""
 });
 
@@ -84,6 +85,9 @@ const [formData, setFormData] = useState({
     leave_date:
       formData.leaveDate,
 
+    leave_campus_time: 
+    formData.leaveCampusTime,
+
     return_date:
       formData.returnDate,
 
@@ -118,6 +122,14 @@ const [formData, setFormData] = useState({
     </div>
   );
 }
+
+
+const today = new Date().toISOString().split("T")[0];
+
+const maxLeaveDate = new Date();
+maxLeaveDate.setDate(maxLeaveDate.getDate() + 5);
+
+const maxDate = maxLeaveDate.toISOString().split("T")[0];
 
   return (
 
@@ -171,19 +183,43 @@ const [formData, setFormData] = useState({
 
   </div>
 
+  
+    <div className="form-group">
+
+  <label>
+    Time of Leaving Campus
+  </label>
+
+ <input
+  type="time"
+  name="leaveCampusTime"
+  value={formData.leaveCampusTime}
+  onChange={(e) => {
+    handleChange(e);
+    e.target.blur();
+  }}
+  required
+/>
+
+</div>
+
   <div className="form-group">
 
     <label>
       Leave Date
     </label>
 
-    <input
-      type="date"
-      name="leaveDate"
-      value={formData.leaveDate}
-      onChange={handleChange}
-      required
-    />
+
+
+   <input
+  type="date"
+  name="leaveDate"
+  value={formData.leaveDate}
+  onChange={handleChange}
+  min={today}
+  max={maxDate}
+  required
+/>
 
   </div>
 
