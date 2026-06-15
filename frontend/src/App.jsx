@@ -20,6 +20,7 @@ import ActivityLogs from "./pages/ActivityLogs";
 import CurfewMail from "./pages/CurfewMail";
 import ApplyVacation from "./pages/ApplyVacation";
 import AdminVacationApplications from "./pages/AdminVacationApplications";
+import VacationStatus from "./pages/VacationStatus";
 
 
 function App() {
