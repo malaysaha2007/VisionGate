@@ -19,6 +19,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ActivityLogs from "./pages/ActivityLogs";
 import CurfewMail from "./pages/CurfewMail";
 import ApplyVacation from "./pages/ApplyVacation";
+import VacationRequests from "./pages/VacationRequests";
+import StudentVacationStatus from "./pages/StudentVacationStatus";
 
 
 function App() {
@@ -98,6 +100,16 @@ function App() {
         <Route
   path="/student/apply-vacation"
   element={<ApplyVacation />}
+/>
+
+<Route
+  path="/student/vacation-status"
+  element={<StudentVacationStatus />}
+/>
+
+<Route
+  path="/vacation-requests"
+  element={<VacationRequests />}
 />
 
 
