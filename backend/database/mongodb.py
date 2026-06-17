@@ -1,8 +1,11 @@
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-client = MongoClient(
-    "mongodb+srv://malay07_db_user:Malay07%40@prproject.h4mjvbl.mongodb.net/?retryWrites=true&w=majority"
-)
+MONGO_URI = os.getenv("MONGO_URI")
+
+client = MongoClient(MONGO_URI)
 
 db = client["main_gate_entry_exit_system"]

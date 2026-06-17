@@ -17,6 +17,10 @@ import cloudinary.uploader
 
 import requests
 
+import os
+
+from dotenv import load_dotenv
+
 
 router = APIRouter()
 
@@ -29,15 +33,16 @@ pwd_context = CryptContext(
 # CLOUDINARY CONFIG
 # =========================
 
+load_dotenv()
+
+
 cloudinary.config(
-
-    cloud_name="dbrjgcpkz",
-
-    api_key="179582722719283",
-
-    api_secret="hjyQQlHCtNXjO-kaXAfaE5XSD_I"
-
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET")
 )
+
+
 
 # =========================
 # REGISTER STUDENT
@@ -134,7 +139,7 @@ async def register_student(
 
     response = requests.post(
 
-        "https://web-production-06939.up.railway.app/generate-embedding",
+    f"{EMBEDDING_API_URL}/generate-embedding",
 
         json={
 

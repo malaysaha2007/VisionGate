@@ -34,7 +34,7 @@ const [denyReason, setDenyReason] =
   const [vacationFilter, setVacationFilter] =
   useState("Pending");
 
-  const [selectedRequest, setSelectedRequest] =
+  const [selectedRequest, setselectedRequest] =
   useState(null);
 
   useEffect(() => {
@@ -138,14 +138,9 @@ const response = await API.get(
 const vacationData =
 response.data.map(
 (request) => ({
-
-
     ...request,
-
-    status:
-      request.status
-
-  })
+    status: request.hostel_status
+})
 );
 
 
@@ -206,31 +201,31 @@ return "Vacation Applications";
     return "Student Status";
   };
 
-  const handleApprove = async (rollNo) => {
+ const handleApprove = async (applicationId) => {
 
-try {
+  try {
 
+    await API.put(
+      `/vacation/approve/${applicationId}`
+    );
 
-await API.put(
-  `/vacation/approve/${rollNo}`
-);
+    setselectedRequest(null);
+    setShowDenyBox(false);
+    setDenyReason("");
 
-setSelectedRequest(null);
-setShowDenyBox(false);
-setDenyReason("");
+    loadStudents();
 
-loadStudents();
+  } catch (error) {
 
-} catch (error) {
+    console.error(error);
 
-
-console.error(error);
-
-
-}
+  }
 
 };
-const handleDeny = async (rollNo) => {
+
+
+
+const handleDeny = async (applicationId) => {
 
   if (!denyReason.trim()) {
     alert("Please enter a rejection reason");
@@ -240,13 +235,13 @@ const handleDeny = async (rollNo) => {
   try {
 
     await API.put(
-      `/vacation/deny/${rollNo}`,
+      `/vacation/deny/${applicationId}`,
       {
-        denialReason: denyReason
+        denialReason
       }
     );
 
-    setSelectedRequest(null);
+    setselectedRequest(null);
     setShowDenyBox(false);
     setDenyReason("");
 
@@ -264,7 +259,7 @@ const filteredStudents =
   type === "vacation"
     ? students.filter(
         (request) =>
-          request.status === vacationFilter
+         request.hostel_status === vacationFilter
       )
     : students;
 
@@ -475,7 +470,7 @@ filteredStudents.map((request, index) => (
 <tr
   key={index}
  onClick={() => {
-  setSelectedRequest(request);
+  setselectedRequest(request);
   setShowDenyBox(false);
   setDenyReason("");
 }}
@@ -508,14 +503,14 @@ filteredStudents.map((request, index) => (
 
     <span
       className={`status-badge ${
-        request.status === "Approved"
+        request.hostel_status === "Approved"
           ? "status-approved"
-          : request.status === "Denied"
+          : request.hostel_status === "Denied"
           ? "status-denied"
           : "status-pending"
       }`}
     >
-      {request.status}
+      {request.hostel_status}
     </span>
 
   </td>
@@ -641,7 +636,7 @@ students.map((student, index) => (
       className="confirm-deny-btn"
       onClick={() =>
         handleDeny(
-          selectedRequest.roll_no
+          selectedRequest._id
           
         )
       }
@@ -656,20 +651,18 @@ students.map((student, index) => (
 
 <div className="vacation-modal-actions">
 
-  {selectedRequest.status !== "Approved" && (
+  {selectedRequest.hostel_status !== "Approved" && (
     <button
       className="approve-btn"
-      onClick={() =>
-        handleApprove(
-          selectedRequest.roll_no
-        )
-      }
+     onClick={() =>
+  handleApprove(selectedRequest._id)
+}
     >
       Approve
     </button>
   )}
 
-  {selectedRequest.status !== "Denied" && (
+  {selectedRequest.hostel_status !== "Denied" && (
     <button
       className="deny-btn"
       onClick={() =>
@@ -683,7 +676,7 @@ students.map((student, index) => (
   <button
     className="close-btn"
     onClick={() => {
-      setSelectedRequest(null);
+      setselectedRequest(null);
       setShowDenyBox(false);
       setDenyReason("");
     }}

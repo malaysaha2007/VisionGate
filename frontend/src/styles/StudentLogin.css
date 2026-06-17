@@ -1,211 +1,392 @@
-:root {
-  --bg-main: #071126;
-  --bg-secondary: #071024;
-  --bg-card: #27242c;
-  --bg-input: #211f1f;
-
-  --accent-primary: #3b82f6;
-  --accent-secondary: #06b6d4;
-
-  --text-primary: #e6eef8;
-  --text-muted: #98a6bf;
-  --text-dark: #021124;
-
-  --danger: #ef4444;
-  --border-light: rgba(255,255,255,0.08);
-
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-
-  --shadow-main: 0 8px 28px rgba(119,202,202,0.4);
-}
+/* ==================================================
+   STUDENT LOGIN PAGE
+================================================== */
 
 .student-login-page {
   min-height: 100vh;
-  background: linear-gradient(
-    180deg,
-    var(--bg-main),
-    var(--bg-secondary)
-  );
 
-  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  font-family: Inter, system-ui, Arial, sans-serif;
+  background:
+    linear-gradient(
+      90deg,
+      #000814 0%,
+      #001845 50%,
+      #000814 100%
+    );
+
+  color: white;
+
+  overflow: hidden;
 }
 
+/* ==================================================
+   LOGIN CARD
+================================================== */
 
-/* LOGIN BOX */
 .login-box {
-  margin: 40px auto 0;
-  width: 500px;
-  padding: 35px;
+  width: 90%;
+  max-width: 600px;
 
+  margin: 18px auto;
 
-  background: var(--bg-card);
+  padding: 32px 40px;
 
-  border-radius: var(--radius-lg);
+  background: rgba(10, 25, 55, 0.88);
 
-  border: 1px solid var(--border-light);
+  border: 1px solid rgba(59, 130, 246, 0.22);
 
-  box-shadow: var(--shadow-main);
+  border-radius: 22px;
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 0 35px rgba(37, 99, 235, 0.12),
+    0 15px 45px rgba(0, 0, 0, 0.45);
+
+  animation: fadeUp 0.45s ease;
 }
+
+/* ==================================================
+   TITLE
+================================================== */
 
 .login-box h2 {
   text-align: center;
-  margin-bottom: 18px;
-  color: var(--accent-secondary);
+
+  font-size: 2.5rem;
+
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
+
+  color: white;
+
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  text-align: center;
+
+  color: #94a3b8;
+
+  font-size: 1rem;
+
+  margin-bottom: 22px;
+}
+
+/* ==================================================
+   FORM
+================================================== */
+
+.login-box form {
+  display: flex;
+  flex-direction: column;
 }
 
 .login-box label {
-  display: block;
-  margin: 10px 0 4px;
-  font-size: 15px;
-  color: var(--text-muted);
+  color: #cbd5e1;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
+  margin-bottom: 8px;
+
+  margin-top: 14px;
 }
+
+/* ==================================================
+   INPUTS
+================================================== */
 
 .login-box input {
   width: 100%;
-  padding: 14px;
-  font-size: 15px;
 
-  border-radius: var(--radius-md);
+  height: 56px;
 
-  border: 1px solid var(--border-light);
+  padding: 0 18px;
 
-  background: var(--bg-input);
+  border-radius: 14px;
 
-  color: var(--text-primary);
+  border: 1px solid rgba(255,255,255,0.12);
+
+  background: rgba(255,255,255,0.06);
+
+  color: white;
+
+  font-size: 1rem;
+
+  transition: all 0.3s ease;
 }
+
+.login-box input::placeholder {
+  color: #94a3b8;
+  font-size: 0.98rem;
+}
+
+.login-box input:focus {
+  outline: none;
+
+  border-color: #3b82f6;
+
+  box-shadow:
+    0 0 0 4px rgba(59,130,246,0.15);
+}
+
+/* ==================================================
+   PASSWORD
+================================================== */
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 60px;
+}
+
+.eye-btn {
+  position: absolute;
+
+  top: 50%;
+  right: 18px;
+
+  transform: translateY(-50%);
+
+  color: #cbd5e1;
+
+  cursor: pointer;
+
+  font-size: 22px;
+
+  transition: 0.2s ease;
+}
+
+.eye-btn:hover {
+  color: #3b82f6;
+}
+
+/* ==================================================
+   BUTTONS
+================================================== */
 
 .actions {
-  text-align: center;
-  margin-top: 18px;
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 24px;
 }
 
-.login-box button {
-  padding: 15px 32px;
+.actions button {
+  flex: 1;
 
-  min-width: 130px;
+  height: 56px;
 
-  border-radius: 12px;
+  border: none;
 
-  font-size: 16px;
+  border-radius: 14px;
+
+  font-size: 1rem;
+
   font-weight: 700;
 
   cursor: pointer;
+
+  transition: all 0.25s ease;
 }
 
-.login-box button.login {
-  background: linear-gradient(
-    90deg,
-    var(--accent-primary),
-    var(--accent-secondary)
-  );
+/* RESET */
 
-  color: var(--text-dark);
+.reset {
+  background: rgba(255,255,255,0.08);
+
+  color: #e2e8f0;
 }
 
-.login-box button.reset {
-  background: transparent;
+.reset:hover {
+  background: rgba(255,255,255,0.14);
 
-  color: var(--danger);
-
-  border: 1px solid var(--danger);
-
-  margin-right: 10px;
+  transform: translateY(-2px);
 }
 
-/* SIGNUP */
-.signup-link {
-  text-align: center;
-  margin-top: 18px;
+/* FORGOT */
+
+.forgot-btn {
+  background: rgba(249,115,22,0.15);
+
+  color: #fb923c;
 }
 
-.signup-link a {
-  display: inline-block;
+.forgot-btn:hover {
+  background: rgba(249,115,22,0.22);
 
-  padding: 10px 16px;
-
-  border-radius: var(--radius-md);
-
-  border: 1px solid var(--accent-primary);
-
-  color: var(--accent-primary);
-
-  text-decoration: none;
-
-  font-weight: 600;
-
-  transition: 0.2s;
+  transform: translateY(-2px);
 }
 
-.signup-link a:hover {
-  background: rgba(59,130,246,0.15);
+/* LOGIN */
+
+.login {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color: white;
 }
+
+.login:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 22px rgba(37,99,235,0.45);
+}
+
+/* ==================================================
+   DIVIDER
+================================================== */
 
 .or-divider {
-  margin: 25px 0;
-  text-align: center;
-  color: #94a3b8;
-  font-weight: 600;
+  display: flex;
+
+  align-items: center;
+
+  margin: 24px 0;
 }
+
+.or-divider::before,
+.or-divider::after {
+  content: "";
+
+  flex: 1;
+
+  height: 1px;
+
+  background: rgba(255,255,255,0.15);
+}
+
+.or-divider span {
+  padding: 0 16px;
+
+  color: #94a3b8;
+
+  font-size: 1rem;
+
+  font-weight: 700;
+}
+
+/* ==================================================
+   GOOGLE SECTION
+================================================== */
 
 .google-signup-section {
   text-align: center;
 }
 
 .google-signup-section p {
-  margin-bottom: 15px;
-  color: #cbd5e1;
-  font-weight: 600;
+  color: #e2e8f0;
+
+  font-size: 1.1rem;
+
+  font-weight: 700;
+
+  margin-bottom: 14px;
 }
 
 .google-btn-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+
+  transform: scale(1.05);
 }
 
+/* ==================================================
+   ANIMATION
+================================================== */
 
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
 
-
-
-
-
-
-.password-wrapper {
-  position: relative;
-  width: 100%;
-  margin-bottom: 14px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.password-wrapper input {
-  width: 100%;
-  padding-right: 45px;
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (max-width: 768px) {
+
+  .student-login-page {
+    overflow-y: auto;
+  }
+
+  .login-box {
+    margin: 20px;
+    padding: 28px;
+  }
+
+  .login-box h2 {
+    font-size: 2.1rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
 }
 
-.eye-btn {
-  position: absolute;
+/* ==================================================
+   MOBILE
+================================================== */
 
-  right: 15px;
-  top: 50%;
+@media (max-width: 480px) {
 
-  transform: translateY(-50%);
+  .student-login-page {
+    overflow-y: auto;
+  }
 
-  cursor: pointer;
+  .login-box {
+    width: 94%;
+    padding: 22px;
+  }
 
-  color: #9ca3af;
+  .login-box h2 {
+    font-size: 1.8rem;
+  }
 
-  font-size: 18px;
+  .login-subtitle {
+    font-size: 0.9rem;
+  }
 
-  z-index: 5;
+  .login-box label {
+    font-size: 0.95rem;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .login-box input {
+    height: 52px;
+    font-size: 0.95rem;
+  }
 
-.eye-btn:hover {
-  color: #00d4ff;
+  .actions button {
+    height: 52px;
+    font-size: 0.95rem;
+  }
+
+  .google-signup-section p {
+    font-size: 1rem;
+  }
+
+  .google-btn-wrapper {
+    transform: scale(1);
+  }
 }

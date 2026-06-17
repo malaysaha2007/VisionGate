@@ -28,6 +28,18 @@ const response = await API.post("/student/login", {
   password,
 });
 
+localStorage.clear();
+
+localStorage.setItem(
+  "roll_no",
+  response.data.roll_no
+);
+
+localStorage.setItem(
+  "role",
+  "student"
+);
+
 localStorage.setItem(
   "roll_no",
   response.data.roll_no
@@ -212,6 +224,15 @@ navigate("/StudentProfile");
             >
               Reset
             </button>
+
+             <button
+    type="button"
+    className="forgot-btn"
+    onClick={() => navigate("/reset-password")}
+  >
+    Forgot Password
+  </button>
+
 
             <button
               type="submit"

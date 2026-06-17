@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/AllPortalHeader.css";
 import PortalHeader from "./PortalHeader";
 
+
 function StudentPortalHeader({
   student,
   logs = [],
@@ -11,6 +12,17 @@ function StudentPortalHeader({
   showVacationButtons = true
 }) {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+
+  localStorage.clear();
+
+  sessionStorage.clear();
+
+  navigate("/");
+
+};
+
 
   const [showMenu, setShowMenu] =
     useState(false);
@@ -134,32 +146,7 @@ function StudentPortalHeader({
               </div>
             </div>
 
-            {showMenu && (
-              <div className="student-dropdown">
-
-                <div className="student-status">
-                  <span
-                    className={`status-indicator ${
-                      isInsideCampus
-                        ? "status-green"
-                        : "status-red"
-                    }`}
-                  />
-
-                  {isInsideCampus
-                    ? "Inside Campus"
-                    : "Outside Campus"}
-                </div>
-
-                <div
-                  className="dropdown-item"
-                  onClick={handleChangePassword}
-                >
-                  Change Password
-                </div>
-
-              </div>
-            )}
+            
           </div>
         )
       }

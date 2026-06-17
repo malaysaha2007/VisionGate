@@ -1,9 +1,13 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/AllPortalHeader.css";
 import PortalHeader from "./PortalHeader";
 
 function AdminPortalHeader({ admin }) {
+
+  const navigate = useNavigate();
+
   const [showMenu, setShowMenu] =
     useState(false);
 
@@ -68,42 +72,7 @@ function AdminPortalHeader({ admin }) {
             </div>
           </div>
 
-          {showMenu && (
-            <div className="portal-dropdown">
-
-              <div
-                className="dropdown-item"
-                onClick={() => {
-                  alert(
-                    "Profile Page Coming Soon"
-                  );
-                }}
-              >
-                👤 Profile
-              </div>
-
-              <div
-                className="dropdown-item logout"
-                onClick={() => {
-
-                  localStorage.removeItem(
-                    "admin"
-                  );
-
-                  sessionStorage.clear();
-
-                  setShowMenu(false);
-
-                  window.location.replace(
-                    "/AdminLogin"
-                  );
-                }}
-              >
-                🚪 Logout
-              </div>
-
-            </div>
-          )}
+         
         </div>
       }
     />

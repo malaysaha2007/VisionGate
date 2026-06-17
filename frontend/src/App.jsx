@@ -19,8 +19,15 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ActivityLogs from "./pages/ActivityLogs";
 import CurfewMail from "./pages/CurfewMail";
 import ApplyVacation from "./pages/ApplyVacation";
+<<<<<<< HEAD
 import VacationRequests from "./pages/VacationRequests";
 import StudentVacationStatus from "./pages/StudentVacationStatus";
+=======
+import AdminVacationApplications from "./pages/AdminVacationApplications";
+import VacationStatus from "./pages/VacationStatus";
+import ResetPassword from "./pages/ResetPassword";
+
+>>>>>>> 24c7ddc23b19d94c0d89a88876b24bfd70918d59
 
 
 function App() {
@@ -84,6 +91,7 @@ function App() {
   path="/activity-logs"
   element={<ActivityLogs />}
 />
+<Route path="/student/vacation-status" element={<VacationStatus />} />
 
 <Route
   path="/curfew-mail"
@@ -103,6 +111,7 @@ function App() {
 />
 
 <Route
+<<<<<<< HEAD
   path="/student/vacation-status"
   element={<StudentVacationStatus />}
 />
@@ -110,6 +119,17 @@ function App() {
 <Route
   path="/vacation-requests"
   element={<VacationRequests />}
+=======
+  path="/admin-vacations"
+  element={<AdminVacationApplications />}
+/>
+
+
+
+<Route
+  path="/reset-password"
+  element={<ResetPassword />}
+>>>>>>> 24c7ddc23b19d94c0d89a88876b24bfd70918d59
 />
 
 
