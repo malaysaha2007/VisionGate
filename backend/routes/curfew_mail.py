@@ -5,6 +5,14 @@ from database.mongodb import db
 from datetime import datetime
 from pydantic import BaseModel
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+EMAIL = os.getenv("EMAIL")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+
 
 
 
@@ -430,8 +438,8 @@ This is an automated message. Please do not reply.
                 server.starttls()
 
                 server.login(
-                    "malaymanpur07@gmail.com",
-                    "nbljlbdkzrdempyb"
+                    EMAIL,
+                    EMAIL_PASSWORD
                 )
 
                 server.send_message(msg)

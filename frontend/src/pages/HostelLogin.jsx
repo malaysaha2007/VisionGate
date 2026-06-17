@@ -38,9 +38,9 @@ function HostelLogin() {
         }
       );
 
-      console.log(response.data);
+localStorage.clear();
 
-      localStorage.setItem(
+localStorage.setItem(
   "hostelUser",
   JSON.stringify({
     name: username,
@@ -48,6 +48,12 @@ function HostelLogin() {
     hostel: hostel
   })
 );
+
+localStorage.setItem(
+  "role",
+  "hostel"
+);
+     
 
 
 
@@ -191,6 +197,19 @@ function HostelLogin() {
             </span>
 
           </div>
+
+          <div className="forgot-password-hostel">
+  <button
+    type="button"
+    onClick={() =>
+      alert(
+        "Password reset is restricted for hostel staff.\n\nPlease contact the system administrator to reset your password."
+      )
+    }
+  >
+    Forgot Password?
+  </button>
+</div>
 
           <button type="submit">
             Login

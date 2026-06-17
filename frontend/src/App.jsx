@@ -21,6 +21,8 @@ import CurfewMail from "./pages/CurfewMail";
 import ApplyVacation from "./pages/ApplyVacation";
 import AdminVacationApplications from "./pages/AdminVacationApplications";
 import VacationStatus from "./pages/VacationStatus";
+import ResetPassword from "./pages/ResetPassword";
+
 
 
 function App() {
@@ -106,6 +108,13 @@ function App() {
 <Route
   path="/admin-vacations"
   element={<AdminVacationApplications />}
+/>
+
+
+
+<Route
+  path="/reset-password"
+  element={<ResetPassword />}
 />
 
 

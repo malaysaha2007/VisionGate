@@ -131,7 +131,6 @@ function AdminDashboard() {
     const query = search.toLowerCase();
 
     const matchesSearch =
-      (log.name || "").toLowerCase().includes(query) ||
       (log.roll || "").toLowerCase().includes(query) ||
       (log.purpose || "").toLowerCase().includes(query);
 
@@ -195,21 +194,7 @@ function AdminDashboard() {
 
 
 
- <div
-  className="stat-card"
-  onClick={() =>
-   navigate("/admin-vacations")
-  }
-  style={{ cursor: "pointer" }}
->
 
-
-  <p>Students On Vacation</p>
-
-  <h2 className="leave-count">
-    {leaveCount}
-  </h2>
-</div>
         </div>
 
         <div className="filter-card">
@@ -268,7 +253,7 @@ function AdminDashboard() {
 
           <input
             type="text"
-            placeholder="Search by Name, Roll Number, or Purpose..."
+            placeholder="Search by Roll Number, or Purpose..."
             value={search}
             onChange={(e) =>
               setSearch(e.target.value)
@@ -281,9 +266,7 @@ function AdminDashboard() {
           <table>
             <thead>
               <tr>
-                <th>Name</th>
                 <th>Roll</th>
-                <th>Room</th>
                 <th>Purpose</th>
                 <th>Out Time</th>
                 <th>In Time</th>
@@ -314,19 +297,23 @@ function AdminDashboard() {
                 filteredLogs.map(
                   (log, index) => (
                     <tr key={index}>
-                      <td>{log.name}</td>
                       <td>{log.roll}</td>
-                      <td>{log.room}</td>
                       <td>{log.purpose}</td>
                       <td>{log.outTime}</td>
                       <td>
                         {log.inTime || "-"}
                       </td>
                       <td>
-                        {log.inTime
-                          ? "IN"
-                          : "OUT"}
-                      </td>
+  <span
+    className={
+      log.inTime
+        ? "status-in"
+        : "status-out"
+    }
+  >
+    {log.inTime ? "IN" : "OUT"}
+  </span>
+</td>
                     </tr>
                   )
                 )

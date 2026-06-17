@@ -401,6 +401,71 @@
   z-index: 1000;
 }
 
+.portal-dropdown {
+  width: 240px;
+
+  background: #10224a;
+
+  border: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.08
+  );
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 40px rgba(
+      0,
+      0,
+      0,
+      0.35
+    );
+}
+
+.dropdown-item {
+  padding: 14px 18px;
+
+  color: white;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: #17386f;
+}
+
+.dropdown-divider {
+  height: 1px;
+
+  background: rgba(
+    255,
+    255,
+    255,
+    0.08
+  );
+
+  margin: 4px 0;
+}
+
+.logout {
+  color: #ef4444;
+}
+
+.logout:hover {
+  background: rgba(
+    239,
+    68,
+    68,
+    0.12
+  );
+}
+
 .student-status {
   padding: 14px 16px;
   color: white;

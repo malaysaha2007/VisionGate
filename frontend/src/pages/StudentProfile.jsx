@@ -18,7 +18,6 @@ function StudentProfile() {
 
   // State to control open/close toggles
   const [isMovementOpen, setIsMovementOpen] = useState(true);
-  const [isVacationOpen, setIsVacationOpen] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -54,10 +53,7 @@ function StudentProfile() {
     );
   }
 
-  // Split logs into Movement and Vacation
-  const vacationLogs = logs.filter(
-    (log) => log.purpose === "Vacation" || log.purpose === "Leave"
-  );
+ 
   
   const movementLogs = logs.filter(
     (log) => log.purpose !== "Vacation" && log.purpose !== "Leave"
@@ -100,39 +96,7 @@ function StudentProfile() {
       });
   };
 
-  // --- VACATION ROW RENDERER ---
-  const renderVacationRows = (logData) => {
-    if (logData.length === 0) {
-      return (
-        <tr>
-          <td colSpan="4">No records found.</td>
-        </tr>
-      );
-    }
-
-    return [...logData]
-      .sort((a, b) => {
-        const aTime = new Date(a.leaveDate || a.outTime || 0);
-        const bTime = new Date(b.leaveDate || b.outTime || 0);
-        return bTime - aTime;
-      })
-      .map((log, index) => {
-        // Fallbacks included just in case your backend uses different variable names
-        const destination = log.destination || "-";
-        const reason = log.reason || log.purpose || "-";
-        const leaveDate = log.leaveDate || log.outTime || "-";
-        const returnDate = log.returnDate || log.inTime || "-";
-
-        return (
-          <tr key={index}>
-            <td>{destination}</td>
-            <td>{reason}</td>
-            <td>{leaveDate}</td>
-            <td>{returnDate}</td>
-          </tr>
-        );
-      });
-  };
+ 
 
   return (
     <div className="student-profile-page">
@@ -176,29 +140,7 @@ function StudentProfile() {
           </table>
         )}
 
-        {/* --- VACATION LOG SECTION --- */}
-        <div 
-          className="collapsible-header" 
-          onClick={() => setIsVacationOpen(!isVacationOpen)}
-        >
-          <h2 className="table-title">Vacation Log</h2>
-          <span className="toggle-icon">{isVacationOpen ? "▲" : "▼"}</span>
-        </div>
-
-        {isVacationOpen && (
-          <table>
-            <thead>
-              <tr>
-                <th>Destination</th>
-                <th>Reason</th>
-                <th>Leave Date</th>
-                <th>Return Date</th>
-              </tr>
-            </thead>
-            <tbody>{renderVacationRows(vacationLogs)}</tbody>
-          </table>
-        )}
-
+        
       </div>
       <Footer />
     </div>
