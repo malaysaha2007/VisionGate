@@ -10,3 +10,4 @@ python-jose
 cloudinary
 requests
 httpx
+openpyxl
