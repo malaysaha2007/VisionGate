@@ -7,6 +7,9 @@ from pydantic import BaseModel
 
 from bson import ObjectId
 
+
+
+
 class DenyVacationRequest(
     BaseModel):
     
@@ -32,6 +35,8 @@ async def apply_vacation(
 
     try:
 
+        from datetime import datetime
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         db.vacation_application.insert_one({
 
             "roll_no": data.roll_no,
@@ -43,7 +48,8 @@ async def apply_vacation(
             "reason": data.reason,
             "hostel_status": "Pending",
             "gate_status": "Not Requested",
-            "vacation_status": "NOT_STARTED"
+            "vacation_status": "NOT_STARTED",
+            "created_at": current_time
 
         })
 
@@ -221,3 +227,20 @@ async def gate_deny_vacation(application_id: str):
     return {
         "message": "Gate Approval Denied"
     }
+    
+    
+    
+    
+    # // VACATION STATUS PAGE //#
+    
+@router.get("/student/{roll_no}")
+async def get_student_vacations(roll_no: str):
+
+    vacations = list(
+        db.vacation_application.find(
+            {"roll_no": roll_no},
+            {"_id": 0}
+        )
+    )
+
+    return vacations

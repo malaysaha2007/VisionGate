@@ -15,19 +15,24 @@ function VacationStatus() {
   const [student, setStudent] = useState(null);
   const [vacations, setVacations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openIndex, setOpenIndex] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await API.get(`/student/profile/${rollNo}`); 
-        setStudent(res.data.student || null);
-        
-        const allLogs = res.data.logs || [];
-        const vacationRequests = allLogs.filter(
-          (log) => log.purpose === "Vacation" || log.purpose === "Leave"
-        );
-        
-        setVacations(vacationRequests);
+      const studentRes = await API.get(
+  `/student/profile/${rollNo}`
+);
+
+setStudent(studentRes.data.student || null);
+
+const vacationRes = await API.get(
+  `/vacation/student/${rollNo}`
+);
+
+setVacations(
+  (vacationRes.data || []).reverse()
+);
       } catch (error) {
         console.error("Error fetching vacation data:", error);
       } finally {
@@ -39,80 +44,231 @@ function VacationStatus() {
       fetchData();
     }
   }, [rollNo]);
+return (
+  <div className="vacation-status-page">
+    <Navbar showLogout={true} />
 
-  return (
-    <div className="vacation-status-page">
-      <Navbar showLogout={true} />
-      
-      {student && (
-        <StudentPortalHeader 
-          student={student} 
-          logs={vacations} 
-          showVacationButtons={false} 
-        />
-      )}
+    {student && (
+      <StudentPortalHeader
+        student={student}
+        logs={vacations}
+        showVacationButtons={false}
+      />
+    )}
 
-      <div className="vacation-unique-container">
-        <h2 className="page-title">Vacation Status</h2>
-        
-        <div className="student-info-row">
-          <div className="info-box">
-            <span className="info-label">Name :</span> {student?.name || "Loading..."}
+    <div className="vacation-container">
+
+      <div className="vacation-header">
+  <h1>Vacation Status</h1>
+</div>
+
+      {/* Student Info Cards */}
+      <div className="student-info-grid">
+  <div className="glass-card">
+    <span>Name</span>
+    <h3>{student?.name}</h3>
+  </div>
+
+  <div className="glass-card">
+    <span>Roll Number</span>
+    <h3>{student?.roll || rollNo}</h3>
+  </div>
+</div>
+
+
+
+      {/* Summary Cards */}
+
+  <div className="summary-grid">
+
+  <div className="summary-card">
+    <h2>{vacations.length}</h2>
+    <p>Total Requests</p>
+  </div>
+
+  <div className="summary-card pending">
+    <h2>
+      {
+        vacations.filter(
+          (v) =>
+               v.hostel_status === "Pending" ||
+            v.gate_status === "Pending"
+        ).length
+      }
+    </h2>
+    <p>Pending</p>
+  </div>
+
+  <div className="summary-card approved">
+    <h2>
+      {
+        vacations.filter(
+          (v) =>
+            v.hostel_status === "Approved" &&
+            v.gate_status === "Approved"
+        ).length
+      }
+    </h2>
+    <p>Approved</p>
+  </div>
+
+  <div className="summary-card rejected">
+    <h2>
+      {
+        vacations.filter(
+          (v) =>
+            v.hostel_status === "Denied" ||
+            v.gate_status === "Denied"
+        ).length
+      }
+    </h2>
+    <p>Rejected</p>
+  </div>
+
+</div>
+
+      {/* Table */}
+
+<div className="vacation-list">
+
+  <div className="vacation-table-header">
+    <span>Destination</span>
+    <span>Leave Date</span>
+    <span>Return Date</span>
+  </div>
+
+  {loading ? (
+    <div className="empty-state">
+      Loading requests...
+    </div>
+  ) : vacations.length === 0 ? (
+    <div className="empty-state">
+      No vacation requests found.
+    </div>
+  ) : (
+    vacations.map((vac, index) => {
+      const isOpen = openIndex === index;
+
+      return (
+        <div
+          key={index}
+          className={`vacation-item ${isOpen ? "open" : ""}`}
+        >
+          <div
+            className="vacation-row"
+            onClick={() =>
+              setOpenIndex(isOpen ? null : index)
+            }
+          >
+            <span>
+              {isOpen ? "▼" : "▶"}{" "}
+              {vac.destination || "-"}
+            </span>
+
+            <span>
+              {vac.leave_date ||
+                vac.leaveDate ||
+                "-"}
+            </span>
+
+            <span>
+              {vac.return_date ||
+                vac.returnDate ||
+                "-"}
+            </span>
           </div>
-          <div className="info-box">
-            <span className="info-label">Roll No :</span> {student?.roll || rollNo}
-          </div>
+
+ {isOpen && (
+  <div className="vacation-details">
+
+    <div className="submitted-date">
+      Submitted on: {vac.created_at || "-"}
+    </div>
+
+    <div className="details-cards">
+
+      <div className="mini-status-card">
+        <div className="status-value">
+          {vac.reason || "-"}
         </div>
 
-        <div className="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Destination</th>
-                <th>Reason</th>
-                <th>Leave Date</th>
-                <th>Return Date</th>
-                <th>Status</th>
-                <th>Denial Reason</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan="6">Loading requests...</td>
-                </tr>
-              ) : vacations.length === 0 ? (
-                <tr>
-                  <td colSpan="6">No vacation requests found.</td>
-                </tr>
-              ) : (
-                vacations.map((vac, index) => (
-                  <tr key={index}>
-                    <td>{vac.destination || "-"}</td>
-                    <td>{vac.reason || vac.purpose || "-"}</td>
-                    <td>{vac.leaveDate || vac.outTime || "-"}</td>
-                    <td>{vac.returnDate || vac.inTime || "-"}</td>
-                    <td>
-                      <span className={`status-badge ${vac.status?.toLowerCase() || 'pending'}`}>
-                        {vac.status || "Pending"}
-                      </span>
-                    </td>
-                    <td>{vac.denialReason || "-"}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+        <div className="status-label">
+          📝 Reason
+        </div>
+      </div>
+
+      <div className="mini-status-card">
+        <div className="status-value">
+          {vac.leave_campus_time || "-"}
         </div>
 
-        <button onClick={() => navigate(-1)} className="back-btn">
+        <div className="status-label">
+          🕒 Campus Leaving Time
+        </div>
+      </div>
+
+    </div>
+
+    <div className="status-cards">
+
+      <div className="mini-status-card hostel">
+        <div className="status-value">
+          {vac.hostel_status || "Pending"}
+        </div>
+
+        <div className="status-label">
+          𖠿 Hostel Status
+        </div>
+      </div>
+
+      <div className="mini-status-card gate">
+        <div className="status-value">
+          {vac.gate_status || "Not Requested"}
+        </div>
+
+        <div className="status-label">
+          🏛️ Gate Status
+        </div>
+      </div>
+
+ <div className="mini-status-card vacation">
+  <div className="status-value">
+    {(vac.vacation_status || "NOT_STARTED")
+      .replaceAll("_", " ")
+      .toLowerCase()
+      .replace(/\b\w/g, c => c.toUpperCase())}
+  </div>
+
+  <div className="status-label">
+    ✈ Vacation Status
+  </div>
+</div>
+
+    </div>
+
+  </div>
+)}
+        </div>
+      );
+    })
+  )}
+
+</div>
+
+      <div className="button-area">
+        <button
+          onClick={() => navigate(-1)}
+          className="back-btn"
+        >
           ← Back
         </button>
       </div>
 
-      <Footer />
     </div>
-  );
+
+    <Footer />
+  </div>
+);
 }
 
 export default VacationStatus;

@@ -185,7 +185,26 @@ function AdminDashboard() {
   }
   style={{ cursor: "pointer" }}
 >
-  <p>View all Vacation Applications</p>
+  <p>Vacation Applications</p>
+
+  <h2 className="leave-count">
+    {leaveCount}
+  </h2>
+</div>
+
+
+
+
+ <div
+  className="stat-card"
+  onClick={() =>
+   navigate("/admin-vacations")
+  }
+  style={{ cursor: "pointer" }}
+>
+
+
+  <p>Students On Vacation</p>
 
   <h2 className="leave-count">
     {leaveCount}

@@ -21,6 +21,7 @@ async def get_all_vacations():
 @router.get("/admin/dashboard")
 async def get_dashboard_data():
 
+    
     logs_cursor = db.entry_exit_logs.find().sort(
         "outTime",
         -1
@@ -30,6 +31,12 @@ async def get_dashboard_data():
 
     inside_count = 0
     outside_count = 0
+    
+    active_vacation_count = db.vacation_application.count_documents(
+    {
+        "vacation_status": "ACTIVE"
+    }
+)
 
     for log in logs_cursor:
 
@@ -99,6 +106,9 @@ async def get_dashboard_data():
         "students_inside": inside_count,
 
         "students_outside": outside_count,
+        
+        "on_vacation_students": active_vacation_count,
+
 
         "logs": logs
 

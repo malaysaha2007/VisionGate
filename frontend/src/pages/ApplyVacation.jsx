@@ -52,14 +52,37 @@ const [formData, setFormData] = useState({
   returnDate: ""
 });
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
 
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  let { name, value } = e.target;
 
-  };
+  // Capitalize first letter of every word
+  if (name === "destination" || name === "reason") {
+    value = value.replace(
+      /\b\w/g,
+      (char) => char.toUpperCase()
+    );
+  }
+
+  // Limit reason to 100 words
+  if (name === "reason") {
+
+    const words = value
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
+    if (words.length > 100) {
+      return;
+    }
+  }
+
+  setFormData({
+    ...formData,
+    [name]: value
+  });
+
+};
 
   const handleSubmit = async (e) => {
 
@@ -253,6 +276,15 @@ const maxDate = maxLeaveDate.toISOString().split("T")[0];
       placeholder="Enter reason for vacation"
       required
     />
+
+    <div className="word-count">
+  {
+    formData.reason
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length
+  } / 100 words
+</div>
 
   </div>
 
