@@ -16,15 +16,14 @@ import {
 
 import "../styles/AboutVisionGate.css";
 
+import API from "../services/api";
+
 //mockdata
-const mockData = [
-  { id: 1, text: `Feedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message here
-      Feedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message here
-      `, user: "Alice", rating: 3 },
-  { id: 2, text: `Great!`, user: "Bob", rating: 4},
-];
 
 function AboutVisionGate() {
+
+  const [feedbacks, setFeedbacks] = useState([]);
+
 
 
   const [showTeam, setShowTeam] =
@@ -34,24 +33,57 @@ function AboutVisionGate() {
 
 const [feedback, setFeedback] = useState("");
 
-const handleFeedbackSubmit = () => {
 
-  if (!name || !feedback) {
+const handleFeedbackSubmit = async () => {
 
+  if (!name || !feedback || rating === 0) {
     alert("Please fill all fields");
-
     return;
+  }
+
+  try {
+
+    await API.post("/feedback/submit", {
+      name,
+      feedback,
+      rating
+    });
+
+    alert("Thank you for your feedback!");
+
+    setName("");
+    setFeedback("");
+    setRating(0);
+
+    fetchFeedbacks();
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Failed to submit feedback");
+
+  }
+};
+
+const fetchFeedbacks = async () => {
+
+  try {
+
+    const response =
+      await API.get("/feedback/all");
+
+    setFeedbacks(response.data);
+
+  } catch (error) {
+
+    console.error(error);
 
   }
 
-  alert(
-    "Thank you for your feedback!"
-  );
-
-  setName("");
-  setFeedback("");
-
 };
+
+
 
  //for stars
 const colors = {
@@ -71,10 +103,14 @@ const [index, setIndex] = useState(0);
 
 useEffect(() => {
   const timer = setInterval(() => {
-    setIndex((prev) => (prev + 1) % mockData.length);
+    setIndex((prev) => (prev + 1) % feedbacks.length);
   }, 5000);
 
   return () => clearInterval(timer); 
+}, []);
+
+useEffect(() => {
+  fetchFeedbacks();
 }, []);
 
   return (
@@ -324,6 +360,9 @@ useEffect(() => {
 
 
 
+
+
+
 <section className="about-card">
 
   <h2>
@@ -354,7 +393,6 @@ useEffect(() => {
                <FaStar
                    key={index}
                    size={25}
-                   onChange={(e) => setRating(e.target.value)}
                    color={(rating) > index ? colors.orange : colors.grey}
                    onClick={() => handleClickStar(index + 1)}
                 />
@@ -396,7 +434,7 @@ useEffect(() => {
   <div className="feedback-display">
       <AnimatePresence mode="wait">
         <motion.div
-          key={mockData[index].id}
+          key={feedbacks[index]?.id}
           initial={{ opacity: 0, x: 0, y: 50 }}
           animate={{ opacity: 1, x: 0, y:0 }}
           exit={{ opacity: 0, x: 0 , y: -50}}
@@ -404,8 +442,7 @@ useEffect(() => {
           
           <div className="user">
             <img alt="user-profile" src="/developers/aditi_verma.jpeg" className="developer-photo"/>
-            <h3>UserName</h3>
-          </div>
+<h3>{feedbacks[index]?.name}</h3>          </div>
         
           <div className="rating-date">
             {stars.map((_, starIndex) => {
@@ -413,18 +450,17 @@ useEffect(() => {
                 <FaStar 
                   key = {starIndex}
                   size= {20}
-                  color = {(mockData[index].rating) > starIndex ? colors.orange : colors.grey}
+                  color = {(feedbacks[index]?.rating) > starIndex ? colors.orange : colors.grey}
                 />
               )
             })}
             <p>dd/mm/yyyy</p>
             
           </div>
-          <p>{mockData[index].text}</p>
-
+<p>{feedbacks[index]?.feedback}</p>
         </motion.div>
       </AnimatePresence>
-      <button className="feedback-next-btn" onClick={() => setIndex((prev) => (prev + 1) % mockData.length)}>
+      <button className="feedback-next-btn" onClick={() => setIndex((prev) => (prev + 1) % feedbacks.length)}>
         Next
       </button>
 
