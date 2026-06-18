@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
 import {
   FaGithub,
@@ -8,15 +9,20 @@ import {
   FaUniversity,
   FaUsers,
   FaLinkedin,
-  FaCode
-
+  FaCode,
+  FaStar
 } from "react-icons/fa";
 
 
-
-
-
 import "../styles/AboutVisionGate.css";
+
+//mockdata
+const mockData = [
+  { id: 1, text: `Feedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message here
+      Feedback message hereFeedback message hereFeedback message hereFeedback message hereFeedback message here
+      `, user: "Alice", rating: 3 },
+  { id: 2, text: `Great!`, user: "Bob", rating: 4},
+];
 
 function AboutVisionGate() {
 
@@ -26,13 +32,11 @@ function AboutVisionGate() {
 
   const [name, setName] = useState("");
 
-const [email, setEmail] = useState("");
-
 const [feedback, setFeedback] = useState("");
 
 const handleFeedbackSubmit = () => {
 
-  if (!name || !email || !feedback) {
+  if (!name || !feedback) {
 
     alert("Please fill all fields");
 
@@ -45,11 +49,33 @@ const handleFeedbackSubmit = () => {
   );
 
   setName("");
-  setEmail("");
   setFeedback("");
 
 };
 
+ //for stars
+const colors = {
+        orange: "#F2C265",
+        grey: "#a9a9a9"
+    }
+const stars = Array(5).fill(0)
+
+const [rating, setRating] = useState(0)
+
+const handleClickStar = value => {
+    setRating(value)
+};
+
+//for slideshow
+const [index, setIndex] = useState(0);
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    setIndex((prev) => (prev + 1) % mockData.length);
+  }, 5000);
+
+  return () => clearInterval(timer); 
+}, []);
 
   return (
 
@@ -205,104 +231,6 @@ const handleFeedbackSubmit = () => {
 </section>
 
 
-
-
-
-      <section className="about-card">
-
-  <h2>
-    Version Information
-  </h2>
-
-  <p>
-    <strong>Current Version:</strong>
-    {" "}
-    1.0
-  </p>
-
-  <p>
-    <strong>Release Year:</strong>
-    {" "}
-    2026
-  </p>
-
-  <p>
-    <strong>Status:</strong>
-    {" "}
-    Active Development
-  </p>
-
-</section>
-
-        <section className="about-card">
-
-  <h2>
-    Project Contributions
-  </h2>
-
-  <ul>
-
-    <li>
-      Frontend Development
-    </li>
-
-    <li>
-      Backend Development
-    </li>
-
-    <li>
-      Face Recognition Integration
-    </li>
-
-    <li>
-      Database Design
-    </li>
-
-    <li>
-      UI/UX Development
-    </li>
-
-    <li>
-      System Testing
-    </li>
-
-  </ul>
-
-</section>
-
-<section className="about-card">
-
-  <h2>
-    Future Enhancements
-  </h2>
-
-  <ul>
-
-    <li>
-      Mobile Application Support
-    </li>
-
-    <li>
-      QR-Based Verification
-    </li>
-
-    <li>
-      Real-Time Notifications
-    </li>
-
-    <li>
-      Advanced Analytics Dashboard
-    </li>
-
-    <li>
-      AI-Based Risk Detection
-    </li>
-
-  </ul>
-
-</section>
-
-
  <section className="about-card about-wide">
 
   <h2>
@@ -360,6 +288,42 @@ const handleFeedbackSubmit = () => {
 
 
 </section>
+
+
+<section className="about-card">
+
+  <h2>
+    Future Enhancements
+  </h2>
+
+  <ul>
+
+    <li>
+      Mobile Application Support
+    </li>
+
+    <li>
+      QR-Based Verification
+    </li>
+
+    <li>
+      Real-Time Notifications
+    </li>
+
+    <li>
+      Advanced Analytics Dashboard
+    </li>
+
+    <li>
+      AI-Based Risk Detection
+    </li>
+
+  </ul>
+
+</section>
+
+
+
 <section className="about-card">
 
   <h2>
@@ -383,14 +347,20 @@ const handleFeedbackSubmit = () => {
       }
     />
 
-    <input
-      type="email"
-      placeholder="Email ID"
-      value={email}
-      onChange={(e) =>
-        setEmail(e.target.value)
-      }
-    />
+    <div className="star-feedback">
+      <p>Rate your experience</p>
+     {stars.map((_, index) => {
+          return (
+               <FaStar
+                   key={index}
+                   size={25}
+                   onChange={(e) => setRating(e.target.value)}
+                   color={(rating) > index ? colors.orange : colors.grey}
+                   onClick={() => handleClickStar(index + 1)}
+                />
+           )
+       })}
+  </div>
 
     <textarea
       placeholder="Write your feedback..."
@@ -409,6 +379,59 @@ const handleFeedbackSubmit = () => {
     </button>
 
   </div>
+
+</section>
+
+
+ <section className="about-card about-wide">
+
+  <h2>
+    Feedbacks
+  </h2>
+
+  <p className="feedback-phrase">
+    Insights from our community
+  </p>
+
+  <div className="feedback-display">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={mockData[index].id}
+          initial={{ opacity: 0, x: 0, y: 50 }}
+          animate={{ opacity: 1, x: 0, y:0 }}
+          exit={{ opacity: 0, x: 0 , y: -50}}
+        >
+          
+          <div className="user">
+            <img alt="user-profile" src="/developers/aditi_verma.jpeg" className="developer-photo"/>
+            <h3>UserName</h3>
+          </div>
+        
+          <div className="rating-date">
+            {stars.map((_, starIndex) => {
+              return (
+                <FaStar 
+                  key = {starIndex}
+                  size= {20}
+                  color = {(mockData[index].rating) > starIndex ? colors.orange : colors.grey}
+                />
+              )
+            })}
+            <p>dd/mm/yyyy</p>
+            
+          </div>
+          <p>{mockData[index].text}</p>
+
+        </motion.div>
+      </AnimatePresence>
+      <button className="feedback-next-btn" onClick={() => setIndex((prev) => (prev + 1) % mockData.length)}>
+        Next
+      </button>
+
+  </div>
+  
+  
+
 
 </section>
 
