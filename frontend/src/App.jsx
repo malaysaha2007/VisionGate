@@ -12,15 +12,18 @@ import HostelStudents from "./pages/HostelStudents";
 import StudentStatusPage from "./pages/StudentStatusPage";
 import AddStudents from "./pages/AddStudents";
 import EditStudent from "./pages/EditStudent";
-import StudentlLogin from "./pages/StudentLogin";
 import FaceRegistration from "./pages/FaceRegistration";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import ActivityLogs from "./pages/ActivityLogs";
 import CurfewMail from "./pages/CurfewMail";
 import ApplyVacation from "./pages/ApplyVacation";
-import VacationRequests from "./pages/VacationRequests";
-import StudentVacationStatus from "./pages/StudentVacationStatus";
+import AdminVacationApplications from "./pages/AdminVacationApplications";
+import VacationStatus from "./pages/VacationStatus";
+import ResetPassword from "./pages/ResetPassword";
+
+
+
 
 
 function App() {
@@ -84,6 +87,7 @@ function App() {
   path="/activity-logs"
   element={<ActivityLogs />}
 />
+<Route path="/student/vacation-status" element={<VacationStatus />} />
 
 <Route
   path="/curfew-mail"
@@ -103,13 +107,13 @@ function App() {
 />
 
 <Route
-  path="/student/vacation-status"
-  element={<StudentVacationStatus />}
+  path="/admin-vacations"
+  element={<AdminVacationApplications />}
 />
 
 <Route
-  path="/vacation-requests"
-  element={<VacationRequests />}
+  path="/reset-password"
+  element={<ResetPassword />}
 />
 
 

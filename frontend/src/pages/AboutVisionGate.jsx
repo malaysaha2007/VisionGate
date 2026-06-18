@@ -338,7 +338,7 @@ const handleFeedbackSubmit = () => {
   </a>
 
   <a
-    href="https://your-deployment-link.com"
+    href="https://vision-gate-sbta.vercel.app"
     target="_blank"
     rel="noopener noreferrer"
     className="connect-item"

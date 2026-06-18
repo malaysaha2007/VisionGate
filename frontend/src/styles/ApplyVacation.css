@@ -103,6 +103,17 @@
   color:#00d4ff;
 }
 
+
+.word-count {
+  text-align: right;
+
+  margin-top: 6px;
+
+  font-size: 0.85rem;
+
+  color: #94a3b8;
+}
+
 @media(max-width:768px){
 
   .vacation-student-info{

@@ -1,39 +1,35 @@
-:root{
-  --bg-main:#071126;
-  --bg-secondary:#071024;
-  --bg-card:#121b33;
-  --accent-primary:#3b82f6;
-  --accent-secondary:#06b6d4;
-  --text-primary:#e6eef8;
-  --text-muted:#98a6bf;
-  --success:#10b981;
-  --danger:#ef4444;
-  --border-light:rgba(255,255,255,0.08);
+:root {
+  --bg-main: #071126;
+  --bg-secondary: #071024;
+  --bg-card: #121b33;
+  --accent-primary: #3b82f6;
+  --accent-secondary: #06b6d4;
+  --text-primary: #e6eef8;
+  --text-muted: #98a6bf;
+  --success: #10b981;
+  --danger: #ef4444;
+  --border-light: rgba(255, 255, 255, 0.08);
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-  font-family:Inter,system-ui,Arial,sans-serif;
+body {
+  font-family: Inter, system-ui, Arial, sans-serif;
 }
 
 /* PAGE */
-.student-profile-page{
-  min-height:100vh;
-  background:linear-gradient(
-    180deg,
-    var(--bg-main),
-    var(--bg-secondary)
-  );
-  color:var(--text-primary);
+.student-profile-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg-main), var(--bg-secondary));
+  color: var(--text-primary);
 }
 
 /* PROFILE CONTAINER */
-.profile-container{
+.profile-container {
   max-width: 1250px;
   margin: 30px auto;
   background: var(--bg-card);
@@ -43,139 +39,155 @@ body{
 }
 
 /* DETAILS */
-.details-title{
-  text-align:center;
-  margin-bottom:28px;
-  color:var(--accent-secondary);
-  font-size:30px;
+.details-title {
+  text-align: center;
+  margin-bottom: 28px;
+  color: var(--accent-secondary);
+  font-size: 30px;
 }
 
-.student-profile-grid{
-   display:grid;
-  grid-template-columns:repeat(2, 550px);
-  gap:20px;
-  justify-content:center;
-  margin-bottom:40px;
+/* =========================================
+   STUDENT DETAILS GRID (Aligned & Sleek)
+   ========================================= */
+.student-profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 40px;
+  margin-top: 10px;
 }
 
-.student-profile-grid p{
-  display:flex;
-  align-items:center;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.05);
-  padding:18px 20px;
-  min-height:80px; 
-  border-radius:8px; 
-  font-size:17px;
-  line-height:1.5;
-  transition:all 0.25s ease;
+.student-profile-grid p {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px 24px;
+  border-radius: 10px;
+  margin: 0;
+  font-size: 16px;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
 }
 
-.student-profile-grid strong{
-  color:var(--accent-secondary);
-  margin-right:8px;
-  white-space:nowrap;
+.student-profile-grid p:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
 }
 
-/* =========================
-   NEW: COLLAPSIBLE HEADERS
-========================= */
+.student-profile-grid p strong {
+  color: var(--accent-secondary);
+  font-weight: 600;
+  min-width: 160px; /* Forces all text to align perfectly! */
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* =========================================
+   COLLAPSIBLE HEADERS (Dark Grey & Cyan)
+   ========================================= */
 .collapsible-header {
+  background: #2a2a35; 
+  padding: 16px 24px;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  padding: 10px 15px;
-  margin-bottom: 15px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 8px;
+  margin-top: 30px;
+  margin-bottom: 5px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.2s ease;
 }
 
 .collapsible-header:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: #31313e;
 }
 
 .table-title {
-  margin-bottom: 0; /* Removed bottom margin since the flex container handles spacing */
-  color: var(--accent-secondary);
-  font-size: 24px;
+  color: #00bcd4; 
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0;
 }
 
 .toggle-icon {
+  color: #00bcd4;
   font-size: 18px;
-  color: var(--accent-secondary);
-  user-select: none; /* Prevents text highlighting when double-clicking */
+  user-select: none;
 }
 
-/* TABLES */
-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-bottom:40px;
-  overflow:hidden;
-  border-radius:12px;
+/* =========================================
+   SCOPED TABLES (Deep Navy Blue)
+   ========================================= */
+.profile-container table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  background-color: #192346;
 }
 
-th{
-  background:linear-gradient(
-    90deg,
-    var(--accent-primary),
-    var(--accent-secondary)
-  );
-  color:#021124;
-  padding:14px;
-  font-size:15px;
+.profile-container th {
+  background-color: #263e7b;
+  color: #ffffff;
+  padding: 18px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
 }
 
-td{
-  padding:14px;
-  text-align:center;
-  border-top:1px solid rgba(255,255,255,0.05);
+.profile-container td {
+  padding: 16px 24px;
+  color: #e2e8f0;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.out-row{
-  background:rgba(239,68,68,0.10);
+.profile-container th:first-child,
+.profile-container td:first-child {
+  text-align: left;
 }
 
-.in-row{
-  background:rgba(16,185,129,0.10);
+.profile-container td[colSpan] {
+  text-align: center;
+  padding: 25px;
+  color: #94a3b8;
+  font-style: italic;
 }
 
-/* MOBILE */
-@media (max-width: 900px){
-  .profile-container{
-    padding:25px;
-  }
-  .student-profile-grid{
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-  }
-}
-
-@media (max-width: 768px){
-  .student-profile-grid{
-    grid-template-columns:1fr;
-  }
-  .details-title{
-    font-size:24px;
-  }
-  .table-title{
-    font-size:20px;
-  }
-  .student-profile-grid p{
-    font-size:16px;
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
+@media (max-width: 900px) {
+  .profile-container {
+    padding: 25px;
   }
 }
 
-@media (max-width: 480px){
-  .profile-container{
-    padding:18px;
-    margin:15px;
+@media (max-width: 768px) {
+  .student-profile-grid {
+    grid-template-columns: 1fr;
   }
-  .student-profile-grid p{
-    padding:14px;
-    font-size:15px;
+  .details-title {
+    font-size: 24px;
+  }
+  .table-title {
+    font-size: 20px;
+  }
+  .student-profile-grid p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 18px;
+    margin: 15px;
+  }
+  .student-profile-grid p {
+    padding: 14px;
+    font-size: 15px;
   }
 }
