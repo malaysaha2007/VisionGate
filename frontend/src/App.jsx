@@ -12,7 +12,6 @@ import HostelStudents from "./pages/HostelStudents";
 import StudentStatusPage from "./pages/StudentStatusPage";
 import AddStudents from "./pages/AddStudents";
 import EditStudent from "./pages/EditStudent";
-import StudentlLogin from "./pages/StudentLogin";
 import FaceRegistration from "./pages/FaceRegistration";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -22,6 +21,8 @@ import ApplyVacation from "./pages/ApplyVacation";
 import AdminVacationApplications from "./pages/AdminVacationApplications";
 import VacationStatus from "./pages/VacationStatus";
 import ResetPassword from "./pages/ResetPassword";
+
+
 
 
 
@@ -109,8 +110,6 @@ function App() {
   path="/admin-vacations"
   element={<AdminVacationApplications />}
 />
-
-
 
 <Route
   path="/reset-password"
