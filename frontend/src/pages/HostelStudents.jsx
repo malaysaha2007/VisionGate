@@ -18,6 +18,15 @@ function HostelStudents() {
   const [search, setSearch] = useState("");
   const [refreshing, setRefreshing] = useState(false);
 
+  const [showViewModal, setShowViewModal] = useState(false);
+const [selectedStudent, setSelectedStudent] = useState(null);
+
+const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+const [deleteConfirmText,
+  setDeleteConfirmText] = useState("");
+
+
   useEffect(() => {
     if (user) {
       fetchStudents();
@@ -28,6 +37,9 @@ function HostelStudents() {
     setRefreshing(true);
     try {
       const response = await API.get(`/hostel/students/${user.hostel}`);
+
+      console.log("Students API:", response.data);
+
       setStudents(response.data || []);
     } catch (error) {
       console.error(error);
@@ -37,6 +49,25 @@ function HostelStudents() {
       }, 300);
     }
   };
+
+
+  const handleView = async (rollNo) => {
+  try {
+
+    const res = await API.get(
+      `/student/profile/${rollNo}`
+    );
+
+    setSelectedStudent(
+      res.data.student
+    );
+
+    setShowViewModal(true);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   const exportCSV = () => {
     if (filteredStudents.length === 0) {
@@ -236,17 +267,19 @@ function HostelStudents() {
             Showing {filteredStudents.length} Students
           </p>
 
+
+
           {/* TABLE */}
           <div className="table-wrapper">
             <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Roll No</th>
-                  <th>Room</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
+             <thead>
+  <tr>
+    <th></th>
+    <th>Name</th>
+    <th>Roll No</th>
+    <th>Room</th>
+  </tr>
+</thead>
               <tbody>
                 {filteredStudents.length === 0 ? (
                   <tr>
@@ -254,60 +287,276 @@ function HostelStudents() {
                   </tr>
                 ) : (
                   filteredStudents.map((student) => (
-                    <tr key={student._id}>
-                      <td>{student.name}</td>
-                      <td>{student.roll_no}</td>
-                      <td>{student.room}</td>
-                      <td>
-                        <div className="actions">
-                          <Link
-                            to="/StudentProfile"
-                            state={{ student }}
-                            className="view"
-                          >
-                            View
-                          </Link>
-                          {(user.role === "Warden" ||
-                            user.role === "Caretaker") && (
-                            <>
-                              <Link
-                                to="/edit-student"
-                                state={{ student }}
-                                className="edit"
-                              >
-                                Edit
-                              </Link>
-                              <button
-                                className="delete"
-                                onClick={async () => {
-                                  const confirmDelete = window.confirm(
-                                    "Are You Sure?"
-                                  );
-                                  if (!confirmDelete) return;
+                   <tr
+  key={student._id}
+  onClick={() => {
+    handleView(student.roll_no);
+  }}
+>
 
-                                  try {
-                                    await API.delete(
-                                      `/student/delete/${student._id}`
-                                    );
-                                    alert("Student Deleted");
-                                    fetchStudents();
-                                  } catch (error) {
-                                    console.error(error);
-                                    alert("Delete Failed");
-                                  }
-                                }}
-                              >
-                                Delete
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
+<td>
+  {student.face_images?.length > 0 ? (
+    <img
+      src={student.face_images[0]}
+      alt={student.name}
+      className="student-table-avatar"
+    />
+  ) : (
+    <div className="student-table-avatar-fallback">
+      {student.name?.charAt(0)}
+    </div>
+  )}
+</td>
+
+  <td>{student.name}</td>
+
+  <td>{student.roll_no}</td>
+
+  <td>{student.room}</td>
+
+</tr>
                   ))
                 )}
               </tbody>
             </table>
+
+
+
+
+            {showViewModal && selectedStudent && (
+  <div className="modal-overlay">
+    <div className="view-modal">
+
+    <div className="student-avatar">
+
+  {selectedStudent.face_images?.length > 0 ? (
+
+    <img
+      src={selectedStudent.face_images[0]}
+      alt={selectedStudent.name}
+    />
+
+  ) : (
+
+    <div className="student-avatar-fallback">
+      {selectedStudent.name?.charAt(0)}
+    </div>
+
+  )}
+
+</div>
+
+  
+<div className="student-details-grid">
+
+  <div className="detail-card">
+    <label>Name</label>
+    <span>{selectedStudent.name}</span>
+  </div>
+
+  <div className="detail-card">
+    <label>Roll No</label>
+    <span>{selectedStudent.roll}</span>
+  </div>
+
+  <div className="detail-card">
+    <label>Branch</label>
+    <span>{selectedStudent.branch}</span>
+  </div>
+
+  <div className="detail-card">
+    <label>Hostel</label>
+    <span>{selectedStudent.hostel}</span>
+  </div>
+
+  <div className="detail-card">
+    <label>Room</label>
+    <span>{selectedStudent.room}</span>
+  </div>
+
+  <div className="detail-card">
+    <label>Student Contact</label>
+    <span>{selectedStudent.contact?.student_no}</span>
+  </div>
+
+  <div className="detail-card">
+    <label>Parent Contact</label>
+    <span>{selectedStudent.contact?.parent_no}</span>
+  </div>
+
+<div className="detail-card">
+  <label>Email</label>
+  <span>{selectedStudent.contact?.email}</span>
+</div>
+
+<div
+  className={`face-status ${
+    selectedStudent.face_images?.length > 0
+      ? "yes"
+      : "no"
+  }`}
+>
+  <label>Face Registration</label>
+
+  <span>
+    {selectedStudent.face_images?.length > 0
+      ? "Registered"
+      : "Not Registered"}
+  </span>
+</div>
+
+</div>
+
+<div className="modal-actions">
+
+  {(user.role === "Warden" ||
+    user.role === "Caretaker") && (
+    <>
+      <button
+        className="modal-edit-btn"
+        onClick={() =>
+          navigate("/edit-student", {
+            state: {
+              student: selectedStudent,
+            },
+          })
+        }
+      >
+        Edit Student
+      </button>
+
+      <button
+        className="modal-delete-btn"
+        onClick={() => {
+  setDeleteConfirmText("");
+  setShowDeleteModal(true);
+}}
+      >
+        Delete Student
+      </button>
+    </>
+  )}
+
+  <button
+    className="modal-close-btn"
+    onClick={() =>
+      setShowViewModal(false)
+    }
+  >
+    Close
+  </button>
+
+</div>
+
+    </div>
+  </div>
+)}
+
+
+{showDeleteModal && selectedStudent && (
+  <div className="modal-overlay">
+
+    <div className="delete-modal">
+
+      <h2 className="delete-modal-title">
+        Delete Student
+      </h2>
+
+      <p className="delete-modal-text">
+        This action cannot be undone.
+      </p>
+
+      <div className="delete-student-info">
+
+        <div>
+          <strong>Name:</strong>
+          {" "}
+          {selectedStudent.name}
+        </div>
+
+        <div>
+          <strong>Roll No:</strong>
+          {" "}
+          {selectedStudent.roll}
+        </div>
+
+      </div>
+
+      <label className="delete-label">
+        Type the student's Roll Number to confirm
+      </label>
+
+      <input
+        type="text"
+        className="delete-input"
+        placeholder={selectedStudent.roll}
+        value={deleteConfirmText}
+        onChange={(e) =>
+          setDeleteConfirmText(
+            e.target.value
+          )
+        }
+      />
+
+      <div className="delete-actions">
+
+        <button
+          className="delete-cancel-btn"
+          onClick={() => {
+            setDeleteConfirmText("");
+            setShowDeleteModal(false);
+          }}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="delete-confirm-btn"
+          disabled={
+            deleteConfirmText !==
+            selectedStudent.roll
+          }
+          onClick={async () => {
+
+            try {
+
+              await API.delete(
+                `/student/delete/${selectedStudent._id}`
+              );
+
+              alert(
+                "Student Deleted Successfully"
+              );
+
+              setShowDeleteModal(false);
+
+              setShowViewModal(false);
+
+              setDeleteConfirmText("");
+
+              fetchStudents();
+
+            } catch (error) {
+
+              console.error(error);
+
+              alert(
+                "Delete Failed"
+              );
+
+            }
+
+          }}
+        >
+          Delete Student
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+)}
           </div>
         </div>
       </div>

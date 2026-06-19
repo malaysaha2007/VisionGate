@@ -28,11 +28,11 @@
 
 .login-box {
   width: 90%;
-  max-width: 600px;
+  max-width: 500px;
 
   margin: 18px auto;
 
-  padding: 32px 40px;
+  padding: 20px 20px;
 
   background: rgba(10, 25, 55, 0.88);
 
@@ -56,9 +56,9 @@
 .login-box h2 {
   text-align: center;
 
-  font-size: 2.5rem;
+  font-size: 2rem;
 
-  font-weight: 800;
+  font-weight: 700;
 
   letter-spacing: -0.5px;
 
@@ -67,15 +67,7 @@
   margin-bottom: 8px;
 }
 
-.login-subtitle {
-  text-align: center;
 
-  color: #94a3b8;
-
-  font-size: 1rem;
-
-  margin-bottom: 22px;
-}
 
 /* ==================================================
    FORM
@@ -89,7 +81,7 @@
 .login-box label {
   color: #cbd5e1;
 
-  font-size: 1rem;
+  font-size:14px;
 
   font-weight: 600;
 
@@ -115,7 +107,7 @@
 
   background: rgba(255,255,255,0.06);
 
-  color: white;
+  color: rgb(227, 219, 219);
 
   font-size: 1rem;
 
@@ -184,13 +176,13 @@
 .actions button {
   flex: 1;
 
-  height: 56px;
+  height: 50px;
 
   border: none;
 
   border-radius: 14px;
 
-  font-size: 1rem;
+  font-size: 2rem;
 
   font-weight: 700;
 
@@ -199,19 +191,6 @@
   transition: all 0.25s ease;
 }
 
-/* RESET */
-
-.reset {
-  background: rgba(255,255,255,0.08);
-
-  color: #e2e8f0;
-}
-
-.reset:hover {
-  background: rgba(255,255,255,0.14);
-
-  transform: translateY(-2px);
-}
 
 /* FORGOT */
 
@@ -233,8 +212,8 @@
   background:
     linear-gradient(
       135deg,
-      #2563eb,
-      #1d4ed8
+      #229177,
+      #13706e
     );
 
   color: white;
@@ -244,7 +223,7 @@
   transform: translateY(-2px);
 
   box-shadow:
-    0 0 22px rgba(37,99,235,0.45);
+    0 0 22px rgba(32, 73, 160, 0.45);
 }
 
 /* ==================================================

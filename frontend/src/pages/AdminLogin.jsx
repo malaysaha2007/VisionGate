@@ -97,9 +97,9 @@ localStorage.setItem(
 
     <>
     
-      <Navbar />
+<Navbar showLogin={true} />
 
-     <AdminPortalHeader />
+     <AdminPortalHeader showProfile={false}/>
 
         <div className="login-container">
 

@@ -237,7 +237,7 @@ const handleDeny = async (applicationId) => {
     await API.put(
       `/vacation/deny/${applicationId}`,
       {
-        denialReason
+            denialReason: denyReason
       }
     );
 
@@ -257,10 +257,15 @@ const handleDeny = async (applicationId) => {
 
 const filteredStudents =
   type === "vacation"
-    ? students.filter(
-        (request) =>
-         request.hostel_status === vacationFilter
-      )
+    ? students
+        .filter(
+          (request) =>
+            request.hostel_status === vacationFilter
+        )
+        .sort(
+          (a, b) =>
+            b._id.localeCompare(a._id)
+        )
     : students;
 
 

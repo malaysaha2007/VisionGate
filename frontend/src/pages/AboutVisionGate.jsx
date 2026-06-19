@@ -102,12 +102,14 @@ const handleClickStar = value => {
 const [index, setIndex] = useState(0);
 
 useEffect(() => {
+  if (!feedbacks.length) return;
+
   const timer = setInterval(() => {
     setIndex((prev) => (prev + 1) % feedbacks.length);
   }, 5000);
 
-  return () => clearInterval(timer); 
-}, []);
+  return () => clearInterval(timer);
+}, [feedbacks]);
 
 useEffect(() => {
   fetchFeedbacks();
@@ -117,7 +119,7 @@ useEffect(() => {
 
     <div className="about-page">
 
-      <Navbar />
+      <Navbar showLogin={true} />
 
     <div className="about-hero">
 
@@ -127,7 +129,6 @@ useEffect(() => {
 
   <p>
     Smart Entry–Exit Monitoring System
-    for PDPM IIITDM Jabalpur
   </p>
 
 </div>
@@ -424,47 +425,84 @@ useEffect(() => {
  <section className="about-card about-wide">
 
   <h2>
-    Feedbacks
+    Feedbacks . . .
   </h2>
 
   <p className="feedback-phrase">
     Insights from our community
   </p>
 
-  <div className="feedback-display">
+
+
+
+<div className="feedback-display">
+
+  {feedbacks.length > 0 ? (
+
+    <>
       <AnimatePresence mode="wait">
-        <motion.div
-          key={feedbacks[index]?.id}
-          initial={{ opacity: 0, x: 0, y: 50 }}
-          animate={{ opacity: 1, x: 0, y:0 }}
-          exit={{ opacity: 0, x: 0 , y: -50}}
-        >
-          
-          <div className="user">
-            <img alt="user-profile" src="/developers/aditi_verma.jpeg" className="developer-photo"/>
-<h3>{feedbacks[index]?.name}</h3>          </div>
-        
-          <div className="rating-date">
-            {stars.map((_, starIndex) => {
-              return (
-                <FaStar 
-                  key = {starIndex}
-                  size= {20}
-                  color = {(feedbacks[index]?.rating) > starIndex ? colors.orange : colors.grey}
-                />
-              )
-            })}
-            <p>dd/mm/yyyy</p>
-            
-          </div>
-<p>{feedbacks[index]?.feedback}</p>
-        </motion.div>
-      </AnimatePresence>
-      <button className="feedback-next-btn" onClick={() => setIndex((prev) => (prev + 1) % feedbacks.length)}>
-        Next
-      </button>
+       <motion.div
+  key={index}
+  initial={{ opacity: 0, y: 50 }}
+  animate={{ opacity: 1, y: 0 }}
+  exit={{ opacity: 0, y: -50 }}
+  className="feedback-card"
+>
+  <div className="feedback-header">
+
+    <div className="feedback-user">
+
+      <img
+        alt={feedbacks[index]?.name}
+        src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${feedbacks[index]?.name}`}
+        className="feedback-avatar"
+      />
+
+      <h3>{feedbacks[index]?.name}</h3>
+
+    </div>
+
+    <span className="feedback-date">
+      {feedbacks[index]?.created_at
+        ? new Date(
+            feedbacks[index].created_at
+          ).toLocaleDateString("en-GB")
+        : ""}
+    </span>
 
   </div>
+
+  <div className="feedback-stars">
+    {stars.map((_, starIndex) => (
+      <FaStar
+        key={starIndex}
+        size={18}
+        color={
+          feedbacks[index]?.rating > starIndex
+            ? colors.orange
+            : colors.grey
+        }
+      />
+    ))}
+  </div>
+
+  <p className="feedback-text">
+    {feedbacks[index]?.feedback}
+  </p>
+
+</motion.div>
+      </AnimatePresence>
+
+      
+    </>
+
+  ) : (
+
+    <p>No feedback available yet.</p>
+
+  )}
+
+</div>
   
   
 

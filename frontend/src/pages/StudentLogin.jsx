@@ -17,46 +17,51 @@ function StudentLogin() {
   const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    try {
+  if (loading) return;
 
-const response = await API.post("/student/login", {
-  studentid,
-  password,
-});
+  setLoading(true);
 
-localStorage.clear();
+  try {
 
-localStorage.setItem(
-  "roll_no",
-  response.data.roll_no
-);
+    const response = await API.post("/student/login", {
+      studentid,
+      password,
+    });
 
-localStorage.setItem(
-  "role",
-  "student"
-);
+    localStorage.clear();
 
-localStorage.setItem(
-  "roll_no",
-  response.data.roll_no
-);
+    localStorage.setItem(
+      "roll_no",
+      response.data.roll_no
+    );
 
-navigate("/StudentProfile");
+    localStorage.setItem(
+      "role",
+      "student"
+    );
 
-    } catch (error) {
+    navigate("/StudentProfile");
 
-      console.error(error);
+  } catch (error) {
 
-      alert(
-        error.response?.data?.detail ||
-        "Login failed"
-      );
-    }
-  };
+    console.error(error);
+
+    alert(
+      error.response?.data?.detail ||
+      "Login failed"
+    );
+
+  } finally {
+
+    setLoading(false);
+
+  }
+};
 
    const handleGoogleSuccess = async (
 
@@ -160,7 +165,8 @@ navigate("/StudentProfile");
     <div className="student-login-page">
 
 
-    <Navbar />
+<Navbar showLogin={true} />
+
     <StudentPortalHeader showProfile={false} />
 
      
@@ -176,6 +182,8 @@ navigate("/StudentProfile");
           <input
             type="text"
             placeholder="e.g. 24BCS137"
+              disabled={loading}
+
             value={studentid}
             onChange={(e) => setStudentid(e.target.value)}
             required
@@ -192,6 +200,8 @@ navigate("/StudentProfile");
                     : "password"
                 }
                 placeholder="Your password"
+                  disabled={loading}
+
                 value={password}
                 onChange={(e) =>
                   setPassword(e.target.value)
@@ -214,32 +224,23 @@ navigate("/StudentProfile");
 
           <div className="actions">
 
-            <button
-              type="reset"
-              className="reset"
-              onClick={() => {
-                setStudentid("");
-                setPassword("");
-              }}
-            >
-              Reset
-            </button>
-
-             <button
-    type="button"
-    className="forgot-btn"
-    onClick={() => navigate("/reset-password")}
-  >
-    Forgot Password
-  </button>
+          <button
+  type="button"
+  className="forgot-btn"
+  disabled={loading}
+  onClick={() => navigate("/reset-password")}
+>
+  Forgot Password
+</button>
 
 
             <button
-              type="submit"
-              className="login"
-            >
-              Login
-            </button>
+  type="submit"
+  className="login"
+  disabled={loading}
+>
+  {loading ? "Logging In..." : "Login"}
+</button>
 
           </div>
 

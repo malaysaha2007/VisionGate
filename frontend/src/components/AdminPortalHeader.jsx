@@ -4,7 +4,13 @@ import { useNavigate } from "react-router-dom";
 import "../styles/AllPortalHeader.css";
 import PortalHeader from "./PortalHeader";
 
-function AdminPortalHeader({ admin }) {
+function AdminPortalHeader({
+  admin,
+  showLogout,
+  showProfile = true,
+})
+
+{
 
   const navigate = useNavigate();
 
@@ -52,24 +58,26 @@ function AdminPortalHeader({ admin }) {
               setShowMenu(!showMenu)
             }
           >
-            <div className="profile-card">
+          
+           {showProfile && (
+  <div className="profile-card">
 
-              <div className="profile-details">
+    <div className="profile-details">
 
-                <div className="profile-name">
-                  {admin?.username ||
-                    "Administrator"}
-                </div>
+      <div className="profile-name">
+        {admin?.username || "Administrator"}
+      </div>
 
-                <div className="profile-role">
-                  {admin?.role ||
-                    admin?.level ||
-                    "Admin"}
-                </div>
+      <div className="profile-role">
+        {admin?.role ||
+          admin?.level ||
+          "Admin"}
+      </div>
 
-              </div>
+    </div>
 
-            </div>
+  </div>
+)}
           </div>
 
          

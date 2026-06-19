@@ -9,7 +9,7 @@ function Rules() {
 
     <div className="rules-page">
 
-      <Navbar />
+<Navbar showLogin={true} />
 
       
       <RulesPortalHeader />

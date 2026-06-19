@@ -21,7 +21,8 @@ async def submit_feedback(data: FeedbackModel):
         "name": data.name,
         "feedback": data.feedback,
         "rating": data.rating,
-        "created_at": datetime.utcnow()
+        "created_at": datetime.utcnow().strftime("%d-%m-%Y")
+
     }
 
     db.feedbacks.insert_one(feedback_doc)

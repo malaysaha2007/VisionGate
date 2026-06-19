@@ -10,7 +10,7 @@ function Contact() {
 
     <div className="contact-page">
 
-      <Navbar />
+<Navbar showLogin={true} />
 
       <ContactPortalHeader />
 

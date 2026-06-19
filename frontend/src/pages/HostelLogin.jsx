@@ -81,7 +81,8 @@ localStorage.setItem(
 
     <div className="hostel-login-page">
 
-      <Navbar />
+<Navbar showLogin={true} />
+
 
        <HostelPortalHeader />
 
