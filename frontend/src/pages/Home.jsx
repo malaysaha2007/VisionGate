@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 
 import CountUpModule from "react-countup";
@@ -76,45 +76,27 @@ import {
 
 
 
-
 function Home() {
 
+  // ==================================================
+  // STATES
+  // ==================================================
 
-const todayData = [
-  { time: "08:00", scans: 320 },
-  { time: "10:00", scans: 450 },
-  { time: "12:00", scans: 620 },
-  { time: "14:00", scans: 580 },
-  { time: "16:00", scans: 520 },
-  { time: "18:00", scans: 410 },
-  { time: "20:00", scans: 280 },
-  { time: "22:00", scans: 180 },
-  { time: "00:00", scans: 90 },
-  { time: "02:00", scans: 40 },
-  { time: "04:00", scans: 20 },
-  { time: "06:00", scans: 60 },
-  { time: "08:00", scans: 300 }
-];
+  const [todayData, setTodayData] = useState([]);
+  const [weekData, setWeekData] = useState([]);
+  const [monthData, setMonthData] = useState([]);
+  const [customData, setCustomData] = useState([]);
+  const dateInputRef = useRef(null);
 
-const weekData = [
-  { day: "Mon", scans: 420 },
-  { day: "Tue", scans: 380 },
-  { day: "Wed", scans: 510 },
-  { day: "Thu", scans: 460 },
-  { day: "Fri", scans: 620 },
-  { day: "Sat", scans: 240 },
-  { day: "Sun", scans: 190 }
-];
+  const [todayStats, setTodayStats] = useState({
+    totalScans: 0,
+    peakHour: "No Logs",
+    average: 0,
+  });
 
-const monthData = [
-  { week: "W1", scans: 2200 },
-  { week: "W2", scans: 2600 },
-  { week: "W3", scans: 3100 },
-  { week: "W4", scans: 2800 }
-];
-
-
-
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
   const [stats, setStats] = useState({
     total: 0,
@@ -123,61 +105,500 @@ const monthData = [
   });
 
   const [activities, setActivities] = useState([]);
-
   const [currentTime, setCurrentTime] = useState("");
+  const [analyticsView, setAnalyticsView] = useState("today");
 
-useEffect(() => {
-  fetchLogs();
-  updateClock();
+  const [customStats, setCustomStats] = useState({
+  totalScans: 0,
+  peakHour: "No Logs",
+  average: 0,
+});
 
-  AOS.init({
-    duration: 1000,
-    once: true,
-  });
 
-  const timer = setInterval(updateClock, 1000);
+const [weekStats, setWeekStats] = useState({
+  totalScans: 0,
+  peakDay: "No Data",
+  average: 0,
+});
 
-  return () => clearInterval(timer);
-}, []);
+const [monthStats, setMonthStats] = useState({
+  totalScans: 0,
+  peakWeek: "No Data",
+  average: 0,
+});
 
-  const fetchLogs = async () => {
+const [selectedWeekDate, setSelectedWeekDate] =
+  useState("Last 7 Days");
+
+
+const [selectedMonthWeek, setSelectedMonthWeek] =
+  useState(
+    new Date().toLocaleDateString(
+      "en-IN",
+      {
+        month: "long",
+        year: "numeric",
+      }
+    )
+  );
+
+
+
+  // ==================================================
+  // ANALYTICS
+  // ==================================================
+
+  const fetchAnalytics = async () => {
     try {
-const response = await API.get("/activity-logs");
-const logs = response.data.logs || [];
 
+      const response = await API.get(
+        "/dashboard/analytics"
+      );
 
+      const logs = response.data.logs || [];
 
-      const total = logs.length;
+      // ==========================================
+      // TODAY LOGS
+      // ==========================================
 
-      const inside = logs.filter(
-        (log) => log.inTime && log.inTime !== null
-      ).length;
+      const today = new Date();
 
-      const outside = total - inside;
+      const hourlyCounts = {};
 
-      setStats({
-        total,
-        inside,
-        outside,
+      logs.forEach((log) => {
+
+        if (!log.outTime) return;
+
+        const logDate = new Date(
+          log.outTime.replace(" ", "T")
+        );
+
+        const isToday =
+          logDate.getDate() === today.getDate() &&
+          logDate.getMonth() === today.getMonth() &&
+          logDate.getFullYear() === today.getFullYear();
+
+        if (!isToday) return;
+
+        const hour =
+          logDate.getHours()
+            .toString()
+            .padStart(2, "0") + ":00";
+
+        hourlyCounts[hour] =
+          (hourlyCounts[hour] || 0) + 1;
       });
 
-      setActivities(logs.slice(-5).reverse());
-    } catch (error) {
-      console.error(error);
+      const todayChart = Object.keys(hourlyCounts)
+        .sort()
+        .map((hour) => ({
+          time: hour,
+          scans: hourlyCounts[hour],
+        }));
+
+      const totalScans =
+        Object.values(hourlyCounts)
+          .reduce(
+            (sum, count) => sum + count,
+            0
+          );
+
+      let peakHour = "No Logs";
+      let maxScans = 0;
+
+      Object.entries(hourlyCounts)
+        .forEach(([hour, count]) => {
+
+          if (count > maxScans) {
+            maxScans = count;
+            peakHour = hour;
+          }
+
+        });
+
+      const average =
+        Object.keys(hourlyCounts).length > 0
+          ? Math.round(
+              totalScans /
+              Object.keys(hourlyCounts).length
+            )
+          : 0;
+
+      setTodayStats({
+        totalScans,
+        peakHour,
+        average,
+      });
+
+      setTodayData(todayChart);
+
+      // ==========================================
+      // CUSTOM DATE LOGS
+      // ==========================================
+
+      const selected =
+        new Date(selectedDate);
+
+      const customHourlyCounts = {};
+
+      logs.forEach((log) => {
+
+        if (!log.outTime) return;
+
+        const logDate = new Date(
+          log.outTime.replace(" ", "T")
+        );
+
+        const isSelectedDate =
+          logDate.getDate() === selected.getDate() &&
+          logDate.getMonth() === selected.getMonth() &&
+          logDate.getFullYear() === selected.getFullYear();
+
+        if (!isSelectedDate) return;
+
+        const hour =
+          logDate.getHours()
+            .toString()
+            .padStart(2, "0") + ":00";
+
+        customHourlyCounts[hour] =
+          (customHourlyCounts[hour] || 0) + 1;
+
+      });
+
+      const customChart =
+        Object.keys(customHourlyCounts)
+          .sort()
+          .map((hour) => ({
+            time: hour,
+            scans: customHourlyCounts[hour],
+          }));
+
+      setCustomData(customChart);
+const customTotalScans =
+  Object.values(customHourlyCounts)
+    .reduce((sum, count) => sum + count, 0);
+
+let customPeakHour = "No Logs";
+let customMaxScans = 0;
+
+Object.entries(customHourlyCounts).forEach(
+  ([hour, count]) => {
+    if (count > customMaxScans) {
+      customMaxScans = count;
+      customPeakHour = hour;
     }
+  }
+);
+
+const customAverage =
+  Object.keys(customHourlyCounts).length > 0
+    ? Math.round(
+        customTotalScans /
+        Object.keys(customHourlyCounts).length
+      )
+    : 0;
+
+setCustomStats({
+  totalScans: customTotalScans,
+  peakHour: customPeakHour,
+  average: customAverage,
+});
+
+
+  // ==========================================
+// WEEK LOGS
+// ==========================================
+
+const weekCounts = {
+  Sun: 0,
+  Mon: 0,
+  Tue: 0,
+  Wed: 0,
+  Thu: 0,
+  Fri: 0,
+  Sat: 0,
+};
+
+
+
+const currentDate = new Date();
+
+logs.forEach((log) => {
+
+  if (!log.outTime) return;
+
+  const logDate = new Date(
+    log.outTime.replace(" ", "T")
+  );
+
+  const diffDays =
+    (currentDate - logDate) /
+    (1000 * 60 * 60 * 24);
+
+  if (diffDays > 7) return;
+
+  const dayName =
+    ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][
+      logDate.getDay()
+    ];
+
+  weekCounts[dayName]++;
+
+});
+
+const weeklyChart = [];
+
+for (let i = 6; i >= 0; i--) {
+
+  const d = new Date();
+  d.setDate(d.getDate() - i);
+
+  const dayName =
+    ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][
+      d.getDay()
+    ];
+
+  weeklyChart.push({
+  day: dayName,
+
+  date: d.toLocaleDateString(
+    "en-IN",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }
+  ),
+
+  scans: weekCounts[dayName],
+});
+}
+
+
+setWeekData(weeklyChart);
+
+const weeklyTotal =
+  Object.values(weekCounts)
+    .reduce((a,b) => a + b, 0);
+
+let busiestDay = "No Data";
+let maxDayScans = 0;
+
+Object.entries(weekCounts).forEach(
+  ([day,count]) => {
+
+    if (count > maxDayScans) {
+      maxDayScans = count;
+      busiestDay = day;
+    }
+
+  }
+);
+
+setWeekStats({
+  totalScans: weeklyTotal,
+  peakDay: busiestDay,
+  average:
+    Math.round(weeklyTotal / 7),
+});
+
+
+// ==========================================
+// MONTH LOGS
+// ==========================================
+
+const weekOfMonthCounts = {
+  "Week 1": 0,
+  "Week 2": 0,
+  "Week 3": 0,
+  "Week 4": 0,
+  "Week 5": 0,
+};
+
+logs.forEach((log) => {
+
+  if (!log.outTime) return;
+
+  const logDate = new Date(
+    log.outTime.replace(" ", "T")
+  );
+
+  if (
+    logDate.getMonth() !==
+      currentDate.getMonth() ||
+    logDate.getFullYear() !==
+      currentDate.getFullYear()
+  ) return;
+
+  const weekNumber =
+    Math.ceil(logDate.getDate() / 7);
+
+  weekOfMonthCounts[
+    `Week ${weekNumber}`
+  ]++;
+
+});
+
+const monthlyChart =
+  Object.keys(weekOfMonthCounts)
+    .map((week) => {
+
+      const weekNumber =
+        parseInt(
+          week.replace("Week ", "")
+        );
+
+      const startDate =
+        (weekNumber - 1) * 7 + 1;
+
+      const endDate =
+        Math.min(
+          weekNumber * 7,
+          new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth() + 1,
+            0
+          ).getDate()
+        );
+
+      return {
+        week,
+        scans: weekOfMonthCounts[week],
+
+        range:
+          `${startDate}/${currentDate.getMonth()+1}/${currentDate.getFullYear()} - ` +
+          `${endDate}/${currentDate.getMonth()+1}/${currentDate.getFullYear()}`
+      };
+
+    });
+
+setMonthData(monthlyChart);
+
+const monthlyTotal =
+  Object.values(weekOfMonthCounts)
+    .reduce((a,b) => a + b, 0);
+
+let peakWeek = "No Data";
+let maxWeekScans = 0;
+
+Object.entries(
+  weekOfMonthCounts
+).forEach(([week,count]) => {
+
+  if (count > maxWeekScans) {
+    maxWeekScans = count;
+    peakWeek = week;
+  }
+
+});
+
+setMonthStats({
+  totalScans: monthlyTotal,
+  peakWeek,
+  average:
+    Math.round(monthlyTotal / 4),
+});
+
+
+
+
+    } catch (err) {
+      console.error(err);
+    }
+
+    
   };
 
-  const updateClock = () => {
-    const now = new Date();
 
-    setCurrentTime(
-      now.toLocaleDateString() +
-      " | " +
-      now.toLocaleTimeString()
+
+
+  // ==================================================
+// LOGS
+// ==================================================
+
+const fetchLogs = async () => {
+  try {
+
+    const response =
+      await API.get("/activity-logs");
+
+    const logs =
+      response.data.logs || [];
+
+    const total = logs.length;
+
+    const inside = logs.filter(
+      (log) =>
+        log.inTime &&
+        log.inTime !== null
+    ).length;
+
+    const outside = total - inside;
+
+    setStats({
+      total,
+      inside,
+      outside,
+    });
+
+    setActivities(
+      logs.slice(-5).reverse()
     );
-  };
 
-  const [analyticsView, setAnalyticsView] = useState("today");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+// ==================================================
+// CLOCK
+// ==================================================
+
+const updateClock = () => {
+
+  const now = new Date();
+
+  setCurrentTime(
+    now.toLocaleDateString() +
+    " | " +
+    now.toLocaleTimeString()
+  );
+
+};
+
+  // ==================================================
+  // EFFECTS
+  // ==================================================
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, [selectedDate]);
+
+  useEffect(() => {
+
+    fetchLogs();
+    updateClock();
+
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+
+    const timer = setInterval(
+      updateClock,
+      1000
+    );
+
+    return () => clearInterval(timer);
+
+  }, []);
+
+
+  
+
 
   return (
 
@@ -472,6 +893,29 @@ const logs = response.data.logs || [];
       This Month
     </button>
 
+
+   <button
+  className={analyticsView === "custom" ? "active" : ""}
+  onClick={() => {
+    setAnalyticsView("custom");
+
+    setTimeout(() => {
+      dateInputRef.current?.showPicker?.();
+    }, 100);
+  }}
+>
+  Custom Date
+</button>
+
+<input
+  ref={dateInputRef}
+  type="date"
+  value={selectedDate}
+  onChange={(e) => setSelectedDate(e.target.value)}
+  className="homepage-hidden-date-picker"
+/>
+     
+
   </div>
 
   {/* TODAY */}
@@ -482,17 +926,17 @@ const logs = response.data.logs || [];
 
         <div className="homepage-summary-card">
           <span>Total Scans</span>
-          <h3>645</h3>
+          <h3>{todayStats.totalScans}</h3>
         </div>
 
         <div className="homepage-summary-card">
           <span>Peak Hour</span>
-          <h3>12 PM</h3>
+          <h3>{todayStats.peakHour}</h3>
         </div>
 
         <div className="homepage-summary-card">
           <span>Average/Hour</span>
-          <h3>53</h3>
+          <h3>{todayStats.average}</h3>
         </div>
 
       </div>
@@ -500,6 +944,7 @@ const logs = response.data.logs || [];
       <div className="homepage-analytics-content">
 
         <ResponsiveContainer width="100%" height={300}>
+        
           <LineChart data={todayData}>
 
             <CartesianGrid
@@ -554,154 +999,338 @@ const logs = response.data.logs || [];
 
           </LineChart>
         </ResponsiveContainer>
+{todayData.length === 0 && (
+  <p className="homepage-no-data">
+    No logs recorded today
+  </p>
+)}
+
+<div className="homepage-graph-date">
+  {new Date().toLocaleDateString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })}
+</div>
 
       </div>
     </>
   )}
 
-  {/* WEEK */}
+  
 
-  {analyticsView === "week" && (
-    <>
-      <div className="homepage-analytics-summary">
+{analyticsView === "custom" && (
+  <>
 
-        <div className="homepage-summary-card">
-          <span>Weekly Scans</span>
-          <h3>4,820</h3>
-        </div>
+    <div className="homepage-analytics-summary">
 
-        <div className="homepage-summary-card">
-          <span>Busiest Day</span>
-          <h3>Monday</h3>
-        </div>
-
-        <div className="homepage-summary-card">
-          <span>Daily Average</span>
-          <h3>688</h3>
-        </div>
-
+      <div className="homepage-summary-card">
+        <span>Total Scans</span>
+        <h3>{customStats.totalScans}</h3>
       </div>
 
-      <div className="homepage-analytics-content">
-
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={weekData}>
-
-            <CartesianGrid
-              vertical={false}
-              stroke="rgba(255,255,255,.08)"
-            />
-
-            <XAxis
-              dataKey="day"
-              tick={{ fill: "#94a3b8" }}
-            />
-
-            <YAxis
-              tick={{ fill: "#94a3b8" }}
-            />
-
-            <Tooltip
-              contentStyle={{
-                background: "rgba(10,20,50,.95)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(56,189,248,.3)",
-                borderRadius: "14px",
-                boxShadow: "0 0 25px rgba(0,140,255,.15)"
-              }}
-              labelStyle={{
-                color: "#60a5fa",
-                fontWeight: 600
-              }}
-              itemStyle={{
-                color: "#ffffff"
-              }}
-            />
-
-            <Bar
-              dataKey="scans"
-              fill="#38bdf8"
-              radius={[8, 8, 0, 0]}
-            />
-
-          </BarChart>
-        </ResponsiveContainer>
-
-      </div>
-    </>
-  )}
-
-  {/* MONTH */}
-
-  {analyticsView === "month" && (
-    <>
-      <div className="homepage-analytics-summary">
-
-        <div className="homepage-summary-card">
-          <span>Monthly Scans</span>
-          <h3>18,650</h3>
-        </div>
-
-        <div className="homepage-summary-card">
-          <span>Peak Week</span>
-          <h3>Week 2</h3>
-        </div>
-
-        <div className="homepage-summary-card">
-          <span>Weekly Average</span>
-          <h3>4,662</h3>
-        </div>
-
+      <div className="homepage-summary-card">
+        <span>Peak Hour</span>
+        <h3>{customStats.peakHour}</h3>
       </div>
 
-      <div className="homepage-analytics-content">
-
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={monthData}>
-
-            <CartesianGrid
-              vertical={false}
-              stroke="rgba(255,255,255,.08)"
-            />
-
-            <XAxis
-              dataKey="week"
-              tick={{ fill: "#94a3b8" }}
-            />
-
-            <YAxis
-              tick={{ fill: "#94a3b8" }}
-            />
-
-            <Tooltip
-              contentStyle={{
-                background: "rgba(10,20,50,.95)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(56,189,248,.3)",
-                borderRadius: "14px",
-                boxShadow: "0 0 25px rgba(0,140,255,.15)"
-              }}
-              labelStyle={{
-                color: "#60a5fa",
-                fontWeight: 600
-              }}
-              itemStyle={{
-                color: "#ffffff"
-              }}
-            />
-
-            <Bar
-              dataKey="scans"
-              fill="#38bdf8"
-              radius={[8, 8, 0, 0]}
-            />
-
-          </BarChart>
-        </ResponsiveContainer>
-
+      <div className="homepage-summary-card">
+        <span>Average/Hour</span>
+        <h3>{customStats.average}</h3>
       </div>
-    </>
-  )}
+
+    </div>
+
+    <div className="homepage-analytics-content">
+
+      <ResponsiveContainer
+        width="100%"
+        height={300}
+      >
+        <LineChart data={customData}>
+
+          <CartesianGrid
+            vertical={false}
+            stroke="rgba(255,255,255,.08)"
+          />
+
+         <XAxis
+  dataKey="time"
+  tick={{ fill: "#94a3b8" }}
+/>
+
+<YAxis
+  tick={{ fill: "#94a3b8" }}
+/>
+         <Tooltip
+  contentStyle={{
+    background: "rgba(10,20,50,.95)",
+    backdropFilter: "blur(12px)",
+    border: "1px solid rgba(56,189,248,.3)",
+    borderRadius: "14px",
+    boxShadow: "0 0 25px rgba(0,140,255,.15)"
+  }}
+  labelStyle={{
+    color: "#60a5fa",
+    fontWeight: 600
+  }}
+  itemStyle={{
+    color: "#ffffff"
+  }}
+/>
+          <Line
+            type="monotone"
+            dataKey="scans"
+            stroke="#38bdf8"
+            strokeWidth={4}
+          />
+
+        </LineChart>
+      </ResponsiveContainer>
+
+      {customData.length === 0 && (
+        <p className="homepage-no-data">
+          No logs found for selected date
+        </p>
+      )}
+
+      <div className="homepage-graph-date">
+        {new Date(selectedDate).toLocaleDateString(
+          "en-IN",
+          {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }
+        )}
+      </div>
+
+    </div>
+
+  </>
+)}
+
+
+
+
+{/* WEEK */}
+
+{analyticsView === "week" && (
+  <>
+    <div className="homepage-analytics-summary">
+
+      <div className="homepage-summary-card">
+        <span>Weekly Scans</span>
+        <h3>{weekStats.totalScans}</h3>
+      </div>
+
+      <div className="homepage-summary-card">
+        <span>Busiest Day</span>
+        <h3>{weekStats.peakDay}</h3>
+      </div>
+
+      <div className="homepage-summary-card">
+        <span>Daily Average</span>
+        <h3>{weekStats.average}</h3>
+      </div>
+
+    </div>
+
+    <div className="homepage-analytics-content">
+
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart
+  data={weekData}
+  onClick={(state) => {
+
+    if (
+      state &&
+      state.activePayload &&
+      state.activePayload.length
+    ) {
+      setSelectedWeekDate(
+        state.activePayload[0].payload.date
+      );
+    }
+
+  }}
+>
+
+          <CartesianGrid
+            vertical={false}
+            stroke="rgba(255,255,255,.08)"
+          />
+
+          <XAxis
+            dataKey="day"
+            tick={{ fill: "#94a3b8" }}
+          />
+
+          <YAxis
+            tick={{ fill: "#94a3b8" }}
+          />
+
+        <Tooltip
+  formatter={(value) => [`${value} scans`]}
+  labelFormatter={(label, payload) => {
+
+    if (
+      payload &&
+      payload.length > 0
+    ) {
+      return `${label} (${payload[0].payload.date})`;
+    }
+
+    return label;
+  }}
+
+  contentStyle={{
+    background:"rgba(10,20,50,.95)",
+    border:"1px solid rgba(56,189,248,.3)",
+    borderRadius:"14px"
+  }}
+/>
+
+         <Bar
+  dataKey="scans"
+  fill="#38bdf8"
+  radius={[8,8,0,0]}
+onMouseMove={(data) => {
+
+  if (data?.payload?.date) {
+
+    setSelectedWeekDate(
+      data.payload.date
+    );
+
+  }
+
+}}
+/>
+        </BarChart>
+      </ResponsiveContainer>
+
+
+      {weekData.every(item => item.scans === 0) && (
+  <p className="homepage-no-data">
+    No scans recorded this week
+  </p>
+)}
+
+<div className="homepage-graph-date">
+  {selectedWeekDate}
+</div>
+
+    </div>
+  </>
+)}
+
+{/* MONTH */}
+
+{analyticsView === "month" && (
+  <>
+    <div className="homepage-analytics-summary">
+
+      <div className="homepage-summary-card">
+        <span>Monthly Scans</span>
+        <h3>{monthStats.totalScans}</h3>
+      </div>
+
+      <div className="homepage-summary-card">
+        <span>Peak Week</span>
+        <h3>{monthStats.peakWeek}</h3>
+      </div>
+
+      <div className="homepage-summary-card">
+        <span>Weekly Average</span>
+        <h3>{monthStats.average}</h3>
+      </div>
+
+    </div>
+
+    <div className="homepage-analytics-content">
+
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart
+  data={monthData}
+  onClick={(state) => {
+
+    if (
+      state &&
+      state.activePayload &&
+      state.activePayload.length
+    ) {
+
+      setSelectedMonthWeek(
+        state.activePayload[0]
+          .payload.range
+      );
+
+    }
+
+  }}
+>
+
+          <CartesianGrid
+            vertical={false}
+            stroke="rgba(255,255,255,.08)"
+          />
+
+          <XAxis
+            dataKey="week"
+            tick={{ fill: "#94a3b8" }}
+          />
+
+          <YAxis
+            tick={{ fill: "#94a3b8" }}
+          />
+
+          <Tooltip
+            contentStyle={{
+              background: "rgba(10,20,50,.95)",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(56,189,248,.3)",
+              borderRadius: "14px",
+              boxShadow: "0 0 25px rgba(0,140,255,.15)"
+            }}
+            labelStyle={{
+              color: "#60a5fa",
+              fontWeight: 600
+            }}
+            itemStyle={{
+              color: "#ffffff"
+            }}
+          />
+
+          <Bar
+            dataKey="scans"
+            fill="#38bdf8"
+            radius={[8, 8, 0, 0]}
+          />
+
+        </BarChart>
+      </ResponsiveContainer>
+
+      <div className="homepage-graph-date">
+  {selectedMonthWeek}
+</div>
+
+      
+
+
+      {monthData.every(item => item.scans === 0) && (
+  <p className="homepage-no-data">
+    No scans recorded this month
+  </p>
+)}
+
+
+
+    </div>
+  </>
+)}
 
 
   
