@@ -177,3 +177,10 @@
 .eye-btn:hover {
   color: #00d4ff;
 }
+
+
+body {
+  font-family: Inter, system-ui, Arial, sans-serif;
+  background-color: #081126; /* or any dark color you prefer */
+  color: #fff; /* optional: ensures text is readable */
+}
