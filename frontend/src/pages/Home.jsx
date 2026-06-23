@@ -23,6 +23,12 @@ import {
   FaArrowDown
 } from "react-icons/fa";
 
+
+import {
+  FaChevronLeft,
+  FaChevronRight
+} from "react-icons/fa";
+
 import API from "../services/api";
 
 import Navbar from "../components/Navbar";
@@ -60,6 +66,13 @@ import googleLogo from "../assets/tech/google.png";
 import androidLogo from "../assets/tech/android.png";
 
 
+import screenshot1 from "../assets/tech/1.png";
+import screenshot2 from "../assets/tech/2.png";
+import screenshot3 from "../assets/tech/3.png";
+import screenshot4 from "../assets/tech/4.png";
+import screenshot5 from "../assets/tech/5.png";
+
+
 
 
 import {
@@ -87,6 +100,44 @@ function Home() {
   const [monthData, setMonthData] = useState([]);
   const [customData, setCustomData] = useState([]);
   const dateInputRef = useRef(null);
+
+  const [currentSlide, setCurrentSlide] =
+  useState(0);
+
+  const [fade, setFade] = useState(true);
+
+  const screenshots = [
+  {
+    image: screenshot1,
+    title: "Admin Dashboard",
+    description:
+      "Centralized monitoring, analytics and security management."
+  },
+  {
+    image: screenshot2,
+    title: "Student Profile",
+    description:
+      "Real-time student information and hostel status."
+  },
+  {
+    image: screenshot3,
+    title: "Vacation Management",
+    description:
+      "Digital leave approval workflow."
+  },
+  {
+    image: screenshot4,
+    title: "Hostel Management",
+    description:
+      "Manage hostel residents and activities."
+  },
+  {
+    image: screenshot5,
+    title: "Face Registration",
+    description:
+      "AI-powered face enrollment system."
+  }
+];
 
   const [todayStats, setTodayStats] = useState({
     totalScans: 0,
@@ -127,20 +178,11 @@ const [monthStats, setMonthStats] = useState({
   average: 0,
 });
 
-const [selectedWeekDate, setSelectedWeekDate] =
-  useState("Last 7 Days");
-
+const [selectedWeekInfo, setSelectedWeekInfo] =
+  useState("Select a day");
 
 const [selectedMonthWeek, setSelectedMonthWeek] =
-  useState(
-    new Date().toLocaleDateString(
-      "en-IN",
-      {
-        month: "long",
-        year: "numeric",
-      }
-    )
-  );
+  useState("Select a week");
 
 
 
@@ -596,6 +638,29 @@ const updateClock = () => {
 
   }, []);
 
+ useEffect(() => {
+
+  const timer = setInterval(() => {
+
+    setFade(false);
+
+    setTimeout(() => {
+
+      setCurrentSlide(prev =>
+        prev === screenshots.length - 1
+          ? 0
+          : prev + 1
+      );
+
+      setFade(true);
+
+    }, 300);
+
+  }, 5000);
+
+  return () => clearInterval(timer);
+
+}, []);
 
   
 
@@ -1141,19 +1206,23 @@ const updateClock = () => {
     <div className="homepage-analytics-content">
 
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart
+  <BarChart
   data={weekData}
   onClick={(state) => {
 
-    if (
-      state &&
-      state.activePayload &&
-      state.activePayload.length
-    ) {
-      setSelectedWeekDate(
-        state.activePayload[0].payload.date
-      );
-    }
+    if (!state?.activeLabel) return;
+
+    const item = weekData.find(
+      d => d.day === state.activeLabel
+    );
+
+    if (!item) return;
+
+    setSelectedWeekInfo(
+      `${item.date} • ${item.scans} ${
+        item.scans === 1 ? "scan" : "scans"
+      }`
+    );
 
   }}
 >
@@ -1172,42 +1241,13 @@ const updateClock = () => {
             tick={{ fill: "#94a3b8" }}
           />
 
-        <Tooltip
-  formatter={(value) => [`${value} scans`]}
-  labelFormatter={(label, payload) => {
-
-    if (
-      payload &&
-      payload.length > 0
-    ) {
-      return `${label} (${payload[0].payload.date})`;
-    }
-
-    return label;
-  }}
-
-  contentStyle={{
-    background:"rgba(10,20,50,.95)",
-    border:"1px solid rgba(56,189,248,.3)",
-    borderRadius:"14px"
-  }}
-/>
+       <Tooltip cursor={false} content={() => null} />
 
          <Bar
   dataKey="scans"
   fill="#38bdf8"
   radius={[8,8,0,0]}
-onMouseMove={(data) => {
 
-  if (data?.payload?.date) {
-
-    setSelectedWeekDate(
-      data.payload.date
-    );
-
-  }
-
-}}
 />
         </BarChart>
       </ResponsiveContainer>
@@ -1220,12 +1260,14 @@ onMouseMove={(data) => {
 )}
 
 <div className="homepage-graph-date">
-  {selectedWeekDate}
+  {selectedWeekInfo}
 </div>
 
     </div>
   </>
 )}
+
+
 
 {/* MONTH */}
 
@@ -1253,65 +1295,56 @@ onMouseMove={(data) => {
     <div className="homepage-analytics-content">
 
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-  data={monthData}
-  onClick={(state) => {
+  <BarChart
+    data={monthData}
+    onClick={(state) => {
 
-    if (
-      state &&
-      state.activePayload &&
-      state.activePayload.length
-    ) {
+      if (!state?.activeLabel) return;
 
-      setSelectedMonthWeek(
-        state.activePayload[0]
-          .payload.range
+      const item = monthData.find(
+        d => d.week === state.activeLabel
       );
 
-    }
+      if (!item) return;
 
-  }}
->
+      setSelectedMonthWeek(
+        `${item.range} • ${item.scans} ${
+          item.scans === 1
+            ? "scan"
+            : "scans"
+        }`
+      );
 
-          <CartesianGrid
-            vertical={false}
-            stroke="rgba(255,255,255,.08)"
-          />
+    }}
+  >
 
-          <XAxis
-            dataKey="week"
-            tick={{ fill: "#94a3b8" }}
-          />
+    <CartesianGrid
+      vertical={false}
+      stroke="rgba(255,255,255,.08)"
+    />
 
-          <YAxis
-            tick={{ fill: "#94a3b8" }}
-          />
+    <XAxis
+      dataKey="week"
+      tick={{ fill: "#94a3b8" }}
+    />
 
-          <Tooltip
-            contentStyle={{
-              background: "rgba(10,20,50,.95)",
-              backdropFilter: "blur(12px)",
-              border: "1px solid rgba(56,189,248,.3)",
-              borderRadius: "14px",
-              boxShadow: "0 0 25px rgba(0,140,255,.15)"
-            }}
-            labelStyle={{
-              color: "#60a5fa",
-              fontWeight: 600
-            }}
-            itemStyle={{
-              color: "#ffffff"
-            }}
-          />
+    <YAxis
+      tick={{ fill: "#94a3b8" }}
+    />
 
-          <Bar
-            dataKey="scans"
-            fill="#38bdf8"
-            radius={[8, 8, 0, 0]}
-          />
+    <Tooltip
+      cursor={false}
+      content={() => null}
+    />
 
-        </BarChart>
-      </ResponsiveContainer>
+    <Bar
+      dataKey="scans"
+      fill="#38bdf8"
+      radius={[8, 8, 0, 0]}
+    />
+
+  </BarChart>
+</ResponsiveContainer>
 
       <div className="homepage-graph-date">
   {selectedMonthWeek}
@@ -1435,61 +1468,88 @@ onMouseMove={(data) => {
      
       
 
-
-
-<section className="homepage-lastTwo-boxes-section">
-      <div className="homepage-visiongate-highlight"
-      data-aos="fade-right"
+<section
+  className="homepage-showcase-section"
+  data-aos="fade-up"
 >
 
-  <h2>
-    Built For Modern Campuses
+
+  <h2 className="homepage-section-title">
+    VisionGate In Action
   </h2>
 
-  <p>
-    VisionGate combines AI-powered
-    verification, automated workflows,
-    centralized monitoring and secure
-    student tracking into one platform.
+  <p className="homepage-showcase-subtitle">
+    Explore the core modules powering
+    secure campus monitoring and
+    intelligent access control.
   </p>
 
-</div>
-
-<div className="homepage-premium-cta" >
-
-<h2 data-aos="zoom-out">
-Ready To Experience
-VisionGate?
-</h2>
-
-<p data-aos="zoom-in">
-Secure your campus with
-AI-powered monitoring.
-</p>
-
-<div className="homepage-cta-buttons"
-data-aos="zoom-in"
+<Tilt
+  tiltMaxAngleX={8}
+  tiltMaxAngleY={8}
+  perspective={1500}
+  scale={1.02}
+  glareEnable={true}
+  glareMaxOpacity={0.12}
 >
+  <div
+    className={`homepage-showcase-slide ${
+    fade ? "show" : "hide"
+  }`}
+    onClick={(e) => {
 
-<Link
-to="/student-login"
-className="homepage-primary-btn"
->
-Student Portal
-</Link>
+      const rect =
+        e.currentTarget.getBoundingClientRect();
 
-<Link
-to="/admin-login"
-className="homepage-secondary-btn"
->
-Admin Dashboard
-</Link>
+      const clickX =
+        e.clientX - rect.left;
+
+      if (clickX < rect.width / 2) {
+
+        setCurrentSlide(prev =>
+          prev === 0
+            ? screenshots.length - 1
+            : prev - 1
+        );
+
+      } else {
+
+        setCurrentSlide(prev =>
+          prev === screenshots.length - 1
+            ? 0
+            : prev + 1
+        );
+
+      }
+
+    }}
+  >
+  <img
+    src={screenshots[currentSlide].image}
+    alt={screenshots[currentSlide].title}
+  />
+
+  <div className="homepage-showcase-content">
+
+    <h3>
+      {screenshots[currentSlide].title}
+    </h3>
+
+    <p>
+      {screenshots[currentSlide].description}
+    </p>
+
+  </div>
 
 </div>
-</div>
+</Tilt>
+
+
+
+
+
 
 </section>
-
       <Footer />
 
     </div>
