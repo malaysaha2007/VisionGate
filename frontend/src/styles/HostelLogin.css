@@ -1,3 +1,8 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 :root{
   --bg-main:#071126;
   --bg-secondary:#071024;
@@ -125,6 +130,8 @@
   font-size:14px;
 
   outline:none;
+
+  box-sizing: border-box;
 }
 
 .login-container input:focus,
@@ -213,6 +220,7 @@
   position:relative;
   width:100%;
   margin-bottom:14px;
+  box-sizing: border-box;
 }
 .eye-btn{
   width:auto !important;
