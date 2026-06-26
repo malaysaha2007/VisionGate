@@ -19,12 +19,14 @@ function StudentProfile() {
   // State to control open/close toggles
   const [isMovementOpen, setIsMovementOpen] = useState(true);
 
+  // Search states
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchDate, setSearchDate] = useState("");
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const res = await API.get(`/student/profile/${rollNo}`);
-        console.log("PROFILE RESPONSE:", res.data);
-
         setStudent(res.data.student || null);
         setLogs(res.data.logs || []);
       } catch (error) {
@@ -53,18 +55,28 @@ function StudentProfile() {
     );
   }
 
- 
-  
-  const movementLogs = logs.filter(
-    (log) => log.purpose !== "Vacation" && log.purpose !== "Leave"
-  );
+  // Filter Logic
+  const movementLogs = logs.filter((log) => {
+    if (log.purpose === "Vacation" || log.purpose === "Leave") return false;
 
-  // --- MOVEMENT ROW RENDERER ---
+    const matchesTerm =
+      searchTerm === "" ||
+      (log.purpose && log.purpose.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    let logDate = "";
+    if (log.outTime) logDate = log.outTime.split(" ")[0];
+    else if (log.inTime) logDate = log.inTime.split(" ")[0];
+
+    const matchesDate = searchDate === "" || logDate === searchDate;
+
+    return matchesTerm && matchesDate;
+  });
+
   const renderMovementRows = (logData) => {
     if (logData.length === 0) {
       return (
         <tr>
-          <td colSpan="4">No records found.</td>
+          <td colSpan="4">No records found matching your search.</td>
         </tr>
       );
     }
@@ -96,8 +108,6 @@ function StudentProfile() {
       });
   };
 
- 
-
   return (
     <div className="student-profile-page">
       <Navbar showLogout={true} />
@@ -117,7 +127,7 @@ function StudentProfile() {
           <p><strong>Email :</strong> {student.contact?.email}</p>
         </div>
 
-        {/* --- MOVEMENT LOG SECTION --- */}
+        {/* --- MOVEMENT LOG HEADER --- */}
         <div 
           className="collapsible-header" 
           onClick={() => setIsMovementOpen(!isMovementOpen)}
@@ -127,19 +137,51 @@ function StudentProfile() {
         </div>
 
         {isMovementOpen && (
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Purpose</th>
-                <th>Out Time</th>
-                <th>In Time</th>
-              </tr>
-            </thead>
-            <tbody>{renderMovementRows(movementLogs)}</tbody>
-          </table>
-        )}
+          <div className="movement-log-wrapper">
+            
+            {/* --- SEARCH BAR --- */}
+            <div className="search-bar-container">
+              <input
+                type="text"
+                placeholder="Search purpose (e.g., Tea Break)..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
+              <input
+                type="date"
+                value={searchDate}
+                onChange={(e) => setSearchDate(e.target.value)}
+                className="search-date"
+                title="Filter by Date"
+              />
+              {(searchTerm || searchDate) && (
+                <button
+                  className="clear-search-btn"
+                  onClick={() => {
+                    setSearchTerm("");
+                    setSearchDate("");
+                  }}
+                >
+                  Clear
+                </button>
+              )}
+            </div>
 
+            {/* --- TABLE --- */}
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Purpose</th>
+                  <th>Out Time</th>
+                  <th>In Time</th>
+                </tr>
+              </thead>
+              <tbody>{renderMovementRows(movementLogs)}</tbody>
+            </table>
+          </div>
+        )}
         
       </div>
       <Footer />
