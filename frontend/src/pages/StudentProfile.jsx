@@ -9,6 +9,8 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import StudentPortalHeader from "../components/StudentPortalHeader";
 
+
+
 function StudentProfile() {
   const navigate = useNavigate();
   const rollNo = localStorage.getItem("roll_no");
@@ -22,6 +24,18 @@ const logsPerPage = 20;
 
   // State to control open/close toggles
   const [isMovementOpen, setIsMovementOpen] = useState(true);
+
+  const latestLog =
+  [...logs].sort((a, b) => {
+    const dateA = new Date(a.outTime || a.inTime);
+    const dateB = new Date(b.outTime || b.inTime);
+
+    return dateB - dateA;
+  })[0] || null;
+
+const isInside = latestLog ? !!latestLog.inTime : true;
+
+const statusText = isInside ? "Inside Campus" : "Outside Campus";
 
   // Search states
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,23 +72,98 @@ const logsPerPage = 20;
       </div>
     );
   }
-
-  // Filter Logic
-  const movementLogs = logs.filter((log) => {
-    if (log.purpose === "Vacation" || log.purpose === "Leave") return false;
+// =========================
+// FILTER MOVEMENT LOGS
+// =========================
+const movementLogs = logs
+  .filter((log) => {
+    if (log.purpose === "Vacation" || log.purpose === "Leave") {
+      return false;
+    }
 
     const matchesTerm =
       searchTerm === "" ||
-      (log.purpose && log.purpose.toLowerCase().includes(searchTerm.toLowerCase()));
+      (log.purpose &&
+        log.purpose.toLowerCase().includes(searchTerm.toLowerCase()));
 
     let logDate = "";
-    if (log.outTime) logDate = log.outTime.split(" ")[0];
-    else if (log.inTime) logDate = log.inTime.split(" ")[0];
+    if (log.outTime) {
+      logDate = log.outTime.split(" ")[0];
+    } else if (log.inTime) {
+      logDate = log.inTime.split(" ")[0];
+    }
 
-    const matchesDate = searchDate === "" || logDate === searchDate;
+    const matchesDate =
+      searchDate === "" || logDate === searchDate;
 
     return matchesTerm && matchesDate;
+  })
+  .sort((a, b) => {
+    const dateA = new Date(a.outTime || a.inTime);
+    const dateB = new Date(b.outTime || b.inTime);
+
+    return dateB - dateA; // Latest first
   });
+// =========================
+// PAGINATION
+// =========================
+const indexOfLastLog = currentPage * logsPerPage;
+const indexOfFirstLog = indexOfLastLog - logsPerPage;
+
+const currentLogs = movementLogs.slice(
+  indexOfFirstLog,
+  indexOfLastLog
+);
+
+const totalPages = Math.max(
+  1,
+  Math.ceil(movementLogs.length / logsPerPage)
+);
+
+
+// =========================
+// PURPOSE BADGE COLORS
+// =========================
+const getPurposeClass = (purpose) => {
+  if (!purpose) return "";
+
+switch (purpose.toLowerCase()) {
+  case "tea break":
+    return "tea-break";
+
+  case "library":
+    return "library";
+
+  case "medical":
+    return "medical";
+
+  case "mess":
+    return "mess";
+
+  case "sports":
+    return "sports";
+
+  case "shopping":
+    return "shopping";
+
+  case "project":
+    return "project";
+
+  case "lab":
+    return "project";
+
+  case "exam":
+    return "exam";
+
+  case "event":
+    return "event";
+
+  default:
+    return "default-purpose";
+}
+};
+
+
 
   const renderMovementRows = (logData) => {
     if (logData.length === 0) {
@@ -84,6 +173,8 @@ const logsPerPage = 20;
         </tr>
       );
     }
+
+    
 
 return logData.map((log, index) => {
 
@@ -101,6 +192,12 @@ return logData.map((log, index) => {
     ? log.inTime.split(" ")[1]
     : "-";
 
+
+
+
+
+
+    
   return (
     <tr key={index}>
       <td>{date}</td>
@@ -116,7 +213,14 @@ return logData.map((log, index) => {
 });
     
   
-  };
+  
+};
+
+console.log(logs.map(log => ({
+  outTime: log.outTime,
+  inTime: log.inTime,
+  purpose: log.purpose
+})));
 
   return (
     <div className="student-profile-page">
@@ -198,22 +302,24 @@ return logData.map((log, index) => {
 </div>
 
         {/* --- MOVEMENT LOG HEADER --- */}
-        <div 
-          className="collapsible-header" 
-          onClick={() => setIsMovementOpen(!isMovementOpen)}
-        >
-          <h2 className="table-title">Movement Log</h2>
-          <span className="toggle-icon">{isMovementOpen ? "▲" : "▼"}</span>
-        </div>
+       <div
+  className="collapsible-header"
+  onClick={() => setIsMovementOpen(!isMovementOpen)}
+>
+  <h2 className="table-title">Movement Log</h2>
+  <span className="toggle-icon">
+    {isMovementOpen ? "▲" : "▼"}
+  </span>
+</div>
 
-        {isMovementOpen && (
-          <div className="movement-log-wrapper">
+{isMovementOpen && (
+  <div className="movement-log-wrapper">
             
             {/* --- SEARCH BAR --- */}
             <div className="search-bar-container">
               <input
                 type="text"
-                placeholder="Search purpose (e.g., Tea Break)..."
+                placeholder="Search purpose (e.g., Tea Break) or filter by date"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-input"
@@ -238,18 +344,7 @@ return logData.map((log, index) => {
               )}
             </div>
 
-            {/* --- TABLE --- */}
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Purpose</th>
-                  <th>Out Time</th>
-                  <th>In Time</th>
-                </tr>
-              </thead>
-              <tbody>{renderMovementRows(movementLogs)}</tbody>
-            </table>
+          
           </div>
         )}
 
