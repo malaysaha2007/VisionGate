@@ -16,6 +16,10 @@ function StudentProfile() {
   const [student, setStudent] = useState(null);
   const [logs, setLogs] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+const logsPerPage = 20;
+
   // State to control open/close toggles
   const [isMovementOpen, setIsMovementOpen] = useState(true);
 
@@ -81,51 +85,117 @@ function StudentProfile() {
       );
     }
 
-    return [...logData]
-      .sort((a, b) => {
-        const aTime = new Date(a.outTime || a.inTime || 0);
-        const bTime = new Date(b.outTime || b.inTime || 0);
-        return bTime - aTime;
-      })
-      .map((log, index) => {
-        const date = log.outTime
-          ? log.outTime.split(" ")[0]
-          : log.inTime
-          ? log.inTime.split(" ")[0]
-          : "-";
+return logData.map((log, index) => {
 
-        const outTime = log.outTime ? log.outTime.split(" ")[1] : "-";
-        const inTime = log.inTime ? log.inTime.split(" ")[1] : "-";
+  const date = log.outTime
+    ? log.outTime.split(" ")[0]
+    : log.inTime
+    ? log.inTime.split(" ")[0]
+    : "-";
 
-        return (
-          <tr key={index}>
-            <td>{date}</td>
-            <td>{log.purpose}</td>
-            <td>{outTime}</td>
-            <td>{inTime}</td>
-          </tr>
-        );
-      });
+  const outTime = log.outTime
+    ? log.outTime.split(" ")[1]
+    : "-";
+
+  const inTime = log.inTime
+    ? log.inTime.split(" ")[1]
+    : "-";
+
+  return (
+    <tr key={index}>
+      <td>{date}</td>
+      <td>
+  <span className={`purpose-badge ${getPurposeClass(log.purpose)}`}>
+    {log.purpose}
+  </span>
+</td>
+      <td>{outTime}</td>
+      <td>{inTime}</td>
+    </tr>
+  );
+});
+    
+  
   };
 
   return (
     <div className="student-profile-page">
       <Navbar showLogout={true} />
       <StudentPortalHeader student={student} logs={logs} />
+<div className="profile-container">
 
-      <div className="profile-container">
-        <h2 className="details-title">Student Details</h2>
+  {/* ================= HERO PROFILE CARD ================= */}
+  <div className="student-profile-hero">
 
-        <div className="student-profile-grid">
-          <p><strong>Name :</strong> {student.name}</p>
-          <p><strong>Roll No :</strong> {student.roll}</p>
-          <p><strong>Branch :</strong> {student.branch}</p>
-          <p><strong>Hostel :</strong> {student.hostel}</p>
-          <p><strong>Room :</strong> {student.room}</p>
-          <p><strong>Student Contact :</strong> {student.contact?.student_no}</p>
-          <p><strong>Parent Contact :</strong> {student.contact?.parent_no}</p>
-          <p><strong>Email :</strong> {student.contact?.email}</p>
-        </div>
+    <div className="hero-left">
+
+      <img
+        src={
+          student.face_images?.length
+            ? student.face_images[0]
+            : "/default-avatar.png"
+        }
+        alt="Student"
+        className="hero-profile-image"
+      />
+
+    </div>
+
+    <div className="hero-right">
+
+      <h1>{student.name}</h1>
+
+      <p className="hero-roll">
+        {student.roll}
+      </p>
+
+      <p className="hero-course">
+        {student.branch} • {student.hostel}
+      </p>
+
+     <div
+  className={`hero-status ${
+    isInside ? "status-inside" : "status-outside"
+  }`}
+>
+  {statusText}
+
+</div>
+
+    </div>
+
+
+    
+
+  </div>
+
+  {/* ================= STUDENT DETAILS ================= */}
+<div className="student-profile-grid">
+
+
+
+ 
+  <div className="profile-info-card">
+    <span className="info-label">Room No.</span>
+    <span className="info-value">{student.room}</span>
+  </div>
+
+  <div className="profile-info-card">
+    <span className="info-label">Student Contact</span>
+    <span className="info-value">{student.contact?.student_no}</span>
+  </div>
+
+  <div className="profile-info-card">
+    <span className="info-label">Parent Contact</span>
+    <span className="info-value">{student.contact?.parent_no}</span>
+  </div>
+
+  <div className="profile-info-card">
+    <span className="info-label">Email</span>
+    <span className="info-value">{student.contact?.email}</span>
+  </div>
+
+</div>
 
         {/* --- MOVEMENT LOG HEADER --- */}
         <div 
@@ -182,6 +252,61 @@ function StudentProfile() {
             </table>
           </div>
         )}
+
+        
+
+    {isMovementOpen && (
+  <>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Purpose</th>
+          <th>Out Time</th>
+          <th>In Time</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+
+
+
+      
+        {renderMovementRows(currentLogs)}
+      </tbody>
+    </table>
+
+    <div className="pagination">
+
+      <button
+        disabled={currentPage === 1}
+        onClick={() => setCurrentPage(currentPage - 1)}
+      >
+        Previous
+      </button>
+
+      <span>
+        Page {currentPage} of {totalPages}
+      </span>
+
+      <button
+        disabled={currentPage === totalPages}
+        onClick={() => setCurrentPage(currentPage + 1)}
+      >
+        Next
+      </button>
+
+    </div>
+
+  </>
+)}
+
+
+    
+
+   
+
         
       </div>
       <Footer />
