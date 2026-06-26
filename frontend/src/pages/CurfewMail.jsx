@@ -142,19 +142,30 @@ function CurfewMail() {
       {showMailPopup && (
         <div className="mail-popup-overlay">
           <div className="mail-popup">
-            <div className="mail-popup-header">
+            <div 
+              className="mail-popup-header"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "20px",
+                gap: "15px"
+              }}
+            >
               <button
                 className="cancel-btn"
                 onClick={() => setShowMailPopup(false)}
+                style={{ width: "auto", flex: "none" }}
               >
                 Cancel
               </button>
 
-              <h2>Select Students</h2>
+              <h2 style={{ margin: 0, flex: 1, textAlign: "center" }}>Select Students</h2>
 
               <button
                 className="send-selected-btn"
                 onClick={handleSendMail}
+                style={{ width: "auto", flex: "none" }}
               >
                 Send Selected Students
               </button>
