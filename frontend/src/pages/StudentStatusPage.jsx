@@ -428,7 +428,12 @@ const filteredStudents =
 
   <th>IN Time</th>
 
-  <th>Status</th>
+  {type === "curfew" && (
+  <th>Violation</th>
+)}
+
+
+  
 
 </tr>
 
@@ -540,26 +545,28 @@ students.map((student, index) => (
 
   <td>{student.purpose || "-"}</td>
 
-  <td>{student.outTime || "-"}</td>
+ <td>{student.outTime || "-"}</td>
 
-  <td>{student.inTime || "-"}</td>
+<td>{student.inTime || "-"}</td>
 
+{type === "curfew" && (
   <td>
-
     <span
-      className={`status-badge ${
-        student.status === "OUTSIDE"
-          ? "status-out"
-          : student.status === "CURFEW"
-          ? "status-curfew"
-          : "status-leave"
+      className={`curfew-type ${
+        student.curfewType === "Still Outside"
+          ? "still-outside"
+          : "late-return"
       }`}
     >
-      {student.status}
+      {student.curfewType}
     </span>
-
   </td>
+)}
+<td>
 
+ 
+
+</td>
 </tr>
 
 

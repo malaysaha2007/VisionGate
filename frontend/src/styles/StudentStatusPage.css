@@ -524,6 +524,26 @@ color:#ef4444;
 }
 
 
+/* =========================
+   CURFEW VIOLATION
+========================= */
+
+.curfew-type {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #facc15;
+  white-space: nowrap;
+}
+
+.curfew-type.still-outside {
+  color: #ef4444;
+}
+
+.curfew-type.late-return {
+  color: #f59e0b;
+}
+
+
 
 
 /* =========================
