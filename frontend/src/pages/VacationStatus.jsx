@@ -37,6 +37,30 @@ function VacationStatus() {
   const [loading, setLoading] = useState(true);
   const [openIndex, setOpenIndex] = useState(null);
 
+
+      const getVacationStatusClass = (vac) => {
+  // Denied
+  if (
+    vac.hostel_status === "Denied" ||
+    vac.gate_status === "Denied"
+  ) {
+    return "denied";
+  }
+
+  // Active (Student is currently on vacation)
+  if (vac.vacation_status === "ACTIVE") {
+    return "active";
+  }
+
+  // Completed
+  if (vac.vacation_status === "COMPLETED") {
+    return "completed";
+  }
+
+  // Pending
+  return "pending";
+};
+
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -170,11 +170,12 @@ object-fit:cover;
 
 /* ==========================================================
    STUDENT INFO
-========================================================== */
 
 .student-info-grid{
 
 display:grid;
+/* =========================
+   Glass Cards
 
 grid-template-columns:repeat(2,1fr);
 
@@ -527,9 +528,34 @@ border-color:#38bdf8;
 
 /* ==========================================================
    ROW
-========================================================== */
 
 .vacation-row{
+
+
+/* =========================
+   Vacation Status Colors
+
+/* =========================
+   Vacation Status Colors
+
+.vacation-item.pending {
+  border-left: 5px solid #f59e0b;
+}
+
+.vacation-item.active {
+  border-left: 5px solid #3b82f6;
+}
+
+.vacation-item.completed {
+  border-left: 5px solid #22c55e;
+}
+
+.vacation-item.denied {
+  border-left: 5px solid #ef4444;
+}
+
+/* =========================
+   Accordion Row
 
 display:grid;
 
