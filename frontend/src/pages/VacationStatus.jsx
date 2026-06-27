@@ -8,6 +8,26 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import StudentPortalHeader from "../components/StudentPortalHeader";
 
+import {
+  FaUser,
+  FaIdCard,
+  FaBriefcase,
+  FaClock,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaUmbrellaBeach,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaChevronDown,
+  FaChevronRight,
+  FaPlaneDeparture,
+  FaHome,
+  FaUniversity,
+  FaStickyNote,
+  FaPlay
+} from "react-icons/fa";
+
+
 function VacationStatus() {
   const navigate = useNavigate();
   const rollNo = localStorage.getItem("roll_no");
@@ -58,21 +78,85 @@ return (
 
     <div className="vacation-container">
 
-      <div className="vacation-header">
-  <h1>Vacation Status</h1>
+      <div className="vacation-hero">
+
+<div className="hero-left">
+
+<div className="hero-icon">
+{/* 
+<FaUmbrellaBeach /> */}
+<img src="../public/vacation-status-icon.svg"/>
+</div>
+
+<div>
+
+<h1>Vacation Status</h1>
+
+<p>
+Track all your vacation requests and approval status.
+</p>
+
+</div>
+
+</div>
+      <div className="button-area">
+        <button
+          onClick={() => navigate(-1)}
+          className="back-btn"
+        >
+          ← Back
+        </button>
+  </div>
+{/* <div className="hero-image">
+
+<img
+src="/vacation-banner.png"
+alt="Vacation"
+/>
+
+</div> */}
+
 </div>
 
       {/* Student Info Cards */}
       <div className="student-info-grid">
-  <div className="glass-card">
-    <span>Name</span>
-    <h3>{student?.name}</h3>
-  </div>
 
-  <div className="glass-card">
-    <span>Roll Number</span>
-    <h3>{student?.roll || rollNo}</h3>
-  </div>
+<div className="glass-card user">
+
+<div className="glass-icon user">
+
+<FaUser />
+
+</div>
+
+<div>
+
+<span>Student Name</span>
+
+<h3>{student?.name}</h3>
+
+</div>
+
+</div>
+
+<div className="glass-card roll">
+
+<div className="glass-icon roll">
+
+<FaIdCard />
+
+</div>
+
+<div>
+
+<span>Roll Number</span>
+
+<h3>{student?.roll || rollNo}</h3>
+
+</div>
+
+</div>
+
 </div>
 
 
@@ -81,51 +165,109 @@ return (
 
   <div className="summary-grid">
 
-  <div className="summary-card">
-    <h2>{vacations.length}</h2>
-    <p>Total Requests</p>
-  </div>
+<div className="summary-card total">
 
-  <div className="summary-card pending">
-    <h2>
-      {
-        vacations.filter(
-          (v) =>
-               v.hostel_status === "Pending" ||
-            v.gate_status === "Pending"
-        ).length
-      }
-    </h2>
-    <p>Pending</p>
-  </div>
+<div className="summary-icon briefcase">
 
-  <div className="summary-card approved">
-    <h2>
-      {
-        vacations.filter(
-          (v) =>
-            v.hostel_status === "Approved" &&
-            v.gate_status === "Approved"
-        ).length
-      }
-    </h2>
-    <p>Approved</p>
-  </div>
-
-  <div className="summary-card rejected">
-    <h2>
-      {
-        vacations.filter(
-          (v) =>
-            v.hostel_status === "Denied" ||
-            v.gate_status === "Denied"
-        ).length
-      }
-    </h2>
-    <p>Rejected</p>
-  </div>
+<FaBriefcase />
 
 </div>
+
+<div>
+
+<h2>{vacations.length}</h2>
+
+<p>Total Requests</p>
+
+</div>
+
+</div>
+
+<div className="summary-card pending">
+
+<div className="summary-icon clock">
+
+<FaClock />
+
+</div>
+
+<div>
+
+<h2>
+
+{
+vacations.filter(
+v =>
+v.hostel_status === "Pending" ||
+v.gate_status === "Pending"
+).length
+}
+
+</h2>
+
+<p>Pending</p>
+
+</div>
+
+</div>
+
+<div className="summary-card approved">
+
+<div className="summary-icon check">
+
+<FaCheckCircle />
+
+</div>
+
+<div>
+
+<h2>
+
+{
+vacations.filter(
+v =>
+v.hostel_status === "Approved" &&
+v.gate_status === "Approved"
+).length
+}
+
+</h2>
+<p>Approved</p>
+
+</div>
+
+</div>
+
+<div className="summary-card rejected">
+
+<div className="summary-icon reject">
+
+<FaTimesCircle />
+
+</div>
+
+<div>
+
+<h2>
+
+{
+vacations.filter(
+v =>
+v.hostel_status === "Denied" ||
+v.gate_status === "Denied"
+).length
+}
+
+</h2>
+
+<p>Rejected</p>
+
+</div>
+
+</div>
+
+</div>
+
 
       {/* Table */}
 
@@ -149,120 +291,212 @@ return (
     vacations.map((vac, index) => {
       const isOpen = openIndex === index;
 
-      return (
-        <div
-          key={index}
-          className={`vacation-item ${isOpen ? "open" : ""}`}
-        >
-          <div
-            className="vacation-row"
-            onClick={() =>
-              setOpenIndex(isOpen ? null : index)
-            }
-          >
-            <span>
-              {isOpen ? "▼" : "▶"}{" "}
-              {vac.destination || "-"}
-            </span>
+return (
 
-            <span>
-              {vac.leave_date ||
-                vac.leaveDate ||
-                "-"}
-            </span>
+<div
+key={index}
+className={`vacation-item ${isOpen ? "open" : ""}`}
+>
 
-            <span>
-              {vac.return_date ||
-                vac.returnDate ||
-                "-"}
-            </span>
-          </div>
+<div
+className="vacation-row"
+onClick={() => setOpenIndex(isOpen ? null : index)}
+>
 
- {isOpen && (
-  <div className="vacation-details">
+<div className="destination">
 
-    <div className="submitted-date">
-      Submitted on: {vac.created_at || "-"}
-    </div>
+{ isOpen ? "" : <FaPlay className="play-icon"/>}
+<FaMapMarkerAlt className="row-icon"/>
 
-    <div className="details-cards">
+<span>{vac.destination || "-"}</span>
 
-      <div className="mini-status-card">
-        <div className="status-value">
-          {vac.reason || "-"}
-        </div>
-
-        <div className="status-label">
-          📝 Reason
-        </div>
-      </div>
-
-      <div className="mini-status-card">
-        <div className="status-value">
-          {vac.leave_campus_time || "-"}
-        </div>
-
-        <div className="status-label">
-          🕒 Campus Leaving Time
-        </div>
-      </div>
-
-    </div>
-
-    <div className="status-cards">
-
-      <div className="mini-status-card hostel">
-        <div className="status-value">
-          {vac.hostel_status || "Pending"}
-        </div>
-
-        <div className="status-label">
-          𖠿 Hostel Status
-        </div>
-      </div>
-
-      <div className="mini-status-card gate">
-        <div className="status-value">
-          {vac.gate_status || "Not Requested"}
-        </div>
-
-        <div className="status-label">
-          🏛️ Gate Status
-        </div>
-      </div>
-
- <div className="mini-status-card vacation">
-  <div className="status-value">
-    {(vac.vacation_status || "NOT_STARTED")
-      .replaceAll("_", " ")
-      .toLowerCase()
-      .replace(/\b\w/g, c => c.toUpperCase())}
-  </div>
-
-  <div className="status-label">
-    ✈ Vacation Status
-  </div>
 </div>
 
-    </div>
+<div className="date-box">
 
-  </div>
-)}
-        </div>
-      );
-    })
+<FaCalendarAlt/>
+
+<span>
+{vac.leave_date || vac.leaveDate || "-"}
+</span>
+
+</div>
+
+<div className="date-box">
+
+<FaCalendarAlt/>
+
+<span>
+{vac.return_date || vac.returnDate || "-"}
+</span>
+
+</div>
+
+<div className="expand-icon">
+
+{
+isOpen ?
+
+<FaChevronDown/>
+
+:
+
+<FaChevronRight/>
+
+}
+
+</div>
+
+</div>
+
+{
+isOpen && (
+
+<div className="vacation-details">
+
+<div className="submitted-date">
+
+Submitted on
+
+<strong>
+
+{vac.created_at || "-"}
+
+</strong>
+
+</div>
+
+<div className="details-cards">
+
+<div className="detail-card">
+
+<div className="detail-icon reason-icon">
+
+<FaStickyNote/>
+
+</div>
+
+<div>
+
+<h4>{vac.reason || "-"}</h4>
+
+<p>Reason</p>
+
+</div>
+
+</div>
+
+<div className="detail-card">
+
+<div className="detail-icon time-icon">
+
+<FaClock/>
+
+</div>
+
+<div>
+
+<h4>
+
+{vac.leave_campus_time || "-"}
+
+</h4>
+
+<p>Campus Leaving Time</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div className="status-cards">
+
+<div className="status-card hostel">
+
+<div className="status-icon hoste-icon">
+
+<FaHome/>
+
+</div>
+
+<div>
+
+<h3>
+
+{vac.hostel_status || "Pending"}
+
+</h3>
+
+<p>Hostel Status</p>
+
+</div>
+
+</div>
+
+<div className="status-card gate">
+
+<div className="status-icon gate-icon">
+
+<FaUniversity/>
+
+</div>
+
+<div>
+
+<h3>
+
+{vac.gate_status || "Not Requested"}
+
+</h3>
+
+<p>Gate Status</p>
+
+</div>
+
+</div>
+
+<div className="status-card vacation-status">
+
+<div className="status-icon vacation-status-icon">
+
+<FaPlaneDeparture/>
+
+</div>
+
+<div>
+
+<h3>
+
+{(vac.vacation_status || "NOT_STARTED")
+.replaceAll("_"," ")
+.toLowerCase()
+.replace(/\b\w/g,c=>c.toUpperCase())}
+
+</h3>
+
+<p>Vacation Status</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+)
+
+}
+
+</div>
+
+);
+
+})
   )}
 
 </div>
-
-      <div className="button-area">
-        <button
-          onClick={() => navigate(-1)}
-          className="back-btn"
-        >
-          ← Back
-        </button>
-      </div>
 
     </div>
 

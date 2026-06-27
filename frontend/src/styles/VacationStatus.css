@@ -1,457 +1,1326 @@
-/* =========================
-   Vacation Status Page
-========================= */
+/* ==========================================================
+   VACATION STATUS PAGE
+========================================================== */
 
-.vacation-status-page {
-  min-height: 100vh;
-  background: #0f172a;
-  color: #e2e8f0;
+.vacation-status-page{
+    min-height:100vh;
+    background:
+    radial-gradient(circle at top,#1e3a8a 0%,#0f172a 40%,#020617 100%);
+    color:#f8fafc;
 }
 
-.vacation-container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px 40px;
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.vacation-container{
+
+    max-width:1400px;
+
+    margin:40px auto;
+
+    padding:35px;
+
+    border-radius:30px;
+
+    background:rgba(15,23,42,.72);
+
+    backdrop-filter:blur(22px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+
+    0 25px 60px rgba(0,0,0,.35);
 }
 
-/* =========================
-   Header
-========================= */
+/* ==========================================================
+   HERO
+========================================================== */
 
-.vacation-header {
-  margin-bottom: 40px;
-  margin-top: 30px;
+.vacation-hero{
 
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:start;
+
+    gap:40px;
+
+    margin-bottom:45px;
+
+    border-radius:26px;
+
+    position:relative;
+
+    overflow:hidden;
 }
 
 
+.hero-left{
 
+display:flex;
 
+align-items:center;
 
-/* =========================
-   Glass Cards
-========================= */
+gap:24px;
 
-.glass-card,
-.summary-card,
-.vacation-item,
-.vacation-details {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+z-index:2;
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.25);
 }
 
-.vacation-row {
-  cursor: pointer;
+.hero-icon{
+
+width:90px;
+
+height:90px;
+
+border-radius:100px;
+
+border: 1px solid #212c4d;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+/* font-size:42px; */
+
+/* box-shadow:
+
+0 20px 35px rgba(37,99,235,.35); */
+
+/* color:rgba(30, 200, 169); */
+
+flex-shrink:0;
+
+overflow: hidden;
+}
+.hero-icon img {
+  max-height: 105%;
+  width: auto;
+  height: auto;
+}
+.hero-left h1{
+
+margin:0;
+
+font-size:2.5rem;
+
+font-weight:700;
+
+color: white;
 }
 
-/* =========================
-   Student Info
-========================= */
+.hero-left p{
 
-.student-info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+margin-top:10px;
 
-  margin-bottom: 30px;
+color:#94a3b8;
+
+font-size:1rem;
+
+line-height:1.7;
+
+max-width:520px;
+
 }
 
-.glass-card {
-  padding: 20px;
-  border-radius: 16px;
+/* Banner placeholder */
+
+.hero-image{
+
+width:330px;
+
+height:220px;
+
+border-radius:22px;
+
+background:
+
+linear-gradient(
+135deg,
+rgba(255,255,255,.08),
+rgba(255,255,255,.03)
+);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+overflow:hidden;
+
+border:1px solid rgba(255,255,255,.08);
+
 }
 
-.glass-card span {
-  display: block;
-  color: #94a3b8;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
+.hero-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
 }
 
-.glass-card h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  color: #f8fafc;
+/* ==========================================================
+   STUDENT INFO
+========================================================== */
+
+.student-info-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+margin-bottom:35px;
+
 }
 
-/* =========================
-   Summary Cards
-========================= */
+.glass-card{
 
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+display:flex;
 
-  margin-bottom: 35px;
+align-items:center;
+
+gap:20px;
+
+padding:26px;
+
+border-radius:22px;
+
+background:
+
+rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+
 }
 
-.summary-card {
-  padding: 22px;
-  border-radius: 16px;
-  text-align: center;
+.glass-card:hover{
 
-  transition: 0.25s ease;
+transform:translateY(-5px);
+
+box-shadow:
+
+0 18px 35px rgba(0,0,0,.28);
+
+}
+.glass-card.user{
+  width: 96.5%;
+}
+.glass-card.roll{
+  width: 60%;
+}
+.glass-icon{
+
+width:60px;
+
+height:60px;
+
+border-radius:12px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:30px;
+
 }
 
-.summary-card:hover {
-  transform: translateY(-4px);
+.glass-icon.user{
+
+background: rgb(37, 99, 235, 0.2);
+color: rgb(62, 152, 249);
+
 }
 
-.summary-card h2 {
-  font-size: 2rem;
-  margin: 0;
-  font-weight: 700;
+.glass-icon.roll{
+
+background: rgb(51, 30, 99, 0.5);
+color: #8652ff;
+
 }
 
-.summary-card p {
-  margin-top: 10px;
-  color: #94a3b8;
+.glass-card span{
+
+display:block;
+
+color:#94a3b8;
+
+font-size:.9rem;
+
+margin-bottom:6px;
+
 }
 
+.glass-card h3{
+
+margin:0;
+
+font-size:1.3rem;
+
+font-weight:600;
+
+color:#f8fafc;
+
+}
+
+/* ==========================================================
+   SUMMARY
+========================================================== */
+
+.summary-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:24px;
+
+margin-bottom:45px;
+
+}
+
+.summary-card{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+padding:28px;
+
+border-radius:22px;
+
+background:
+
+rgba(255,255,255,.04);
+
+
+transition:.3s;
+
+}
+
+.summary-card:hover{
+
+transform:translateY(-6px);
+
+box-shadow:
+
+0 20px 40px rgba(0,0,0,.35);
+
+}
+
+.summary-icon{
+
+width: 90px;
+
+height:90px;
+
+border-radius:100px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:50px;
+
+flex-shrink:0;
+
+}
+.summary-icon.briefcase {
+  color: rgb(62, 152, 249);
+}
+.summary-icon.clock{
+  color: rgb(245, 158, 11);
+
+}
+.summary-icon.check{
+  color: rgb(34, 197, 94);
+
+}
+.summary-icon.reject{
+  color: rgb(239, 68, 68);
+
+}
+
+.summary-card.total .summary-icon{
+
+background-color:rgb(37, 99, 235, 0.2);
+
+}
+
+.summary-card.pending .summary-icon{
+
+background: radial-gradient(circle, white 0%, white 30%, rgb(245, 158, 11, 0.2) 38%);
+
+}
+
+.summary-card.approved .summary-icon{
+
+background:radial-gradient(circle, white 0%, white 30%, rgb(34, 197, 94, 0.2) 38%);
+
+}
+
+.summary-card.rejected .summary-icon{
+
+background:radial-gradient(circle, white 0%, white 30%, rgb(239, 68, 68, 0.2) 38%);
+
+}
+
+.summary-card h2{
+
+margin:0;
+
+font-size:2.2rem;
+
+font-weight:700;
+
+}
+
+.summary-card p{
+
+margin-top:6px;
+
+font-size:.95rem;
+
+}
 /* Accent Borders */
+
+.summary-card.total {
+  border-left: 4px solid rgb(62, 152, 249);
+   box-shadow: 
+    inset 0 0.5px 0 0 rgb(62, 152, 249),  /* Top line */
+    inset -0.5px 0 0 0 rgb(62, 152, 249), /* Right line */
+    inset 0 -0.5px 0 0 rgb(62, 152, 249); /* Bottom line */
+
+}
 
 .summary-card.pending {
   border-left: 4px solid #f59e0b;
+  box-shadow: 
+    inset 0 0.5px 0 0 #f59e0b,  /* Top line */
+    inset -0.5px 0 0 0 #f59e0b, /* Right line */
+    inset 0 -0.5px 0 0 #f59e0b; /* Bottom line */
 }
 
 .summary-card.approved {
   border-left: 4px solid #22c55e;
+  box-shadow: 
+    inset 0 0.5px 0 0 #22c55e,  /* Top line */
+    inset -0.5px 0 0 0 #22c55e, /* Right line */
+    inset 0 -0.5px 0 0 #22c55e; /* Bottom line */
 }
 
 .summary-card.rejected {
   border-left: 4px solid #ef4444;
+  box-shadow: 
+    inset 0 0.5px 0 0 #ef4444,  /* Top line */
+    inset -0.5px 0 0 0 #ef4444, /* Right line */
+    inset 0 -0.5px 0 0 #ef4444; /* Bottom line */
 }
 
-/* =========================
-   Table Header
-========================= */
-
-.vacation-table-header {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-
-  padding: 16px 20px;
-
-  margin-bottom: 12px;
-
-  background: rgba(37, 99, 235, 0.35);
-
-  border-radius: 14px;
-
-  font-weight: 600;
-  color: #f8fafc;
+.summary-card.total h2, .summary-card.total p{
+  color: rgb(62, 152, 249);
 }
-
-/* =========================
-   Accordion List
-========================= */
-
-.vacation-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.summary-card.pending h2, .summary-card.pending p{
+  color: #f59e0b;
 }
-
-.vacation-item {
-  border-radius: 16px;
-  overflow: hidden;
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
+.summary-card.approved h2, .summary-card.approved p{
+  color: #22c55e;
 }
-
-
-
-.vacation-item.open {
-  border-color: rgba(34, 211, 238, 0.4);
+.summary-card.rejected h2, .summary-card.rejected p{
+  color: #ef4444;
 }
+/* ==========================================================
+   TABLE HEADER
+========================================================== */
 
-/* =========================
-   Accordion Row
-========================= */
+.vacation-table-header{
 
-.vacation-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+display:grid;
 
-  align-items: center;
+grid-template-columns:2fr 1.2fr 1.2fr 60px;
 
-  padding: 18px 20px;
+align-items:center;
 
-  color: #f8fafc;
-}
+padding:18px 40px;
 
-.vacation-row span:first-child {
-  font-weight: 600;
-}
+margin-bottom:5px;
 
-/* =========================
-   Expanded Details
-========================= */
+border-radius:18px;
 
-.vacation-details {
-  padding: 24px;
+background: linear-gradient(to right, rgba(17, 33, 93) 20%, rgb(48, 1, 75));
 
-  background: rgba(15, 23, 42, 0.75);
+color:white;
 
-  border-top: 1px solid rgba(34, 211, 238, 0.12);
+font-weight:600;
 
-  animation: slideDown 0.25s ease;
-}
+letter-spacing:.4px;
 
-.submitted-date {
-  color: #64748b;
-
-  font-size: 0.82rem;
-
-  margin-bottom: 20px;
-}
-
-/* =========================
-   Top Cards
-   Reason + Leave Time
-========================= */
-
-/* =========================
-   Details Cards
-========================= */
-
-.details-cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 18px;
-
-  margin-bottom: 18px;
-}
-
-
-.mini-status-card:hover {
-  transform: translateY(-3px);
-
-  background: rgba(255,255,255,0.06);
-
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.25);
-}
-/* =========================
-   Status Cards
-========================= */
-
-.status-cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-
-  gap: 18px;
-
-  margin-top: 18px;
-}
-
-/* =========================
-   Common Card Style
-========================= */
-
-.mini-status-card {
-  background: rgba(255, 255, 255, 0.04);
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-   width: 100%;
-
-  min-height: 120px;
-  max-height: 120px;
-
-  box-sizing: border-box;
-
-  border-radius: 16px;
-
-  padding: 20px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  text-align: center;
-
-  transition: all 0.25s ease;
+box-shadow: 
+    inset 0 2px 0 0 rgb(44, 65, 123, 0.8),  /* Top line */
+    inset 0px 0 0 0 rgb(62, 152, 249), /* Right line */
+    inset 0 0px 0 0 rgb(62, 152, 249); /* Bottom line */
 
 }
 
-.mini-status-card:hover {
-  transform: translateY(-3px);
+/* ==========================================================
+   VACATION LIST
+========================================================== */
 
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.25);
+.vacation-list{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
 }
 
-/* =========================
-   Text
-========================= */
+/* ==========================================================
+   ACCORDION CARD
+========================================================== */
 
-.status-value {
+.vacation-item{
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:22px;
+
+overflow:hidden;
+
+transition:.35s;
+
+}
+
+.vacation-item:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 18px 35px rgba(0,0,0,.30);
+
+}
+
+.vacation-item.open{
+
+border-color:#38bdf8;
+
+}
+
+/* ==========================================================
+   ROW
+========================================================== */
+
+.vacation-row{
+
+display:grid;
+
+grid-template-columns:2fr 1.2fr 1.2fr 60px;
+
+align-items:center;
+
+padding:24px 26px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.vacation-row:hover{
+
+background:rgba(255,255,255,.03);
+
+}
+
+/* ==========================================================
+   DESTINATION
+========================================================== */
+
+.destination{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+font-weight:600;
+
+font-size:1.3rem;
+
+}
+.play-icon{
   font-size: 1rem;
-  font-weight: 700;
-
-  color: #f8fafc;
-
-  margin-bottom: 10px;
-
-  line-height: 1.3;
-
-  text-align: center;
+  margin-right: 5px;
 }
+.row-icon{
 
-.status-label {
-  color: #94a3b8;
+color: rgb(62, 152, 249);
 
-  font-size: 0.85rem;
-
-  text-align: center;
-}
-
-
-
-/* =========================
-   Status Colors
-========================= */
-
-/* Hostel */
-
-.mini-status-card.hostel {
-  border-left: 4px solid #f59e0b;
-}
-
-/* Gate */
-
-.mini-status-card.gate {
-  border-left: 4px solid #64748b;
-}
-
-/* Vacation */
-
-.mini-status-card.vacation {
-  border-left: 4px solid #22d3ee;
-}
-
-
-
-/* =========================
-   Responsive
-========================= */
-
-@media (max-width: 900px) {
-
-  .status-cards {
-    grid-template-columns: 1fr;
-  }
+font-size:20px;
 
 }
 
-@media (max-width: 768px) {
+/* ==========================================================
+   DATE
+========================================================== */
 
-  .details-cards {
-    grid-template-columns: 1fr;
-  }
+.date-box{
 
-  .status-cards {
-    grid-template-columns: 1fr;
-  }
+display:flex;
 
-}
+align-items:center;
 
-@media (max-width: 600px) {
+gap:12px;
 
-  .vacation-details {
-    padding: 18px;
-  }
+color:#e2e8f0;
 
-  .mini-status-card {
-    min-height: 90px;
-    padding: 16px;
-  }
+font-size:1.3rem;
 
 }
 
-
-/* =========================
-   Empty State
-========================= */
-
-.empty-state {
-  text-align: center;
-
-  padding: 40px;
-
-  border-radius: 16px;
-
-  background: rgba(255, 255, 255, 0.04);
-
-  color: #94a3b8;
+.date-box svg{
+font-size:20px;
 }
 
-/* =========================
-   Back Button
-========================= */
+/* ==========================================================
+   ARROW
+========================================================== */
 
-.button-area {
-  display: flex;
-  justify-content: center;
+.expand-icon{
 
-  margin-top: 35px;
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:18px;
+
+color:#cbd5e1;
+
+transition:.3s;
+
 }
 
-.back-btn {
-  border: none;
+.vacation-item.open .expand-icon{
 
-  background: linear-gradient(
-    135deg,
-    #06b6d4,
-    #2563eb
-  );
+transform:rotate(180deg);
 
-  color: white;
+color:#38bdf8;
 
-  padding: 12px 24px;
-
-  border-radius: 12px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.25s ease;
 }
 
-.back-btn:hover {
-  transform: translateY(-2px);
+/* ==========================================================
+   DETAILS
+========================================================== */
 
-  box-shadow:
-    0 0 20px rgba(34, 211, 238, 0.3);
+.vacation-details{
+
+padding:28px;
+
+background:#0f172a;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+animation:slideDown .35s ease;
+
 }
 
-/* =========================
-   Animation
-========================= */
+/* ==========================================================
+   SUBMITTED DATE
+========================================================== */
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
+.submitted-date{
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding-bottom:20px;
+
+margin-bottom:28px;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+color:#94a3b8;
+
+font-size:.9rem;
+
+}
+
+.submitted-date strong{
+
+color:#f8fafc;
+
+font-weight:600;
+
+}
+
+/* ==========================================================
+   REASON + TIME
+========================================================== */
+
+.details-cards{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:24px;
+
+margin-bottom:28px;
+
+}
+
+.detail-card{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+padding:24px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+
+}
+
+.detail-card:hover{
+
+transform:translateY(-4px);
+
+box-shadow:
+0 14px 30px rgba(0,0,0,.25);
+
+}
+
+.detail-icon{
+
+width:60px;
+
+height:60px;
+
+border-radius:100px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:21px;
+
+color:white;
+
+flex-shrink:0;
+
+}
+.detail-icon.time-icon {
+  max-height: 100%;
+}
+.detail-card p{
+
+margin:0 0 8px;
+
+font-size:.9rem;
+
+color:#94a3b8;
+
+}
+
+.detail-card h4{
+
+margin:0;
+
+font-size:1.3rem;
+
+font-weight:600;
+
+color:#f8fafc;
+
+line-height:1.5;
+
+}
+
+.detail-icon.reason-icon{
+background: rgb(51, 30, 99, 0.5);
+color: #8652ff;
+}
+
+.detail-icon.time-icon{
+background: rgba(0, 165, 63, 0.2);
+color: rgb(89, 255, 47);
+}
+
+.detail-card h4{
+  margin-bottom: 2px;
+}
+/* ==========================================================
+   STATUS CARDS
+========================================================== */
+
+.status-cards{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:40px;
+}
+
+
+.status-card{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+padding:24px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.04);
+
+transition:.3s;
+
+position: relative;
+
+}
+
+.status-card:hover{
+
+transform:translateY(-4px);
+
+box-shadow:
+0 15px 30px rgba(0,0,0,.25);
+
+}
+
+.status-card:not(:last-child)::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:50%;
+
+    left:100%;
+
+    width:40px;
+
+    height:2px;
+
+    transform:translateY(-50%);
+
+    background:
+    repeating-linear-gradient(
+        to right,
+        #94a3b8 0 8px,
+        transparent 8px 14px
+    );
+}
+
+.status-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:50%;
+
+    width:12px;
+
+    height:12px;
+
+    border-radius:50%;
+
+    transform:translateY(-50%);
+
+}
+
+.status-card.hostel::before{
+
+    right: -5px;
+    background:#f59e0b;
+}
+.status-card.gate::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -6px; 
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #22c55e;
+  transform: translateY(-50%);
+  z-index: 2;
+
+  box-shadow: 392px 0 0 0 #22c55e; 
+}
+.status-card.gate::before{
+
+    right:-1px;
+
+    background:#22c55e;
+}
+.status-card.vacation-status::before{
+
+    left:-6px;
+
+    background:#2563eb;
+}
+.status-icon{
+
+width:58px;
+
+height:58px;
+
+border-radius:100px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:25px;
+
+color:white;
+
+flex-shrink:0;
+
+}
+.status-card.hostel {
+  box-shadow: 
+    inset 0 0.5px 0 0 rgb(245, 158, 11),  /* Top line */
+    inset -0.5px 0 0 0 rgb(245, 158, 11), /* Right line */
+    inset 0 -0.5px 0 0 rgb(245, 158, 11), /* Bottom line */
+    inset 0.5px 0 0 0 rgb(245, 158, 11);
+;
+  background-color: rgb(245, 158, 11, 0.08);
+  color: rgb(245, 158, 11);
+}
+.status-card.hostel .status-icon{
+
+background: rgb(245, 158, 11, 0.1);
+color: rgb(245, 158, 11);
+
+}
+
+
+.status-card.gate .status-icon{
+
+background:#22c55e;
+
+}
+.status-card.gate {
+  box-shadow: 
+    inset 0 0.5px 0 0 #22c55e,  /* Top line */
+    inset -0.5px 0 0 0 #22c55e, /* Right line */
+    inset 0 -0.5px 0 0 #22c55e, /* Bottom line */
+    inset 0.5px 0 0 0 #22c55e;
+    
+ background: rgba(0, 165, 63, 0.08);
+color: rgb(89, 255, 47);
+}
+.status-card.gate .status-icon{
+
+background: rgba(0, 165, 63, 0.1);
+color: rgb(89, 255, 47);
+
+}
+
+.status-card.vacation-status .status-icon{
+
+background:#2563eb;
+
+}
+.status-card.vacation-status {
+  box-shadow: 
+    inset 0 0.5px 0 0 rgb(62, 152, 249),  /* Top line */
+    inset -0.5px 0 0 0 rgb(62, 152, 249), /* Right line */
+    inset 0 -0.5px 0 0 rgb(62, 152, 249), /* Bottom line */
+    inset 0.5px 0 0 0 rgb(62, 152, 249);
+    
+background-color:rgb(37, 99, 235, 0.08);
+color: rgb(62, 152, 249);
+}
+.status-card.vacation-status .status-icon{
+
+background-color:rgb(37, 99, 235, 0.1);
+color: rgb(62, 152, 249);
+
+}
+
+.status-card h3{
+
+margin:0;
+
+font-size:1rem;
+
+font-weight:600;
+
+}
+
+.status-card p{
+
+margin-top:6px;
+
+color:#94a3b8;
+
+font-size:.9rem;
+
+}
+
+
+/* ==========================================================
+   EMPTY STATE
+========================================================== */
+
+.empty-state{
+
+    padding:70px 30px;
+
+    text-align:center;
+
+    border-radius:22px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px dashed rgba(255,255,255,.10);
+
+    color:#94a3b8;
+
+    font-size:1rem;
+}
+
+/* ==========================================================
+   BACK BUTTON
+========================================================== */
+
+.button-area{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-top:5px;
+}
+
+.back-btn{
+
+    border:none;
+
+    padding:16px 50px;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    color:white;
+
+    background: linear-gradient(to bottom, #ef4444, #881515) !important;
+
+    transition:.35s;
+
+    box-shadow:
+    0 1px 3px rgb(239, 68, 68, 0.3);
+
+}
+
+.back-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 2px 45px rgb(239, 68, 68, 0.3);
+
+}
+
+.back-btn:active{
+
+    transform:scale(.98);
+
+}
+
+/* ==========================================================
+   CUSTOM SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar{
+
+    width:9px;
+}
+
+::-webkit-scrollbar-track{
+
+    background:#0f172a;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:30px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#3b82f6;
+}
+
+/* ==========================================================
+   ANIMATIONS
+========================================================== */
+
+@keyframes slideDown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-15px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+    }
+
+}
+
+@keyframes float{
+
+    0%{
+
+        transform:translateY(0px);
+    }
+
+    50%{
+
+        transform:translateY(-10px);
+    }
+
+    100%{
+
+        transform:translateY(0px);
+    }
+
+}
+
+
+.summary-card{
+
+    animation:slideDown .5s ease;
+}
+
+.glass-card{
+
+    animation:slideDown .5s ease;
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media(max-width:1200px){
+
+.summary-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.hero-image{
+
+display:none;
+
+}
+
+}
+
+@media(max-width:900px){
+
+.student-info-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.details-cards{
+
+grid-template-columns:1fr;
+
+}
+
+.status-cards{
+
+grid-template-columns:1fr;
+
+}
+
+.vacation-table-header{
+
+grid-template-columns:2fr 1fr;
+
+}
+
+.vacation-table-header span:nth-child(3),
+
+.vacation-table-header span:nth-child(4){
+
+display:none;
+
+}
+
+.vacation-row{
+
+grid-template-columns:2fr 1fr;
+
+}
+
+.date-box:nth-child(3),
+
+.expand-icon{
+
+display:none;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.vacation-container{
+
+padding:20px;
+
+}
+
+.vacation-hero{
+
+padding:25px;
+
+}
+
+.hero-left{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.hero-left h1{
+
+font-size:2rem;
+
+}
+
+.summary-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.summary-card{
+
+padding:22px;
+
+}
+
+.glass-card{
+
+padding:22px;
+
+}
+
+.detail-card{
+
+padding:18px;
+
+}
+
+.status-card{
+
+padding:18px;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.hero-icon{
+
+width:70px;
+
+height:70px;
+
+font-size:30px;
+
+}
+
+.summary-icon{
+
+width:55px;
+
+height:55px;
+
+}
+
+.glass-icon{
+
+width:55px;
+
+height:55px;
+
+}
+
+.back-btn{
+
+width:100%;
+
+}
+
 }
 
