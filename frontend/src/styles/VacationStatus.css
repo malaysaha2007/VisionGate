@@ -168,113 +168,6 @@ object-fit:cover;
 
 }
 
-/* ==========================================================
-   STUDENT INFO
-
-.student-info-grid{
-
-display:grid;
-/* =========================
-   Glass Cards
-
-grid-template-columns:repeat(2,1fr);
-
-margin-bottom:35px;
-
-}
-
-.glass-card{
-
-display:flex;
-
-align-items:center;
-
-gap:20px;
-
-padding:26px;
-
-border-radius:22px;
-
-background:
-
-rgba(255,255,255,.04);
-
-border:1px solid rgba(255,255,255,.08);
-
-transition:.3s;
-
-}
-
-.glass-card:hover{
-
-transform:translateY(-5px);
-
-box-shadow:
-
-0 18px 35px rgba(0,0,0,.28);
-
-}
-.glass-card.user{
-  width: 96.5%;
-}
-.glass-card.roll{
-  width: 60%;
-}
-.glass-icon{
-
-width:60px;
-
-height:60px;
-
-border-radius:12px;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:30px;
-
-}
-
-.glass-icon.user{
-
-background: rgb(37, 99, 235, 0.2);
-color: rgb(62, 152, 249);
-
-}
-
-.glass-icon.roll{
-
-background: rgb(51, 30, 99, 0.5);
-color: #8652ff;
-
-}
-
-.glass-card span{
-
-display:block;
-
-color:#94a3b8;
-
-font-size:.9rem;
-
-margin-bottom:6px;
-
-}
-
-.glass-card h3{
-
-margin:0;
-
-font-size:1.3rem;
-
-font-weight:600;
-
-color:#f8fafc;
-
-}
 
 /* ==========================================================
    SUMMARY
@@ -527,72 +420,46 @@ border-color:#38bdf8;
 }
 
 /* ==========================================================
-   ROW
+   VACATION ROW
+========================================================== */
 
 .vacation-row{
+    display:grid;
+    grid-template-columns:2fr 1.2fr 1.2fr 60px;
+    align-items:center;
 
+    gap:20px;
 
-/* =========================
-   Vacation Status Colors
+    padding:22px 35px;
 
-/* =========================
-   Vacation Status Colors
+    cursor:pointer;
 
-.vacation-item.pending {
-  border-left: 5px solid #f59e0b;
-}
-
-.vacation-item.active {
-  border-left: 5px solid #3b82f6;
-}
-
-.vacation-item.completed {
-  border-left: 5px solid #22c55e;
-}
-
-.vacation-item.denied {
-  border-left: 5px solid #ef4444;
-}
-
-/* =========================
-   Accordion Row
-
-display:grid;
-
-grid-template-columns:2fr 1.2fr 1.2fr 60px;
-
-align-items:center;
-
-padding:24px 26px;
-
-cursor:pointer;
-
-transition:.3s;
-
+    transition:.3s;
 }
 
 .vacation-row:hover{
-
-background:rgba(255,255,255,.03);
-
+    background:rgba(255,255,255,.03);
 }
+
 
 /* ==========================================================
    DESTINATION
 ========================================================== */
 
 .destination{
+    display:flex;
+    align-items:center;
+    gap:12px;
 
-display:flex;
+    min-width:0;
+}
 
-align-items:center;
-
-gap:14px;
-
-font-weight:600;
-
-font-size:1.3rem;
-
+.destination span{
+    font-size:1rem;
+    font-weight:500;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 .play-icon{
   font-size: 1rem;
@@ -611,17 +478,13 @@ font-size:20px;
 ========================================================== */
 
 .date-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
 
-display:flex;
+    justify-self:start;
 
-align-items:center;
-
-gap:12px;
-
-color:#e2e8f0;
-
-font-size:1.3rem;
-
+    font-size:1.2rem;
 }
 
 .date-box svg{
@@ -633,19 +496,11 @@ font-size:20px;
 ========================================================== */
 
 .expand-icon{
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:18px;
-
-color:#cbd5e1;
-
-transition:.3s;
-
+    font-size:20px;
 }
 
 .vacation-item.open .expand-icon{
@@ -815,72 +670,133 @@ color: rgb(89, 255, 47);
 ========================================================== */
 
 .status-cards{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  gap:40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:50px;
 }
 
-
 .status-card{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:18px;
 
-display:flex;
+    padding:24px;
 
-align-items:center;
+    position:relative;
 
-gap:18px;
+    border-radius:20px;
 
-padding:24px;
-
-border-radius:20px;
-
-background:rgba(255,255,255,.04);
-
-transition:.3s;
-
-position: relative;
-
+    transition:.3s;
 }
 
 .status-card:hover{
-
-transform:translateY(-4px);
-
-box-shadow:
-0 15px 30px rgba(0,0,0,.25);
-
+    transform:translateY(-4px);
+    box-shadow:0 15px 30px rgba(0,0,0,.25);
 }
 
-.status-card:not(:last-child)::after{
+.status-card.pending{
+    border:1px solid #f59e0b;
+    background:rgba(245,158,11,.08);
+    color:#f59e0b;
+}
 
+.status-card.pending .status-icon{
+    background:rgba(245,158,11,.15);
+    color:#f59e0b;
+}
+/* Approved */
+.status-card.approved{
+    border:1px solid #22c55e;
+    background:rgba(34,197,94,.08);
+    color:#22c55e;
+}
+
+.status-card.approved .status-icon{
+    background:rgba(34,197,94,.15);
+    color:#22c55e;
+}
+
+/* Denied */
+.status-card.denied{
+    border:1px solid #ef4444;
+    background:rgba(239,68,68,.08);
+    color:#ef4444;
+}
+
+.status-card.denied .status-icon{
+    background:rgba(239,68,68,.15);
+    color:#ef4444;
+}
+
+/* Not Requested */
+.status-card.not-requested{
+    border:1px solid #64748b;
+    background:rgba(100,116,139,.08);
+    color:#94a3b8;
+}
+
+.status-card.not-requested .status-icon{
+    background:rgba(100,116,139,.15);
+    color:#94a3b8;
+}
+
+/* Active */
+.status-card.active{
+    border:1px solid #06b6d4;
+    background:rgba(6,182,212,.08);
+    color:#06b6d4;
+}
+
+.status-card.active .status-icon{
+    background:rgba(6,182,212,.15);
+    color:#06b6d4;
+}
+
+/* Completed */
+.status-card.completed{
+    border:1px solid #a855f7;
+    background:rgba(168,85,247,.08);
+    color:#a855f7;
+}
+
+.status-card.completed .status-icon{
+    background:rgba(168,85,247,.15);
+    color:#a855f7;
+}
+
+
+
+
+
+/* ---------------- CONNECTOR LINE ---------------- */
+
+.status-card:not(:last-child)::after{
     content:"";
 
     position:absolute;
 
     top:50%;
-
     left:100%;
 
-    width:40px;
-
+    width:50px;
     height:2px;
 
     transform:translateY(-50%);
 
-    background:
-    repeating-linear-gradient(
+    background:repeating-linear-gradient(
         to right,
         #94a3b8 0 8px,
         transparent 8px 14px
     );
+
+    z-index:1;
 }
 
-.status-card::before{
+/* ---------------- DOTS ---------------- */
 
+.status-card::before{
     content:"";
 
     position:absolute;
@@ -888,149 +804,115 @@ box-shadow:
     top:50%;
 
     width:12px;
-
     height:12px;
 
     border-radius:50%;
 
     transform:translateY(-50%);
 
+    z-index:2;
 }
+
+/* Hostel */
 
 .status-card.hostel::before{
+    right:-6px;
+}
 
-    right: -5px;
+
+
+/* Gate */
+
+.status-card.gate::before{
+    left:-6px;
+}
+
+/* Vacation */
+
+.status-card.vacation-status::before{
+    left:-6px;
+}
+
+
+.gate-right-dot{
+    position:absolute;
+
+    top:50%;
+    right:-6px;
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    transform:translateY(-50%);
+
+    z-index:2;
+}
+
+
+
+.status-card.pending::before,
+.status-card.pending .gate-right-dot{
     background:#f59e0b;
 }
-.status-card.gate::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -6px; 
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #22c55e;
-  transform: translateY(-50%);
-  z-index: 2;
 
-  box-shadow: 392px 0 0 0 #22c55e; 
-}
-.status-card.gate::before{
-
-    right:-1px;
-
+.status-card.approved::before,
+.status-card.approved .gate-right-dot{
     background:#22c55e;
 }
-.status-card.vacation-status::before{
 
-    left:-6px;
-
-    background:#2563eb;
+.status-card.denied::before,
+.status-card.denied .gate-right-dot{
+    background:#ef4444;
 }
+
+.status-card.not-requested::before,
+.status-card.not-requested .gate-right-dot{
+    background:#64748b;
+}
+
+.status-card.active::before,
+.status-card.active .gate-right-dot{
+    background:#06b6d4;
+}
+
+.status-card.completed::before,
+.status-card.completed .gate-right-dot{
+    background:#a855f7;
+}
+
+/* ---------------- ICON ---------------- */
+
 .status-icon{
+    width:58px;
+    height:58px;
 
-width:58px;
+    border-radius:50%;
 
-height:58px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-border-radius:100px;
+    font-size:25px;
 
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:25px;
-
-color:white;
-
-flex-shrink:0;
-
-}
-.status-card.hostel {
-  box-shadow: 
-    inset 0 0.5px 0 0 rgb(245, 158, 11),  /* Top line */
-    inset -0.5px 0 0 0 rgb(245, 158, 11), /* Right line */
-    inset 0 -0.5px 0 0 rgb(245, 158, 11), /* Bottom line */
-    inset 0.5px 0 0 0 rgb(245, 158, 11);
-;
-  background-color: rgb(245, 158, 11, 0.08);
-  color: rgb(245, 158, 11);
-}
-.status-card.hostel .status-icon{
-
-background: rgb(245, 158, 11, 0.1);
-color: rgb(245, 158, 11);
-
+    flex-shrink:0;
 }
 
 
-.status-card.gate .status-icon{
-
-background:#22c55e;
-
-}
-.status-card.gate {
-  box-shadow: 
-    inset 0 0.5px 0 0 #22c55e,  /* Top line */
-    inset -0.5px 0 0 0 #22c55e, /* Right line */
-    inset 0 -0.5px 0 0 #22c55e, /* Bottom line */
-    inset 0.5px 0 0 0 #22c55e;
-    
- background: rgba(0, 165, 63, 0.08);
-color: rgb(89, 255, 47);
-}
-.status-card.gate .status-icon{
-
-background: rgba(0, 165, 63, 0.1);
-color: rgb(89, 255, 47);
-
-}
-
-.status-card.vacation-status .status-icon{
-
-background:#2563eb;
-
-}
-.status-card.vacation-status {
-  box-shadow: 
-    inset 0 0.5px 0 0 rgb(62, 152, 249),  /* Top line */
-    inset -0.5px 0 0 0 rgb(62, 152, 249), /* Right line */
-    inset 0 -0.5px 0 0 rgb(62, 152, 249), /* Bottom line */
-    inset 0.5px 0 0 0 rgb(62, 152, 249);
-    
-background-color:rgb(37, 99, 235, 0.08);
-color: rgb(62, 152, 249);
-}
-.status-card.vacation-status .status-icon{
-
-background-color:rgb(37, 99, 235, 0.1);
-color: rgb(62, 152, 249);
-
-}
+/* ---------------- TEXT ---------------- */
 
 .status-card h3{
-
-margin:0;
-
-font-size:1rem;
-
-font-weight:600;
-
+    margin:0;
+    font-size:1.25rem;
+    font-weight:700;
 }
 
 .status-card p{
-
-margin-top:6px;
-
-color:#94a3b8;
-
-font-size:.9rem;
-
+    margin-top:6px;
+    color:#94a3b8;
+    font-size:.95rem;
 }
-
 
 /* ==========================================================
    EMPTY STATE
@@ -1131,6 +1013,128 @@ font-size:.9rem;
 
     background:#3b82f6;
 }
+
+
+
+/* ===================================
+   STUDENT PROFILE CARD
+=================================== */
+
+.student-profile-card{
+    display:flex;
+    align-items:center;
+    gap:40px;
+
+    background:#121b38;
+
+    border:1px solid rgba(59,130,246,.25);
+
+    border-radius:28px;
+
+    padding:34px;
+
+    margin:30px 0 40px;
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.30);
+}
+
+.profile-image{
+    width:170px;
+    height:170px;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    border:3px solid #3b82f6;
+
+    flex-shrink:0;
+}
+
+.profile-image img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+.profile-placeholder{
+    width:100%;
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:65px;
+
+    font-weight:700;
+
+    color:white;
+
+    background:#3b82f6;
+}
+
+.profile-info{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.profile-info h2{
+    font-size:54px;
+
+    color:#16d7ff;
+
+    font-weight:800;
+
+    margin:0;
+}
+
+.roll-number{
+    color:#67a4ff;
+
+    font-size:30px;
+
+    margin:0;
+}
+
+.course-info{
+    color:#b7c7df;
+
+    font-size:25px;
+
+    margin:0;
+}
+
+.campus-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    width:max-content;
+
+    padding:15px 26px;
+
+    border-radius:999px;
+
+    background:rgba(22,215,150,.12);
+
+    border:1px solid rgba(22,215,150,.35);
+
+    color:#31e3b2;
+
+    font-size:24px;
+
+    font-weight:700;
+}
+
+
+
 
 /* ==========================================================
    ANIMATIONS
@@ -1349,4 +1353,3 @@ width:100%;
 }
 
 }
-

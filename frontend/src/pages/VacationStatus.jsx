@@ -61,6 +61,41 @@ function VacationStatus() {
   return "pending";
 };
 
+
+
+const getHostelStatusClass = (status) => {
+  switch (status) {
+    case "Approved":
+      return "approved";
+
+    case "Denied":
+      return "denied";
+
+    case "Pending":
+    default:
+      return "pending";
+  }
+};
+
+const getGateStatusClass = (status) => {
+  switch (status) {
+    case "Approved":
+      return "approved";
+
+    case "Denied":
+      return "denied";
+
+    case "Not Requested":
+      return "not-requested";
+
+    case "Pending":
+      return "pending";
+
+    default:
+      return "pending";
+  }
+};
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -131,55 +166,47 @@ Track all your vacation requests and approval status.
           ← Back
         </button>
   </div>
-{/* <div className="hero-image">
 
-<img
-src="/vacation-banner.png"
-alt="Vacation"
-/>
-
-</div> */}
 
 </div>
 
       {/* Student Info Cards */}
-      <div className="student-info-grid">
+{/* Student Profile Card */}
 
-<div className="glass-card user">
+<div className="student-profile-card">
 
-<div className="glass-icon user">
+  <div className="profile-image">
 
-<FaUser />
+    {student?.face_images?.length > 0 ? (
+      <img
+        src={student.face_images[0]}
+        alt={student.name}
+      />
+    ) : (
+      <div className="profile-placeholder">
+        {student?.name?.charAt(0)}
+      </div>
+    )}
 
-</div>
+  </div>
 
-<div>
+  <div className="profile-info">
 
-<span>Student Name</span>
+    <h2>{student?.name}</h2>
 
-<h3>{student?.name}</h3>
+    <p className="roll-number">
+      {student?.roll_no}
+    </p>
 
-</div>
+    <p className="course-info">
+      {student?.branch} • {student?.hostel}
+    </p>
 
-</div>
+    <div className="campus-status">
+      <span>Inside Campus</span>
+    </div>
 
-<div className="glass-card roll">
-
-<div className="glass-icon roll">
-
-<FaIdCard />
-
-</div>
-
-<div>
-
-<span>Roll Number</span>
-
-<h3>{student?.roll || rollNo}</h3>
-
-</div>
-
-</div>
+  </div>
 
 </div>
 
@@ -436,7 +463,9 @@ Submitted on
 
 <div className="status-cards">
 
-<div className="status-card hostel">
+<div
+  className={`status-card hostel ${getHostelStatusClass(vac.hostel_status)}`}
+>
 
 <div className="status-icon hoste-icon">
 
@@ -458,7 +487,11 @@ Submitted on
 
 </div>
 
-<div className="status-card gate">
+<div
+  className={`status-card gate ${getGateStatusClass(vac.gate_status)}`}
+>
+
+  <span className="gate-right-dot"></span>
 
 <div className="status-icon gate-icon">
 
@@ -480,7 +513,10 @@ Submitted on
 
 </div>
 
-<div className="status-card vacation-status">
+
+<div
+  className={`status-card vacation-status ${getVacationStatusClass(vac)}`}
+>
 
 <div className="status-icon vacation-status-icon">
 
