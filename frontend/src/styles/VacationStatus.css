@@ -24,10 +24,6 @@
 
 }
 
-
-
-
-
 /* =========================
    Glass Cards
 ========================= */
@@ -173,6 +169,32 @@
 
 .vacation-item.open {
   border-color: rgba(34, 211, 238, 0.4);
+}
+
+
+
+/* =========================
+   Vacation Status Colors
+========================= */
+
+/* =========================
+   Vacation Status Colors
+========================= */
+
+.vacation-item.pending {
+  border-left: 5px solid #f59e0b;
+}
+
+.vacation-item.active {
+  border-left: 5px solid #3b82f6;
+}
+
+.vacation-item.completed {
+  border-left: 5px solid #22c55e;
+}
+
+.vacation-item.denied {
+  border-left: 5px solid #ef4444;
 }
 
 /* =========================
