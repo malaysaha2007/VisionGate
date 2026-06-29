@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import {
-  FaSyncAlt,
-  FaEnvelope
-} from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
 
 import API from "../services/api";
 
@@ -23,14 +20,17 @@ function CurfewMail() {
 
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [showMailPopup, setShowMailPopup] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [mailResult, setMailResult] = useState(null);
 
   const fetchStudents = async () => {
-    setLoading(true); 
     try {
+      setLoading(true);
+
       const response = await API.get("/curfew-mail");
+
       setStudents(response.data.students || []);
     } catch (error) {
       console.error(error);
@@ -71,25 +71,36 @@ function CurfewMail() {
       />
 
       <AdminPortalHeader admin={admin} />
+      <div
+        className={`admin-dashboard-page ${
+          refreshing ? "page-refresh" : ""
+        }`}
+      >
 
       
       {/* ACTIONS */}
-      <div className="curfew-actions">
-        <button
-          className="refresh-btn"
-          onClick={fetchStudents}
-        >
-          <FaSyncAlt />
-          Refresh
-        </button>
+      <div className="filter-card">
 
-        <button
-          className="send-mail-btn"
-          onClick={() => setShowMailPopup(true)}
-        >
-          <FaEnvelope />
-          Send Mail
-        </button>
+        <div className="filter-top">
+
+          <div>
+            <h3>Students Outside After Curfew</h3>
+          </div>
+
+          <div className="action-buttons">
+
+            <button
+              onClick={() => setShowMailPopup(true)}
+              title="Send Mail"
+              className="icon-btn"
+            >
+              <FaEnvelope />
+            </button>
+
+          </div>
+
+        </div>
+
       </div>
 
       {/* TABLE */}
@@ -247,6 +258,7 @@ function CurfewMail() {
         </div>
       )}
 
+      </div>
       <Footer />
     </>
   );

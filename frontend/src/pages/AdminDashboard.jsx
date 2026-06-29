@@ -22,7 +22,7 @@ function AdminDashboard() {
   const [search, setSearch] = useState("");
   const [logs, setLogs] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [studentsInside, setStudentsInside] = useState(0);
+  const [leaveCount, setLeaveCount] = useState(0);
   const [studentsOutside, setStudentsOutside] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedHostel, setSelectedHostel] = useState("All");
@@ -162,27 +162,27 @@ function AdminDashboard() {
         }`}
       >
         <div className="stats-grid">
-          <div className="stat-card">
-            <p>Total Records</p>
-            <h2>{totalRecords}</h2>
-          </div>
 
-        
+      <div className="stat-card">
+        <p>Total Records</p>
+        <h2>{totalRecords}</h2>
+      </div>
 
-          <div className="stat-card">
-            <p>Students Outside</p>
-            <h2 className="outside">
-              {studentsOutside}
-            </h2>
-          </div> 
-          
-          <div className="stat-card">
-  <p>Leave / Special Purpose</p>
-  <h2 className="leave-count">
-    {leaveCount}
-  </h2>
-</div>
-        </div>
+      <div className="stat-card">
+        <p>Leave / Special Purpose</p>
+        <h2 className="leave-count">
+          {leaveCount}
+        </h2>
+      </div>
+
+      <div className="stat-card">
+        <p>Students Outside</p>
+        <h2 className="outside">
+          {studentsOutside}
+        </h2>
+      </div>
+
+    </div>
 
         <div className="filter-card">
           <div className="filter-top">
