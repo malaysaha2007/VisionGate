@@ -5,7 +5,19 @@ import API from "../services/api";
 import {
   FaSyncAlt,
   FaEnvelope,
-  FaFileCsv
+  FaFileCsv,
+  FaUsers,
+  FaClipboard,
+  FaUser,
+  FaCalendarAlt,
+  FaMugHot,
+  FaPaperPlane,
+  FaPlaneDeparture,
+  FaHospital,
+  FaBriefcase,
+  FaHome,
+  FaQuestionCircle,
+  FaCartArrowDown
 } from "react-icons/fa";
 
 import "../styles/AdminDashboard.css";
@@ -29,6 +41,31 @@ function AdminDashboard() {
   const [leaveCount, setLeaveCount] = useState(0);
   const [leaveFilter, setLeaveFilter] = useState("Pending");
   
+  const getPurposeIcon = (purpose) => {
+  switch (purpose) {
+    case "Hospital":
+    case "Medical":
+      return <FaHospital />;
+
+    case "Vacation":
+      return <FaPlaneDeparture />;
+
+    case "Official Work":
+      return <FaBriefcase />;
+
+    case "Market":
+      return <FaCartArrowDown />;
+
+    case "Home":
+      return <FaHome />;
+
+    case "Tea Break":
+      return <FaMugHot />;
+
+    default:
+      return <FaQuestionCircle />;
+  }
+};
 
   const hostels = [
     "All",
@@ -164,18 +201,73 @@ function AdminDashboard() {
       >
         <div className="stats-grid">
           <div className="stat-card">
-            <p>Total Records</p>
-            <h2>{totalRecords}</h2>
-          </div>
+  <div className="icon-box clipboard">
+    <FaClipboard />
+  </div>
+
+  <div className="stat-info">
+    <p>Total Records</p>
+    <h2>{totalRecords}</h2>
+  </div>
+
+  <div className="graph blue">
+    <svg
+      width="80"
+      height="40"
+      viewBox="0 0 90 40"
+      fill="none"
+    >
+      <path
+        d="M2 28
+           C12 28,12 10,22 18
+           S35 36,45 25
+           S58 8,68 20
+           S80 18,88 8"
+        stroke="#2d7fff"
+        strokeWidth="1"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle cx="88" cy="8" r="3" fill="#2d7fff"/>
+    </svg>
+  </div>
+</div>
 
         
-
           <div className="stat-card">
-            <p>Students Outside</p>
-            <h2 className="outside">
-              {studentsOutside}
-            </h2>
-          </div> 
+  <div className="icon-box users">
+    <FaUsers />
+  </div>
+
+  <div className="stat-info">
+    <p>Students Outside</p>
+    <h2 className="outside">
+      {studentsOutside}
+    </h2>
+  </div>
+
+  <div className="graph red">
+    <svg
+      width="80"
+      height="40"
+      viewBox="0 0 90 40"
+      fill="none"
+    >
+      <path
+        d="M2 28
+           C12 28,12 10,22 18
+           S35 36,45 25
+           S58 8,68 20
+           S80 18,88 8"
+        stroke="#a13735"
+        strokeWidth="0.7"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle cx="88" cy="8" r="3" fill="#a13735"/>
+    </svg>
+  </div>
+</div>
           
           <div
   className="stat-card"
@@ -184,14 +276,38 @@ function AdminDashboard() {
   }
   style={{ cursor: "pointer" }}
 >
+    <div className="icon-box airplane">
+    <FaPlaneDeparture />
+  </div>
+   <div className="stat-info">
   <p>Vacation Applications</p>
 
   <h2 className="leave-count">
     {leaveCount}
   </h2>
 </div>
-
-
+  <div className="graph blue">
+    <svg
+      width="80"
+      height="40"
+      viewBox="0 0 90 40"
+      fill="none"
+    >
+      <path
+        d="M2 28
+           C12 28,12 10,22 18
+           S35 36,45 25
+           S58 8,68 20
+           S80 18,88 8"
+        stroke="#2d7fff"
+        strokeWidth="1"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle cx="88" cy="8" r="3" fill="#2d7fff"/>
+    </svg>
+  </div>
+</div>
 
 
 
@@ -224,7 +340,7 @@ function AdminDashboard() {
               <button
                 onClick={fetchDashboard}
                 title="Refresh"
-                className="icon-btn"
+                className="icon-btn refresh"
               >
                 <FaSyncAlt />
               </button>
@@ -244,7 +360,7 @@ function AdminDashboard() {
               <button
                 onClick={exportCSV}
                 title="Export CSV"
-                className="icon-btn"
+                className="icon-btn csv"
               >
                 <FaFileCsv />
               </button>
@@ -297,13 +413,42 @@ function AdminDashboard() {
                 filteredLogs.map(
                   (log, index) => (
                     <tr key={index}>
-                      <td>{log.roll}</td>
-                      <td>{log.purpose}</td>
-                      <td>{log.outTime}</td>
+
                       <td>
-                        {log.inTime || "-"}
+                        <span className="icon-log">
+                         <span className="user-icon"> <FaUser/></span>
+                        {log.roll}
+                        </span>
+                        
+                        </td>
+
+                      <td>
+                        <span className="icon-log">
+                          <span className="purpose-icon">
+                            {getPurposeIcon(log.purpose)}
+                          </span>
+                          {log.purpose}
+                        </span>
                       </td>
+
                       <td>
+                         <span className="icon-log">
+                          <span>
+                            <FaCalendarAlt/>
+                          </span>
+                          {log.outTime}
+                        </span>
+                        </td>
+                      <td>
+                        <span className="icon-log">
+                          <span>
+                            <FaCalendarAlt/>
+                          </span>
+                          {log.inTime || "-"}
+                        </span>
+                        
+                      </td>
+<td>
   <span
     className={
       log.inTime
@@ -311,6 +456,7 @@ function AdminDashboard() {
         : "status-out"
     }
   >
+    
     {log.inTime ? "IN" : "OUT"}
   </span>
 </td>
