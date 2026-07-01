@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import {
-  FaSyncAlt,
-  FaEnvelope
-} from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
 
 import API from "../services/api";
 
@@ -23,14 +20,17 @@ function CurfewMail() {
 
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [showMailPopup, setShowMailPopup] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [mailResult, setMailResult] = useState(null);
 
   const fetchStudents = async () => {
-    setLoading(true); 
     try {
+      setLoading(true);
+
       const response = await API.get("/curfew-mail");
+
       setStudents(response.data.students || []);
     } catch (error) {
       console.error(error);
@@ -55,6 +55,7 @@ function CurfewMail() {
       });
 
       setMailResult(response.data);
+      setSelectedStudents([]);
       setShowMailPopup(false);
     } catch (error) {
       console.error(error);
@@ -71,25 +72,42 @@ function CurfewMail() {
       />
 
       <AdminPortalHeader admin={admin} />
+      <div
+        className={`admin-dashboard-page ${
+          refreshing ? "page-refresh" : ""
+        }`}
+      >
 
       
       {/* ACTIONS */}
-      <div className="curfew-actions">
-        <button
-          className="refresh-btn"
-          onClick={fetchStudents}
-        >
-          <FaSyncAlt />
-          Refresh
-        </button>
+      {/* HERO MAIL ACTION */}
+
+      <div className="mail-hero">
+
+        <div className="mail-hero-icon">
+          <FaEnvelope />
+        </div>
+
+        <h2>
+          Send Mail to Students
+        </h2>
+
+        <p>
+          Notify students who are outside after curfew time.
+        </p>
 
         <button
-          className="send-mail-btn"
-          onClick={() => setShowMailPopup(true)}
+          className="mail-hero-btn"
+          onClick={() => {
+            setMailResult(null);
+            setShowMailPopup(true);
+            setSelectedStudents([]);
+          }}
         >
           <FaEnvelope />
-          Send Mail
+          <span>Send Mail</span>
         </button>
+
       </div>
 
       {/* TABLE */}
@@ -165,13 +183,34 @@ function CurfewMail() {
               <button
                 className="send-selected-btn"
                 onClick={handleSendMail}
-                style={{ width: "auto", flex: "none" }}
               >
                 Send Selected Students
               </button>
             </div>
 
             <div className="student-list">
+
+              <div className="popup-search">
+
+                <input
+                  type="text"
+                  placeholder="Search students..."
+                  className="popup-search-box"
+                />
+
+              </div>
+              {
+                selectedStudents.length>0 && (
+
+                <div className="selection-info">
+
+                ✓ {selectedStudents.length} student
+                {selectedStudents.length!==1 && "s"} selected
+
+                </div>
+
+                )
+              }
               <table className="mail-table">
                 <thead>
                   <tr>
@@ -206,7 +245,14 @@ function CurfewMail() {
                           }}
                         />
                       </td>
-                      <td>{student.name}</td>
+                      <td>
+                        <div className="student-name">
+                          <div className="student-avatar">
+                            {student.name.charAt(0)}
+                          </div>
+                          {student.name}
+                        </div>
+                      </td>
                       <td>{student.roll}</td>
                       <td>{student.email}</td>
                       <td>{student.hostel}</td>
@@ -221,43 +267,49 @@ function CurfewMail() {
       )}
 
       {/* RESULTS POPUP */}
-      {mailResult && (
-        <div className="mail-popup-overlay">
-          <div className="mail-result-popup">
-            <h2>Mail Sending Report</h2>
+      {mailResult &&
+        (mailResult.sent?.length > 0 ||
+          mailResult.failed?.length > 0) && (
+            <div className="mail-popup-overlay">
+              <div className="mail-result-popup">
+                <h2>Mail Sending Report</h2>
 
-            <div className="success-section">
-              <h3>Mail Sent Successfully</h3>
-              {mailResult.sent?.length > 0 ? (
-                mailResult.sent.map((email, index) => (
-                  <p key={index}>✓ {email}</p>
-                ))
-              ) : (
-                <p>No successful mails</p>
-              )}
+                <div className="success-section">
+                  <h3>Mail Sent Successfully</h3>
+                  {mailResult.sent?.length > 0 ? (
+                    mailResult.sent.map((email, index) => (
+                      <p key={index}>✓ {email}</p>
+                    ))
+                  ) : (
+                    <p>No successful mails</p>
+                  )}
+                </div>
+
+                <div className="failed-section">
+                  <h3>Mail Not Sent</h3>
+                  {mailResult.failed?.length > 0 ? (
+                    mailResult.failed.map((email, index) => (
+                      <p key={index}>✗ {email}</p>
+                    ))
+                  ) : (
+                    <p>No failed mails</p>
+                  )}
+                </div>
+
+                <button
+                  className="close-result-btn"
+                  onClick={() => {
+                    setMailResult(null);
+                    setSelectedStudents([]);
+                  }}
+                >
+                  Close
+                </button>
+              </div>
             </div>
-
-            <div className="failed-section">
-              <h3>Mail Not Sent</h3>
-              {mailResult.failed?.length > 0 ? (
-                mailResult.failed.map((email, index) => (
-                  <p key={index}>✗ {email}</p>
-                ))
-              ) : (
-                <p>No failed mails</p>
-              )}
-            </div>
-
-            <button
-              className="close-result-btn"
-              onClick={() => setMailResult(null)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
       )}
 
+      </div>
       <Footer />
     </>
   );

@@ -72,7 +72,7 @@
 }
 
 .mail-popup {
-  width: 92%;
+  width:min(1200px,92vw);
   max-width: 1200px;
   height: 82vh;
   background: linear-gradient(135deg, #071327 0%, #0b1f3f 50%, #10264d 100%);
@@ -275,4 +275,350 @@
   color: white;
   font-weight: 600;
   cursor: pointer;
+}
+
+
+
+
+.mail-hero{
+
+    width:92%;
+
+    margin:35px auto;
+
+    padding:45px 30px;
+
+    border-radius:22px;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #111c3c,
+        #1d1848
+    );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+    0 20px 45px rgba(0,0,0,.45);
+
+    position:relative;
+
+    overflow:hidden;
+}
+.mail-hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:320px;
+    height:320px;
+
+    background:#6d4cff;
+
+    filter:blur(130px);
+
+    opacity:.18;
+
+    left:50%;
+
+    top:-100px;
+
+    transform:translateX(-50%);
+}
+.mail-hero-icon{
+
+    width:95px;
+    height:95px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:42px;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #7b2ff7,
+        #2f80ed
+    );
+
+    box-shadow:
+    0 0 35px
+    rgba(105,85,255,.65);
+
+    position:relative;
+
+    z-index:2;
+}
+.mail-hero h2{
+
+    margin-top:28px;
+
+    color:white;
+
+    font-size:40px;
+
+    font-weight:700;
+}
+.mail-hero p{
+
+    margin-top:15px;
+
+    color:#c9d4ea;
+
+    font-size:18px;
+
+    max-width:700px;
+
+    margin-left:auto;
+
+    margin-right:auto;
+}
+.mail-hero-btn{
+
+    margin-top:35px;
+
+    border:none;
+
+    cursor:pointer;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:18px 65px;
+
+    border-radius:60px;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        90deg,
+        #8a2be2,
+        #2f80ed
+    );
+
+    box-shadow:
+    0 0 30px
+    rgba(87,132,255,.55);
+
+    transition:.3s;
+}
+.mail-hero-btn:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.03);
+
+    box-shadow:
+    0 0 45px
+    rgba(87,132,255,.8);
+}
+.mail-hero-btn svg{
+
+    font-size:28px;
+}
+.table-container{
+
+    margin-top:35px;
+}
+
+.mail-popup-top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:25px 30px;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+margin-bottom:15px;
+
+}
+.mail-counter{
+
+width:95px;
+
+height:95px;
+
+border-radius:50%;
+
+background:linear-gradient(135deg,#7b2ff7,#2f80ed);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+color:white;
+
+box-shadow:0 0 30px rgba(111,90,255,.45);
+
+}
+
+.mail-counter h1{
+
+margin:0;
+
+font-size:34px;
+
+}
+
+.mail-counter span{
+
+font-size:13px;
+
+}
+.mail-actions{
+
+display:flex;
+
+justify-content:flex-end;
+
+gap:15px;
+
+padding:20px 30px;
+
+} 
+.popup-search{
+
+padding:15px 20px;
+
+}
+.popup-search-box{
+
+width:100%;
+
+padding:14px;
+
+border-radius:12px;
+
+background:#162447;
+
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+font-size:15px;
+
+}
+.student-name{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
+.student-avatar{
+
+width:38px;
+
+height:38px;
+
+border-radius:50%;
+
+background:linear-gradient(135deg,#4f7cff,#00d4ff);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-weight:bold;
+
+color:white;
+
+}
+.selection-info{
+
+margin:15px 20px;
+
+padding:12px;
+
+border-radius:10px;
+
+background:#203560;
+
+color:#7df9ff;
+
+font-weight:600;
+
+}
+.mail-table tbody tr{
+
+transition:.25s;
+
+}
+.mail-table tbody tr:hover{
+
+background:#24345d;
+
+transform:scale(1.003);
+
+}
+.mail-table input[type="checkbox"]{
+
+width:18px;
+
+height:18px;
+
+accent-color:#4f7cff;
+
+cursor:pointer;
+
+}
+.send-selected-btn{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:12px 28px;
+
+font-size:16px;
+
+border-radius:12px;
+
+background:linear-gradient(90deg,#7b2ff7,#2f80ed);
+
+transition:.3s;
+
+}
+.send-selected-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 10px 25px rgba(79,124,255,.45);
+
 }
