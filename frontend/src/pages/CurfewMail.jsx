@@ -160,32 +160,60 @@ function CurfewMail() {
       {showMailPopup && (
         <div className="mail-popup-overlay">
           <div className="mail-popup">
-            <div 
-              className="mail-popup-header"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "20px",
-                gap: "15px"
-              }}
-            >
-              <button
-                className="cancel-btn"
-                onClick={() => setShowMailPopup(false)}
-                style={{ width: "auto", flex: "none" }}
-              >
-                Cancel
-              </button>
+            <div className="mail-popup-header">
 
-              <h2 style={{ margin: 0, flex: 1, textAlign: "center" }}>Select Students</h2>
+              <div className="mail-popup-top">
 
-              <button
-                className="send-selected-btn"
-                onClick={handleSendMail}
-              >
-                Send Selected Students
-              </button>
+                <div>
+
+                  <h2>
+                    📧 Send Curfew Alert
+                  </h2>
+
+                  <p>
+                    Select the students who should receive a
+                    curfew notification email.
+                  </p>
+
+                </div>
+
+                <div className="mail-counter">
+
+                  <h1>{selectedStudents.length}</h1>
+
+                  <span>
+                    Selected
+                  </span>
+
+                </div>
+
+              </div>
+
+              <div className="mail-actions">
+
+                <button
+                  className="cancel-btn"
+                  onClick={() =>
+                    setShowMailPopup(false)
+                  }
+                >
+                  Cancel
+                </button>
+
+                <button
+                  className="send-selected-btn"
+                  onClick={handleSendMail}
+                >
+
+                  <FaEnvelope />
+
+                  Send {selectedStudents.length} Mail
+                  {selectedStudents.length !== 1 && "s"}
+
+                </button>
+
+              </div>
+
             </div>
 
             <div className="student-list">
