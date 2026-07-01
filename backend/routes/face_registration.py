@@ -17,6 +17,10 @@ import cloudinary.uploader
 
 import requests
 
+import os
+
+from dotenv import load_dotenv
+
 
 router = APIRouter()
 
@@ -29,15 +33,16 @@ pwd_context = CryptContext(
 # CLOUDINARY CONFIG
 # =========================
 
+load_dotenv()
+
+EMBEDDING_API_URL = os.getenv("EMBEDDING_API_URL")
+
 cloudinary.config(
-
-    cloud_name="dbrjgcpkz",
-
-    api_key="179582722719283",
-
-    api_secret="hjyQQlHCtNXjO-kaXAfaE5XSD_I"
-
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET")
 )
+
 
 # =========================
 # REGISTER STUDENT
@@ -128,34 +133,29 @@ async def register_student(
 
         )
 
-    # =========================
-    # GENERATE EMBEDDING
-    # =========================
+# =========================
+# GENERATE EMBEDDING
+# =========================
+
+    print("EMBEDDING_API_URL =", EMBEDDING_API_URL)
+    print("IMAGE URL =", image_urls[0])
 
     response = requests.post(
+    f"{EMBEDDING_API_URL}/generate-embedding",
+    json={
+        "image_url": image_urls[0]
+    },
+    timeout=30
+)
 
-        "https://web-production-06939.up.railway.app/generate-embedding",
-
-        json={
-
-            "image_url":
-                image_urls[0]
-
-        }
-
-    )
+    print("Embedding status:", response.status_code)
+    print("Embedding response:", response.text)
 
     if response.status_code != 200:
-
         raise HTTPException(
-
             status_code=500,
-
-            detail=(
-                "Embedding Generation Failed"
-            )
-
-        )
+            detail=f"Embedding Generation Failed: {response.text}"
+    )
 
     result = response.json()
 

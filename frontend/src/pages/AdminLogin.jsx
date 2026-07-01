@@ -48,9 +48,23 @@ function AdminLogin() {
         }
       );
 
+      localStorage.clear();
+
+localStorage.setItem(
+  "username",
+  response.data.admin.username
+);
+
+localStorage.setItem(
+  "role",
+  "admin"
+);
+
       alert(
         response.data.message
       );
+
+    
 
       navigate(
         "/admin-dashboard",
@@ -83,9 +97,9 @@ function AdminLogin() {
 
     <>
     
-      <Navbar />
+<Navbar showLogin={true} />
 
-     <AdminPortalHeader />
+     <AdminPortalHeader showProfile={false}/>
 
         <div className="login-container">
 
@@ -169,6 +183,19 @@ function AdminLogin() {
               </option>
 
             </select>
+
+            <div className="forgot-password-admin">
+  <button
+    type="button"
+    onClick={() =>
+      alert(
+        "Password reset is restricted for administrators.\n\nPlease contact the system administrator to reset your password."
+      )
+    }
+  >
+    Forgot Password?
+  </button>
+</div>
 
             <button
               type="submit"

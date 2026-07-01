@@ -1,112 +1,394 @@
-.apply-vacation-page {
-  min-height: 100vh;
-  background: linear-gradient(180deg,#050c1d,#071126);
-  padding: 40px 20px;
-  color: white;
+/* ============================
+   APPLY VACATION PAGE
+============================ */
+
+.apply-vacation-page{
+    min-height:100vh;
+    background:linear-gradient(180deg,#071126 0%,#05101f 100%);
+   
 }
 
-.vacation-container {
-  max-width: 900px;
-  margin: auto;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 35px;
-  backdrop-filter: blur(10px);
+.vacation-container{
+
+    width:min(1100px,92%);
+    margin:0 auto;
+
+    background:rgba(18,27,51,.88);
+
+    border:1px solid rgba(59,130,246,.15);
+
+    border-radius:24px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:0 12px 35px rgba(0,0,0,.25);
+
 }
 
-.vacation-container h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #00d4ff;
+.vacation-container h1{
+
+    text-align:center;
+
+    font-size:2.4rem;
+
+    color:#22d3ee;
+
+    margin-bottom:20px;
+
+    font-weight:700;
+
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+
+
+
+/* ==================================
+   FORM
+================================== */
+
+form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
 }
 
-.form-group label {
-  margin-bottom: 8px;
-  color: #00d4ff;
-  font-weight: 600;
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    margin-bottom:10px;
+
+    color:#22d3ee;
+
+    font-weight:600;
+
+    font-size:.95rem;
+
 }
 
 .form-group input,
-.form-group textarea {
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #334;
-  background: rgba(255,255,255,0.05);
-  color: white;
-  font-size: 15px;
+.form-group textarea{
+
+    width:100%;
+
+    background:#242d40;
+
+    color:#f1f5f9;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:14px;
+
+    padding:15px 18px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+    outline:none;
+
+    box-sizing:border-box;
+
+}
+
+.form-group textarea{
+
+    resize:vertical;
+
+    min-height:150px;
+
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #00d4ff;
+.form-group textarea:focus{
+
+    border-color:#3b82f6;
+
+    box-shadow:
+        0 0 0 3px rgba(59,130,246,.15);
+
 }
 
-.button-group {
-  display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-  margin-top: 25px;
+
+/* ==================================
+   DATE & TIME
+================================== */
+
+input[type="date"],
+input[type="time"]{
+
+    cursor:pointer;
+
 }
 
-.submit-btn {
-  background: #0077ff;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
+
+/* ==================================
+   WORD COUNT
+================================== */
+
+.word-count{
+
+    margin-top:8px;
+
+    text-align:right;
+
+    color:#94a3b8;
+
+    font-size:.85rem;
+
 }
 
-.submit-btn:hover {
-  transform: translateY(-2px);
+
+/* ==================================
+   BUTTONS
+================================== */
+
+.button-group{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:18px;
+
+    margin-top:10px;
+
 }
 
-.cancel-btn {
-  background: #444;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 10px;
-  cursor: pointer;
+.cancel-btn,
+.submit-btn{
+
+    padding:14px 28px;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
 }
 
-.cancel-btn:hover {
-  transform: translateY(-2px);
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator{
+
+    cursor:pointer;
+
+    filter:
+        invert(43%)
+        sepia(99%)
+        saturate(2288%)
+        hue-rotate(200deg)
+        brightness(101%)
+        contrast(101%);
+
+    opacity:1;
+
 }
 
-.vacation-student-info{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  margin-bottom:30px;
+.cancel-btn{
+
+    background:#374151;
+
+    color:white;
+
 }
 
-.student-info-card{
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:12px;
-  padding:16px 20px;
-  color:#fff;
-  font-size:16px;
+.cancel-btn:hover{
+
+    background:#4b5563;
+
 }
 
-.student-info-card strong{
-  color:#00d4ff;
+.submit-btn{
+
+    background:#2563eb;
+
+    color:white;
+
 }
 
-@media(max-width:768px){
+.submit-btn:hover{
 
-  .vacation-student-info{
-    grid-template-columns:1fr;
-  }
+    background:#3b82f6;
+
+    box-shadow:
+        0 0 18px rgba(59,130,246,.35);
+
+}
+
+
+
+/* ===========================
+   HERO CARD
+=========================== */
+
+.student-profile-hero{
+
+    display:flex;
+    align-items:center;
+    gap:35px;
+
+    background:rgba(15,25,50,.82);
+
+    border:1px solid rgba(80,120,255,.18);
+
+    border-radius:22px;
+
+    padding:20px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+    0 0 30px rgba(15,35,90,.35);
+
+    margin-bottom:35px;
+
+}
+
+
+.form-group input[type="text"],
+.form-group textarea{
+
+    cursor:text;
+
+}
+
+
+.hero-profile-image{
+
+    width:165px;
+    height:165px;
+
+    border-radius:20px;
+
+    object-fit:cover;
+
+    border:3px solid #3b82f6;
+
+    box-shadow:
+    0 0 25px rgba(59,130,246,.35);
+
+}
+
+
+.hero-right{
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    flex:none;
+
+}
+.hero-right h1{
+
+    font-size:2.2rem;
+    font-weight:500;
+    margin-bottom:8px;
+    color:#ffffff;
+}
+
+.hero-roll{
+
+    color:#60a5fa;
+
+    font-size:1.05rem;
+
+    margin-bottom:6px;
+}
+
+.hero-course{
+
+    color:#9cb6d8;
+
+    margin-bottom:18px;
+}
+
+
+
+/* ===========================
+   STATUS
+=========================== */
+
+.status-inside{
+
+    background:rgba(16,185,129,.12);
+
+    color:#34d399;
+
+    border:1px solid rgba(52,211,153,.25);
+}
+
+.status-inside::before{
+
+    background:#10b981;
+
+    box-shadow:0 0 10px #10b981;
+}
+
+
+.status-outside{
+
+    background:rgba(239,68,68,.12);
+
+    color:#f87171;
+
+    border:1px solid rgba(248,113,113,.25);
+}
+
+.status-outside::before{
+
+    background:#ef4444;
+
+    box-shadow:0 0 10px #ef4444;
+}
+
+
+/* ==================================
+   RESPONSIVE
+================================== */
+
+@media (max-width:900px){
+
+.vacation-container{
+
+    padding:25px;
+
+}
+
+.vacation-container h1{
+
+    font-size:2rem;
+
+}
+
+.button-group{
+
+    flex-direction:column;
+
+}
+
+.cancel-btn,
+.submit-btn{
+
+    width:100%;
+
+}
 
 }

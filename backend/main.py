@@ -17,6 +17,13 @@ from routes.activity_logs import (router as activity_logs_router)
 from routes.curfew_mail import (router as curfew_mail_router)
 from routes.student_profile import router as student_profile_router
 from routes import vacation
+from routes import change_password
+from routes.feedback import router as feedback_router
+from routes import dashboard_analytics
+
+
+
+
 
 
 app = FastAPI()
@@ -56,6 +63,11 @@ app.include_router(activity_logs_router)
 app.include_router(curfew_mail_router)
 app.include_router(student_profile_router)
 app.include_router(vacation.router)
+app.include_router(change_password.router)
+app.include_router(feedback_router)
+app.include_router(dashboard_analytics.router)
+
+
 
 
 # =========================

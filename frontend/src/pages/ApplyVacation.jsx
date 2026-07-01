@@ -48,17 +48,41 @@ const [formData, setFormData] = useState({
   reason: "",
   destination: "",
   leaveDate: "",
+  leaveCampusTime: "", 
   returnDate: ""
 });
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
 
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  let { name, value } = e.target;
 
-  };
+  // Capitalize first letter of every word
+  if (name === "destination" || name === "reason") {
+    value = value.replace(
+      /\b\w/g,
+      (char) => char.toUpperCase()
+    );
+  }
+
+  // Limit reason to 100 words
+  if (name === "reason") {
+
+    const words = value
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
+    if (words.length > 100) {
+      return;
+    }
+  }
+
+  setFormData({
+    ...formData,
+    [name]: value
+  });
+
+};
 
   const handleSubmit = async (e) => {
 
@@ -83,6 +107,9 @@ const [formData, setFormData] = useState({
 
     leave_date:
       formData.leaveDate,
+
+    leave_campus_time: 
+    formData.leaveCampusTime,
 
     return_date:
       formData.returnDate,
@@ -119,6 +146,28 @@ const [formData, setFormData] = useState({
   );
 }
 
+const latestLog =
+  [...logs].sort((a, b) => {
+    const dateA = new Date(a.outTime || a.inTime);
+    const dateB = new Date(b.outTime || b.inTime);
+
+    return dateB - dateA;
+  })[0] || null;
+
+const isInside = latestLog ? !!latestLog.inTime : true;
+
+const statusText = isInside
+  ? "Inside Campus"
+  : "Outside Campus";
+
+
+const today = new Date().toISOString().split("T")[0];
+
+const maxLeaveDate = new Date();
+maxLeaveDate.setDate(maxLeaveDate.getDate() + 5);
+
+const maxDate = maxLeaveDate.toISOString().split("T")[0];
+
   return (
 
     <>
@@ -140,17 +189,50 @@ const [formData, setFormData] = useState({
             Apply For Vacation
           </h1>
 
-          <div className="vacation-student-info">
+  {/* ================= HERO PROFILE CARD ================= */}
+  <div className="student-profile-hero">
 
-  <div className="student-info-card">
-    <strong>Name :</strong> {student?.name}
-  </div>
+    <div className="hero-left">
 
-  <div className="student-info-card">
-    <strong>Roll No :</strong> {student?.roll}
-  </div>
+      <img
+        src={
+          student.face_images?.length
+            ? student.face_images[0]
+            : "/default-avatar.png"
+        }
+        alt="Student"
+        className="hero-profile-image"
+      />
+
+    </div>
+
+    <div className="hero-right">
+
+      <h1>{student.name}</h1>
+
+      <p className="hero-roll">
+        {student.roll}
+      </p>
+
+      <p className="hero-course">
+        {student.branch} • {student.hostel}
+      </p>
+
+     <div
+  className={`hero-status ${
+    isInside ? "status-inside" : "status-outside"
+  }`}
+>
+  {statusText}
 
 </div>
+
+    </div>
+
+
+    
+
+  </div>
 
           <form onSubmit={handleSubmit}>
 
@@ -171,19 +253,43 @@ const [formData, setFormData] = useState({
 
   </div>
 
+  
+    <div className="form-group">
+
+  <label>
+    Time of Leaving Campus
+  </label>
+
+ <input
+  type="time"
+  name="leaveCampusTime"
+  value={formData.leaveCampusTime}
+  onChange={(e) => {
+    handleChange(e);
+    e.target.blur();
+  }}
+  required
+/>
+
+</div>
+
   <div className="form-group">
 
     <label>
       Leave Date
     </label>
 
-    <input
-      type="date"
-      name="leaveDate"
-      value={formData.leaveDate}
-      onChange={handleChange}
-      required
-    />
+
+
+   <input
+  type="date"
+  name="leaveDate"
+  value={formData.leaveDate}
+  onChange={handleChange}
+  min={today}
+  max={maxDate}
+  required
+/>
 
   </div>
 
@@ -217,6 +323,15 @@ const [formData, setFormData] = useState({
       placeholder="Enter reason for vacation"
       required
     />
+
+    <div className="word-count">
+  {
+    formData.reason
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length
+  } / 100 words
+</div>
 
   </div>
 

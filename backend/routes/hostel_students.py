@@ -40,7 +40,11 @@ async def get_hostel_students(hostel_name: str):
 
         "parent_no": student.get("contact", {}).get("parent_no", ""),
 
-        "branch": student.get("branch", "")
+        "branch": student.get("branch", ""),
+        
+        "face_images": student.get( "face_images",[]
+),
+        
 
     })
 

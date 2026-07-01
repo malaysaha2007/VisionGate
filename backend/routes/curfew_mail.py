@@ -5,6 +5,31 @@ from database.mongodb import db
 from datetime import datetime
 from pydantic import BaseModel
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+EMAIL = os.getenv("EMAIL")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+
+
+
+
+# =========================
+# LATEST LOG PER STUDENT
+# =========================
+    
+    
+CURFEW_HOUR = 11
+CURFEW_MINUTE = 00
+
+
+# =========================
+
+
+
+
 router = APIRouter()
 
 
@@ -65,9 +90,6 @@ async def get_curfew_students():
 
     students = []
 
-    curfew_hour = 22
-    curfew_minute = 30
-
     current_time = datetime.now()
 
     for log in latest_logs.values():
@@ -76,6 +98,23 @@ async def get_curfew_students():
             "purpose",
             ""
         ).strip().lower()
+        
+        roll = log.get(
+        "roll",
+        ""
+)
+
+        active_vacation = db.vacation_application.find_one(
+    {
+        "roll_no": roll,
+        "vacation_status": "ACTIVE"
+    }
+)
+
+        if active_vacation:
+            continue
+        
+      
 
         # =====================
         # AUTHORIZED PURPOSES
@@ -104,7 +143,7 @@ async def get_curfew_students():
 
         try:
 
-            datetime.strptime(
+             out_dt = datetime.strptime(
                 out_time_str,
                 "%Y-%m-%d %H:%M:%S"
             )
@@ -118,72 +157,42 @@ async def get_curfew_students():
         # STUDENT RETURNED
         # =====================
 
+        in_dt = None
+
         if in_time_str:
 
-            try:
+            in_dt = datetime.strptime(
+        in_time_str,
+        "%Y-%m-%d %H:%M:%S"
+    )
 
-                in_dt = datetime.strptime(
-                    in_time_str,
-                    "%Y-%m-%d %H:%M:%S"
-                )
+        curfew_dt = datetime(
+    current_time.year,
+    current_time.month,
+    current_time.day,
+    CURFEW_HOUR,
+    CURFEW_MINUTE,
+    0
+)
+        violation = False
 
-                if (
+        if out_dt <= curfew_dt:
 
-                    in_dt.hour > curfew_hour
+    # Student still outside
+            if not in_dt:
+                violation = True
 
-                    or
-
-                    (
-                        in_dt.hour ==
-                        curfew_hour
-
-                        and
-
-                        in_dt.minute >
-                        curfew_minute
-                    )
-
-                ):
-
-                    violation = True
-
-            except:
-                pass
-
-        # =====================
-        # STUDENT STILL OUTSIDE
-        # =====================
-
-        else:
-
-            if (
-
-                current_time.hour >
-                curfew_hour
-
-                or
-
-                (
-                    current_time.hour ==
-                    curfew_hour
-
-                    and
-
-                    current_time.minute >
-                    curfew_minute
-                )
-
-            ):
-
+    # Student returned after today's curfew
+            elif in_dt > curfew_dt:
                 violation = True
 
         if not violation:
-            continue
+                continue
 
         roll = log.get(
             "roll",
             ""
-        )
+    )
 
         student_auth = db.student_auth_data.find_one(
             {
@@ -218,6 +227,17 @@ async def get_curfew_students():
                 "room",
                 ""
             )
+            
+        today = datetime.now().strftime("%Y-%m-%d")
+
+        already_sent = db.curfew_notifications.find_one({
+            "roll_no": roll,
+            "date": today
+            })
+
+        if already_sent:
+                continue
+            
 
         students.append({
 
@@ -418,11 +438,17 @@ This is an automated message. Please do not reply.
                 server.starttls()
 
                 server.login(
-                    "malaymanpur07@gmail.com",
-                    "nbljlbdkzrdempyb"
+                    EMAIL,
+                    EMAIL_PASSWORD
                 )
 
                 server.send_message(msg)
+                
+                db.curfew_notifications.insert_one({
+    "roll_no": student["roll"],
+    "date": datetime.now().strftime("%Y-%m-%d"),
+    "sent_at": datetime.now()
+})
 
             sent_emails.append(email)
         except Exception as e:

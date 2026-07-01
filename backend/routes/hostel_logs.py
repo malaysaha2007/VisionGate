@@ -32,6 +32,16 @@ async def get_hostel_logs(hostel_name: str):
             }
         )
     )
+    
+    
+    # =========================
+    # CURRENT TIME
+    # =========================
+
+    current_time = datetime.now()
+
+    curfew_hour = 22
+    curfew_minute = 30
 
     # =========================
     # GET LATEST LOG OF EACH STUDENT
@@ -120,7 +130,6 @@ async def get_hostel_logs(hostel_name: str):
             "inTime": in_time
 
         }
-
         # =====================
         # OUTSIDE STUDENTS
         # =====================
@@ -130,36 +139,6 @@ async def get_hostel_logs(hostel_name: str):
             outside_students.append(
                 student_data
             )
-
-            # =====================
-            # CURFEW CHECK
-            # =====================
-
-            try:
-
-                dt = datetime.strptime(
-                    out_time,
-                    "%Y-%m-%d %H:%M:%S"
-                )
-
-                if (
-                    dt.hour > 22 or
-                    (
-                        dt.hour == 22 and
-                        dt.minute >= 30
-                    )
-                ):
-
-                    curfew_students.append(
-                        student_data
-                    )
-
-            except Exception as e:
-
-                print(
-                    "Curfew Error:",
-                    e
-                )
 
         # =====================
         # LEAVE / SPECIAL PURPOSE
@@ -172,14 +151,109 @@ async def get_hostel_logs(hostel_name: str):
         )
 
         if (
-            "leave" in purpose_lower
-            or "medical" in purpose_lower
-            or "hospital" in purpose_lower
-            or "emergency" in purpose_lower
+            out_time
+            and not in_time
+            and (
+                "leave" in purpose_lower
+                or "medical" in purpose_lower
+                or "hospital" in purpose_lower
+                or "emergency" in purpose_lower
+            )
         ):
 
             leave_students.append(
                 student_data
+            )
+
+        # =====================
+        # CURFEW SYSTEM
+        # =====================
+
+        try:
+
+            purpose_lower = (
+                purpose.lower()
+                if purpose
+                else ""
+            )
+
+            special_purpose = (
+                "leave" in purpose_lower
+                or "medical" in purpose_lower
+                or "hospital" in purpose_lower
+                or "emergency" in purpose_lower
+            )
+
+            # Skip curfew checking for approved overnight purposes
+            if not special_purpose:
+
+                # =====================
+                # CASE 1:
+                # Student is still outside after curfew
+                # =====================
+
+                if out_time and not in_time:
+
+                    out_dt = datetime.strptime(
+                        out_time,
+                        "%Y-%m-%d %H:%M:%S"
+                )
+
+                    curfew_dt = out_dt.replace(
+                        hour=curfew_hour,
+                        minute=curfew_minute,
+                        second=0,
+                        microsecond=0
+                )
+
+                    if current_time > curfew_dt:
+
+                        student_data["curfewType"] = "Still Outside"
+
+                        curfew_students.append(
+                            student_data
+                )
+
+                # =====================
+                # CASE 2:
+                # Student has returned
+                # =====================
+
+                elif out_time and in_time:
+
+                    out_dt = datetime.strptime(
+                        out_time,
+                        "%Y-%m-%d %H:%M:%S"
+                    )
+
+                    in_dt = datetime.strptime(
+                        in_time,
+                        "%Y-%m-%d %H:%M:%S"
+                    )
+                    
+                    curfew_dt = out_dt.replace(
+                        hour=curfew_hour,
+                        minute=curfew_minute,
+                        second=0,
+                        microsecond=0
+                    )
+
+                   
+
+                    # Returned after curfew on the same day
+                    if in_dt > curfew_dt:
+
+                        student_data["curfewType"] = "Late Return"
+
+                        curfew_students.append(
+                            student_data
+                        )
+
+        except Exception as e:
+
+            print(
+                "Curfew Error:",
+                e
             )
 
     # =========================

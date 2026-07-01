@@ -1,3 +1,8 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 :root{
   --bg-main:#071126;
   --bg-secondary:#071024;
@@ -125,6 +130,8 @@
   font-size:14px;
 
   outline:none;
+
+  box-sizing: border-box;
 }
 
 .login-container input:focus,
@@ -165,6 +172,31 @@
   opacity:0.92;
 }
 
+.forgot-password-hostel {
+  width: 100%;
+  text-align: right;
+  margin-top: 8px;
+  margin-bottom: 18px;
+}
+
+.forgot-password-hostel button {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  color: #2563eb;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: 0.3s;
+}
+
+.forgot-password-hostel button:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
 /* RESPONSIVE */
 
 @media(max-width:500px){
@@ -188,6 +220,7 @@
   position:relative;
   width:100%;
   margin-bottom:14px;
+  box-sizing: border-box;
 }
 .eye-btn{
   width:auto !important;

@@ -5,7 +5,19 @@ import API from "../services/api";
 import {
   FaSyncAlt,
   FaEnvelope,
-  FaFileCsv
+  FaFileCsv,
+  FaUsers,
+  FaClipboard,
+  FaUser,
+  FaCalendarAlt,
+  FaMugHot,
+  FaPaperPlane,
+  FaPlaneDeparture,
+  FaHospital,
+  FaBriefcase,
+  FaHome,
+  FaQuestionCircle,
+  FaCartArrowDown
 } from "react-icons/fa";
 
 import "../styles/AdminDashboard.css";
@@ -22,11 +34,38 @@ function AdminDashboard() {
   const [search, setSearch] = useState("");
   const [logs, setLogs] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [leaveCount, setLeaveCount] = useState(0);
   const [studentsOutside, setStudentsOutside] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedHostel, setSelectedHostel] = useState("All");
   const [refreshing, setRefreshing] = useState(false);
+  const [leaveCount, setLeaveCount] = useState(0);
+  const [leaveFilter, setLeaveFilter] = useState("Pending");
+  
+  const getPurposeIcon = (purpose) => {
+  switch (purpose) {
+    case "Hospital":
+    case "Medical":
+      return <FaHospital />;
+
+    case "Vacation":
+      return <FaPlaneDeparture />;
+
+    case "Official Work":
+      return <FaBriefcase />;
+
+    case "Market":
+      return <FaCartArrowDown />;
+
+    case "Home":
+      return <FaHome />;
+
+    case "Tea Break":
+      return <FaMugHot />;
+
+    default:
+      return <FaQuestionCircle />;
+  }
+};
 
   const hostels = [
     "All",
@@ -129,7 +168,6 @@ function AdminDashboard() {
     const query = search.toLowerCase();
 
     const matchesSearch =
-      (log.name || "").toLowerCase().includes(query) ||
       (log.roll || "").toLowerCase().includes(query) ||
       (log.purpose || "").toLowerCase().includes(query);
 
@@ -162,27 +200,27 @@ function AdminDashboard() {
         }`}
       >
         <div className="stats-grid">
+          <div className="stat-card">
+            <p>Total Records</p>
+            <h2>{totalRecords}</h2>
+          </div>
 
-      <div className="stat-card">
-        <p>Total Records</p>
-        <h2>{totalRecords}</h2>
-      </div>
+        
 
-      <div className="stat-card">
-        <p>Leave / Special Purpose</p>
-        <h2 className="leave-count">
-          {leaveCount}
-        </h2>
-      </div>
-
-      <div className="stat-card">
-        <p>Students Outside</p>
-        <h2 className="outside">
-          {studentsOutside}
-        </h2>
-      </div>
-
-    </div>
+          <div className="stat-card">
+            <p>Students Outside</p>
+            <h2 className="outside">
+              {studentsOutside}
+            </h2>
+          </div> 
+          
+          <div className="stat-card">
+  <p>Leave / Special Purpose</p>
+  <h2 className="leave-count">
+    {leaveCount}
+  </h2>
+</div>
+        </div>
 
         <div className="filter-card">
           <div className="filter-top">
@@ -211,7 +249,7 @@ function AdminDashboard() {
               <button
                 onClick={fetchDashboard}
                 title="Refresh"
-                className="icon-btn"
+                className="icon-btn refresh"
               >
                 <FaSyncAlt />
               </button>
@@ -231,7 +269,7 @@ function AdminDashboard() {
               <button
                 onClick={exportCSV}
                 title="Export CSV"
-                className="icon-btn"
+                className="icon-btn csv"
               >
                 <FaFileCsv />
               </button>
@@ -240,7 +278,7 @@ function AdminDashboard() {
 
           <input
             type="text"
-            placeholder="Search by Name, Roll Number, or Purpose..."
+            placeholder="Search by Roll Number, or Purpose..."
             value={search}
             onChange={(e) =>
               setSearch(e.target.value)
@@ -253,9 +291,7 @@ function AdminDashboard() {
           <table>
             <thead>
               <tr>
-                <th>Name</th>
                 <th>Roll</th>
-                <th>Room</th>
                 <th>Purpose</th>
                 <th>Out Time</th>
                 <th>In Time</th>
@@ -286,19 +322,53 @@ function AdminDashboard() {
                 filteredLogs.map(
                   (log, index) => (
                     <tr key={index}>
-                      <td>{log.name}</td>
-                      <td>{log.roll}</td>
-                      <td>{log.room}</td>
-                      <td>{log.purpose}</td>
-                      <td>{log.outTime}</td>
+
                       <td>
-                        {log.inTime || "-"}
-                      </td>
+                        <span className="icon-log">
+                         <span className="user-icon"> <FaUser/></span>
+                        {log.roll}
+                        </span>
+                        
+                        </td>
+
                       <td>
-                        {log.inTime
-                          ? "IN"
-                          : "OUT"}
+                        <span className="icon-log">
+                          <span className="purpose-icon">
+                            {getPurposeIcon(log.purpose)}
+                          </span>
+                          {log.purpose}
+                        </span>
                       </td>
+
+                      <td>
+                         <span className="icon-log">
+                          <span>
+                            <FaCalendarAlt/>
+                          </span>
+                          {log.outTime}
+                        </span>
+                        </td>
+                      <td>
+                        <span className="icon-log">
+                          <span>
+                            <FaCalendarAlt/>
+                          </span>
+                          {log.inTime || "-"}
+                        </span>
+                        
+                      </td>
+<td>
+  <span
+    className={
+      log.inTime
+        ? "status-in"
+        : "status-out"
+    }
+  >
+    
+    {log.inTime ? "IN" : "OUT"}
+  </span>
+</td>
                     </tr>
                   )
                 )

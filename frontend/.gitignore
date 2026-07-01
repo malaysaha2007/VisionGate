@@ -38,5 +38,5 @@ frontend/node_modules/
 dist/
 build/
 
-# Environment files
-.env
+# Environment
+backend/.env

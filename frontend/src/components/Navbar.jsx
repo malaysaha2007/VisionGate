@@ -51,6 +51,10 @@ function Navbar({
           <nav className="nav-links">
             
 
+            <Link to="/">
+              Home
+            </Link>
+            
             <Link to="/Rules">
               Rules
             </Link>
@@ -90,17 +94,19 @@ function Navbar({
 
     <div className="dropdown-menu">
 
+    <Link to="/AdminLogin">
+        Admin Login
+      </Link>
+
+       <Link to="/HostelLogin">
+        Hostel Login
+      </Link>
+
       <Link to="/StudentLogin">
         Student Login
       </Link>
 
-      <Link to="/HostelLogin">
-        Hostel Login
-      </Link>
-
-      <Link to="/AdminLogin">
-        Admin Login
-      </Link>
+      
 
     </div>
 

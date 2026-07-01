@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
 import {
   FaGithub,
@@ -8,17 +9,21 @@ import {
   FaUniversity,
   FaUsers,
   FaLinkedin,
-  FaCode
-
+  FaCode,
+  FaStar
 } from "react-icons/fa";
-
-
-
 
 
 import "../styles/AboutVisionGate.css";
 
+import API from "../services/api";
+
+//mockdata
+
 function AboutVisionGate() {
+
+  const [feedbacks, setFeedbacks] = useState([]);
+
 
 
   const [showTeam, setShowTeam] =
@@ -26,36 +31,95 @@ function AboutVisionGate() {
 
   const [name, setName] = useState("");
 
-const [email, setEmail] = useState("");
-
 const [feedback, setFeedback] = useState("");
 
-const handleFeedbackSubmit = () => {
 
-  if (!name || !email || !feedback) {
+const handleFeedbackSubmit = async () => {
 
+  if (!name || !feedback || rating === 0) {
     alert("Please fill all fields");
-
     return;
+  }
+
+  try {
+
+    await API.post("/feedback/submit", {
+      name,
+      feedback,
+      rating
+    });
+
+    alert("Thank you for your feedback!");
+
+    setName("");
+    setFeedback("");
+    setRating(0);
+
+    fetchFeedbacks();
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Failed to submit feedback");
+
+  }
+};
+
+const fetchFeedbacks = async () => {
+
+  try {
+
+    const response =
+      await API.get("/feedback/all");
+
+    setFeedbacks(response.data);
+
+  } catch (error) {
+
+    console.error(error);
 
   }
 
-  alert(
-    "Thank you for your feedback!"
-  );
-
-  setName("");
-  setEmail("");
-  setFeedback("");
-
 };
 
+
+
+ //for stars
+const colors = {
+        orange: "#F2C265",
+        grey: "#a9a9a9"
+    }
+const stars = Array(5).fill(0)
+
+const [rating, setRating] = useState(0)
+
+const handleClickStar = value => {
+    setRating(value)
+};
+
+//for slideshow
+const [index, setIndex] = useState(0);
+
+useEffect(() => {
+  if (!feedbacks.length) return;
+
+  const timer = setInterval(() => {
+    setIndex((prev) => (prev + 1) % feedbacks.length);
+  }, 5000);
+
+  return () => clearInterval(timer);
+}, [feedbacks]);
+
+useEffect(() => {
+  fetchFeedbacks();
+}, []);
 
   return (
 
     <div className="about-page">
 
-      <Navbar />
+      <Navbar showLogin={true} />
 
     <div className="about-hero">
 
@@ -65,7 +129,6 @@ const handleFeedbackSubmit = () => {
 
   <p>
     Smart Entry–Exit Monitoring System
-    for PDPM IIITDM Jabalpur
   </p>
 
 </div>
@@ -205,104 +268,6 @@ const handleFeedbackSubmit = () => {
 </section>
 
 
-
-
-
-      <section className="about-card">
-
-  <h2>
-    Version Information
-  </h2>
-
-  <p>
-    <strong>Current Version:</strong>
-    {" "}
-    1.0
-  </p>
-
-  <p>
-    <strong>Release Year:</strong>
-    {" "}
-    2026
-  </p>
-
-  <p>
-    <strong>Status:</strong>
-    {" "}
-    Active Development
-  </p>
-
-</section>
-
-        <section className="about-card">
-
-  <h2>
-    Project Contributions
-  </h2>
-
-  <ul>
-
-    <li>
-      Frontend Development
-    </li>
-
-    <li>
-      Backend Development
-    </li>
-
-    <li>
-      Face Recognition Integration
-    </li>
-
-    <li>
-      Database Design
-    </li>
-
-    <li>
-      UI/UX Development
-    </li>
-
-    <li>
-      System Testing
-    </li>
-
-  </ul>
-
-</section>
-
-<section className="about-card">
-
-  <h2>
-    Future Enhancements
-  </h2>
-
-  <ul>
-
-    <li>
-      Mobile Application Support
-    </li>
-
-    <li>
-      QR-Based Verification
-    </li>
-
-    <li>
-      Real-Time Notifications
-    </li>
-
-    <li>
-      Advanced Analytics Dashboard
-    </li>
-
-    <li>
-      AI-Based Risk Detection
-    </li>
-
-  </ul>
-
-</section>
-
-
  <section className="about-card about-wide">
 
   <h2>
@@ -338,7 +303,7 @@ const handleFeedbackSubmit = () => {
   </a>
 
   <a
-    href="https://your-deployment-link.com"
+    href="https://vision-gate-sbta.vercel.app"
     target="_blank"
     rel="noopener noreferrer"
     className="connect-item"
@@ -360,6 +325,45 @@ const handleFeedbackSubmit = () => {
 
 
 </section>
+
+
+<section className="about-card">
+
+  <h2>
+    Future Enhancements
+  </h2>
+
+  <ul>
+
+    <li>
+      Mobile Application Support
+    </li>
+
+    <li>
+      QR-Based Verification
+    </li>
+
+    <li>
+      Real-Time Notifications
+    </li>
+
+    <li>
+      Advanced Analytics Dashboard
+    </li>
+
+    <li>
+      AI-Based Risk Detection
+    </li>
+
+  </ul>
+
+</section>
+
+
+
+
+
+
 <section className="about-card">
 
   <h2>
@@ -383,14 +387,19 @@ const handleFeedbackSubmit = () => {
       }
     />
 
-    <input
-      type="email"
-      placeholder="Email ID"
-      value={email}
-      onChange={(e) =>
-        setEmail(e.target.value)
-      }
-    />
+    <div className="star-feedback">
+      <p>Rate your experience</p>
+     {stars.map((_, index) => {
+          return (
+               <FaStar
+                   key={index}
+                   size={25}
+                   color={(rating) > index ? colors.orange : colors.grey}
+                   onClick={() => handleClickStar(index + 1)}
+                />
+           )
+       })}
+  </div>
 
     <textarea
       placeholder="Write your feedback..."
@@ -409,6 +418,94 @@ const handleFeedbackSubmit = () => {
     </button>
 
   </div>
+
+</section>
+
+
+ <section className="about-card about-wide">
+
+  <h2>
+    Feedbacks . . .
+  </h2>
+
+  <p className="feedback-phrase">
+    Insights from our community
+  </p>
+
+
+
+
+<div className="feedback-display">
+
+  {feedbacks.length > 0 ? (
+
+    <>
+      <AnimatePresence mode="wait">
+       <motion.div
+  key={index}
+  initial={{ opacity: 0, y: 50 }}
+  animate={{ opacity: 1, y: 0 }}
+  exit={{ opacity: 0, y: -50 }}
+  className="feedback-card"
+>
+  <div className="feedback-header">
+
+    <div className="feedback-user">
+
+      <img
+        alt={feedbacks[index]?.name}
+        src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${feedbacks[index]?.name}`}
+        className="feedback-avatar"
+      />
+
+      <h3>{feedbacks[index]?.name}</h3>
+
+    </div>
+
+    <span className="feedback-date">
+      {feedbacks[index]?.created_at
+        ? new Date(
+            feedbacks[index].created_at
+          ).toLocaleDateString("en-GB")
+        : ""}
+    </span>
+
+  </div>
+
+  <div className="feedback-stars">
+    {stars.map((_, starIndex) => (
+      <FaStar
+        key={starIndex}
+        size={18}
+        color={
+          feedbacks[index]?.rating > starIndex
+            ? colors.orange
+            : colors.grey
+        }
+      />
+    ))}
+  </div>
+
+  <p className="feedback-text">
+    {feedbacks[index]?.feedback}
+  </p>
+
+</motion.div>
+      </AnimatePresence>
+
+      
+    </>
+
+  ) : (
+
+    <p>No feedback available yet.</p>
+
+  )}
+
+</div>
+  
+  
+
 
 </section>
 

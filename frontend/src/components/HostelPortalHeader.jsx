@@ -1,11 +1,26 @@
 import "../styles/AllPortalHeader.css";
-import { useLocation } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+
+import {
+  useLocation,
+  useNavigate
+} from "react-router-dom";
+
+import {
+  useState,
+  useEffect,
+  useRef
+} from "react";
 
 import PortalHeader from "./PortalHeader";
 
+
+
 function HostelPortalHeader() {
   const [showMenu, setShowMenu] = useState(false);
+
+   const navigate = useNavigate();
+
+  
 
   const menuRef = useRef(null);
 
@@ -82,50 +97,7 @@ function HostelPortalHeader() {
               </div>
             </div>
 
-            {showMenu && (
-              <div className="portal-dropdown">
-
-                <div
-                  className="dropdown-item"
-                  onClick={() => {
-                    alert(
-                      "Profile Page Coming Soon"
-                    );
-                  }}
-                >
-                  👤 Profile
-                </div>
-
-                <div
-                  className="dropdown-item logout"
-                  onClick={() => {
-
-                    localStorage.removeItem(
-                      "hostelUser"
-                    );
-
-                    sessionStorage.clear();
-
-                    localStorage.removeItem(
-                      "hostelStudents"
-                    );
-
-                    localStorage.removeItem(
-                      "hostelData"
-                    );
-
-                    setShowMenu(false);
-
-                    window.location.replace(
-                      "/HostelLogin"
-                    );
-                  }}
-                >
-                  🚪 Logout
-                </div>
-
-              </div>
-            )}
+            
           </div>
         )
       }
