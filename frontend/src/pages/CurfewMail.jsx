@@ -55,6 +55,7 @@ function CurfewMail() {
       });
 
       setMailResult(response.data);
+      setSelectedStudents([]);
       setShowMailPopup(false);
     } catch (error) {
       console.error(error);
@@ -79,27 +80,33 @@ function CurfewMail() {
 
       
       {/* ACTIONS */}
-      <div className="filter-card">
+      {/* HERO MAIL ACTION */}
 
-        <div className="filter-top">
+      <div className="mail-hero">
 
-          <div>
-            <h3>Students Outside After Curfew</h3>
-          </div>
-
-          <div className="action-buttons">
-
-            <button
-              onClick={() => setShowMailPopup(true)}
-              title="Send Mail"
-              className="icon-btn"
-            >
-              <FaEnvelope />
-            </button>
-
-          </div>
-
+        <div className="mail-hero-icon">
+          <FaEnvelope />
         </div>
+
+        <h2>
+          Send Mail to Students
+        </h2>
+
+        <p>
+          Notify students who are outside after curfew time.
+        </p>
+
+        <button
+          className="mail-hero-btn"
+          onClick={() => {
+            setMailResult(null);
+            setShowMailPopup(true);
+            setSelectedStudents([]);
+          }}
+        >
+          <FaEnvelope />
+          <span>Send Mail</span>
+        </button>
 
       </div>
 
@@ -154,24 +161,84 @@ function CurfewMail() {
         <div className="mail-popup-overlay">
           <div className="mail-popup">
             <div className="mail-popup-header">
-              <button
-                className="cancel-btn"
-                onClick={() => setShowMailPopup(false)}
-              >
-                Cancel
-              </button>
 
-              <h2>Select Students</h2>
+              <div className="mail-popup-top">
 
-              <button
-                className="send-selected-btn"
-                onClick={handleSendMail}
-              >
-                Send Selected Students
-              </button>
+                <div>
+
+                  <h2>
+                    📧 Send Curfew Alert
+                  </h2>
+
+                  <p>
+                    Select the students who should receive a
+                    curfew notification email.
+                  </p>
+
+                </div>
+
+                <div className="mail-counter">
+
+                  <h1>{selectedStudents.length}</h1>
+
+                  <span>
+                    Selected
+                  </span>
+
+                </div>
+
+              </div>
+
+              <div className="mail-actions">
+
+                <button
+                  className="cancel-btn"
+                  onClick={() =>
+                    setShowMailPopup(false)
+                  }
+                >
+                  Cancel
+                </button>
+
+                <button
+                  className="send-selected-btn"
+                  onClick={handleSendMail}
+                >
+
+                  <FaEnvelope />
+
+                  Send {selectedStudents.length} Mail
+                  {selectedStudents.length !== 1 && "s"}
+
+                </button>
+
+              </div>
+
             </div>
 
             <div className="student-list">
+
+              <div className="popup-search">
+
+                <input
+                  type="text"
+                  placeholder="Search students..."
+                  className="popup-search-box"
+                />
+
+              </div>
+              {
+                selectedStudents.length>0 && (
+
+                <div className="selection-info">
+
+                ✓ {selectedStudents.length} student
+                {selectedStudents.length!==1 && "s"} selected
+
+                </div>
+
+                )
+              }
               <table className="mail-table">
                 <thead>
                   <tr>
@@ -206,7 +273,14 @@ function CurfewMail() {
                           }}
                         />
                       </td>
-                      <td>{student.name}</td>
+                      <td>
+                        <div className="student-name">
+                          <div className="student-avatar">
+                            {student.name.charAt(0)}
+                          </div>
+                          {student.name}
+                        </div>
+                      </td>
                       <td>{student.roll}</td>
                       <td>{student.email}</td>
                       <td>{student.hostel}</td>
@@ -221,41 +295,46 @@ function CurfewMail() {
       )}
 
       {/* RESULTS POPUP */}
-      {mailResult && (
-        <div className="mail-popup-overlay">
-          <div className="mail-result-popup">
-            <h2>Mail Sending Report</h2>
+      {mailResult &&
+        (mailResult.sent?.length > 0 ||
+          mailResult.failed?.length > 0) && (
+            <div className="mail-popup-overlay">
+              <div className="mail-result-popup">
+                <h2>Mail Sending Report</h2>
 
-            <div className="success-section">
-              <h3>Mail Sent Successfully</h3>
-              {mailResult.sent?.length > 0 ? (
-                mailResult.sent.map((email, index) => (
-                  <p key={index}>✓ {email}</p>
-                ))
-              ) : (
-                <p>No successful mails</p>
-              )}
+                <div className="success-section">
+                  <h3>Mail Sent Successfully</h3>
+                  {mailResult.sent?.length > 0 ? (
+                    mailResult.sent.map((email, index) => (
+                      <p key={index}>✓ {email}</p>
+                    ))
+                  ) : (
+                    <p>No successful mails</p>
+                  )}
+                </div>
+
+                <div className="failed-section">
+                  <h3>Mail Not Sent</h3>
+                  {mailResult.failed?.length > 0 ? (
+                    mailResult.failed.map((email, index) => (
+                      <p key={index}>✗ {email}</p>
+                    ))
+                  ) : (
+                    <p>No failed mails</p>
+                  )}
+                </div>
+
+                <button
+                  className="close-result-btn"
+                  onClick={() => {
+                    setMailResult(null);
+                    setSelectedStudents([]);
+                  }}
+                >
+                  Close
+                </button>
+              </div>
             </div>
-
-            <div className="failed-section">
-              <h3>Mail Not Sent</h3>
-              {mailResult.failed?.length > 0 ? (
-                mailResult.failed.map((email, index) => (
-                  <p key={index}>✗ {email}</p>
-                ))
-              ) : (
-                <p>No failed mails</p>
-              )}
-            </div>
-
-            <button
-              className="close-result-btn"
-              onClick={() => setMailResult(null)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
       )}
 
       </div>
