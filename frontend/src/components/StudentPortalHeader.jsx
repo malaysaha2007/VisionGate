@@ -132,7 +132,7 @@ function StudentPortalHeader({
                   />
                 ) : (
                   <div className="student-header-fallback">
-                    👤
+                    
                   </div>
                 )}
 

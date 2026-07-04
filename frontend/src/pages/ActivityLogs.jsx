@@ -9,12 +9,30 @@ import AdminPortalHeader from "../components/AdminPortalHeader";
 
 import "../styles/ActivityLogs.css";
 
-// Visual Mappings for SOC Theme
 const ROLE_CONFIGS = {
-  "Director": { icon: "👑", label: "Director" },
-  "Guard": { icon: "🛡️", label: "Guard" },
-  "Dean Academic": { icon: "🎓", label: "Dean Academic" },
-  "Hostel Warden": { icon: "🏢", label: "Warden" }
+  "Director": {
+    letter: "D",
+    label: "Director",
+    className: "director-avatar",
+  },
+
+  "Guard": {
+    letter: "G",
+    label: "Guard",
+    className: "guard-avatar",
+  },
+
+  "Dean Academic": {
+    letter: "DA",
+    label: "Dean Academic",
+    className: "dean-avatar",
+  },
+
+  "Hostel Warden": {
+    letter: "W",
+    label: "Warden",
+    className: "warden-avatar",
+  },
 };
 
 const ACTION_CONFIGS = {
@@ -146,7 +164,7 @@ function ActivityLogs() {
   };
 
   const getRoleIcon = (role) => {
-    return ROLE_CONFIGS[role]?.icon || "👤";
+    return ROLE_CONFIGS[role]?.icon || "";
   };
 
   return (
@@ -156,73 +174,9 @@ function ActivityLogs() {
 
       <div className={`soc-dashboard-container ${refreshing ? "feed-refreshing" : ""}`}>
         
-        {/* Header Block */}
-        <div className="soc-header">
-          <div>
-            <h2>Activity Streams</h2>
-            <p className="soc-subtitle">Real-time system telemetry and authorization monitoring logs</p>
-          </div>
-          <div className="soc-live-indicator">
-            <span className="pulse-dot"></span>
-            <span>SECURE LINK ACTIVE</span>
-          </div>
-        </div>
+      
 
-        {/* 4 Analytics Cards */}
-        <div className="soc-stats-grid">
-          <div className="soc-stat-card">
-            <div className="card-top">
-              <span className="card-label">TOTAL ACTIONS</span>
-              <span className="trend-up">System Wide</span>
-            </div>
-            <h3>{metrics.total}</h3>
-            <p className="card-subtext">+{metrics.todayCount} added today</p>
-          </div>
 
-          <div className="soc-stat-card highlight">
-            <div className="card-top">
-              <span className="card-label">TODAY'S METRICS</span>
-              <span className="live-pill">LIVE FEED</span>
-            </div>
-            <h3>{metrics.todayCount}</h3>
-            <p className="card-subtext">Awaiting synchronization</p>
-          </div>
-
-          <div className="soc-stat-card">
-            <div className="card-top">
-              <span className="card-label">MOST ACTIVE CONSOLE</span>
-              <span className="trend-neutral">Peak Load</span>
-            </div>
-            <h3>{ROLE_CONFIGS[metrics.activeRole]?.label || metrics.activeRole}</h3>
-            <p className="card-subtext">{metrics.maxActions} sequential events</p>
-          </div>
-
-          <div className="soc-stat-card">
-            <div className="card-top">
-              <span className="card-label">LAST TELEMETRY</span>
-              <span className="time-icon"><FaHistory /></span>
-            </div>
-            <h3>{metrics.latestTime}</h3>
-            <p className="card-subtext">No latency overhead</p>
-          </div>
-        </div>
-
-        {/* Tiny Chart Visualization */}
-        <div className="soc-mini-chart-card">
-          <p className="chart-title">Current Load Distribution Tracker</p>
-          <div className="mini-bar-wrapper">
-            <div className="bar-segment green" style={{ width: `${(metrics.actionCounts.ENTRY / (metrics.total || 1)) * 100}%` }} title="Entries"></div>
-            <div className="bar-segment red" style={{ width: `${(metrics.actionCounts.EXIT / (metrics.total || 1)) * 100}%` }} title="Exits"></div>
-            <div className="bar-segment orange" style={{ width: `${(metrics.actionCounts.CURFEW / (metrics.total || 1)) * 100}%` }} title="Curfew Mails"></div>
-            <div className="bar-segment mixed" style={{ width: `${(metrics.actionCounts.OTHER / (metrics.total || 1)) * 100}%` }} title="Other system actions"></div>
-          </div>
-          <div className="chart-legend">
-            <span><span className="dot green"></span> Entries ({metrics.actionCounts.ENTRY})</span>
-            <span><span className="dot red"></span> Exits ({metrics.actionCounts.EXIT})</span>
-            <span><span className="dot orange"></span> Curfew Updates ({metrics.actionCounts.CURFEW})</span>
-            <span><span className="dot mixed"></span> Configs ({metrics.actionCounts.OTHER})</span>
-          </div>
-        </div>
 
         {/* Compact Single Row Toolbar */}
         <div className="soc-filter-toolbar">
@@ -295,27 +249,43 @@ function ActivityLogs() {
             Object.entries(groupedLogs).map(([timeLabel, logsInGroup]) => {
               if (logsInGroup.length === 0) return null;
               return (
-                <div key={timeLabel} className="timeline-block">
-                  <div className="timeline-header-pill">
-                    <span>{timeLabel.toUpperCase()}</span>
-                  </div>
+      
+                 
                   
                   <div className="timeline-nodes-container">
                     {logsInGroup.map((log, index) => {
                       const actionDetails = getActionDetails(log.action_type);
                       return (
                         <div key={index} className={`timeline-card border-theme-${actionDetails.color}`}>
+
+
+
                           {/* Colored status line */}
                           <div className="status-indicator-bar"></div>
 
-                          {/* Left Column: Role Details */}
-                          <div className="node-identity">
-                            <span className="role-avatar">{getRoleIcon(log.role)}</span>
-                            <div className="identity-text">
-                              <h4>{log.role}</h4>
-                              <span className="location-tag">{log.hostel || "Global Core"}</span>
-                            </div>
-                          </div>
+
+
+
+                         <div className="node-identity">
+  <span
+    className={`role-avatar ${
+      ROLE_CONFIGS[log.role]?.className || "default-avatar"
+    }`}
+  >
+    {ROLE_CONFIGS[log.role]?.letter || "?"}
+  </span>
+
+  <div className="identity-text">
+    <h4>{ROLE_CONFIGS[log.role]?.label || log.role}</h4>
+
+    <span className="location-tag">
+      {log.hostel || "Global Core"}
+    </span>
+  </div>
+</div>
+
+
+
 
                           {/* Center Column: Core Content Payload */}
                           <div className="node-payload">
@@ -332,18 +302,13 @@ function ActivityLogs() {
                             <span className="time-string">
                               {log.timestamp?.split(" ").slice(-2).join(" ") || log.timestamp}
                             </span>
-                            <span className="date-string">
-                              {log.timestamp?.split(" ")[0]}
-                            </span>
+                          
                           </div>
                           
-                          {/* Interactive Hover Vector Element */}
-                          <div className="interactive-arrow-hint">➔</div>
                         </div>
                       );
                     })}
                   </div>
-                </div>
               );
             })
           )}
