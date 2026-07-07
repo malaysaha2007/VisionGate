@@ -201,25 +201,116 @@ function AdminDashboard() {
       >
         <div className="stats-grid">
           <div className="stat-card">
-            <p>Total Records</p>
-            <h2>{totalRecords}</h2>
-          </div>
+  <div className="icon-box clipboard">
+    <FaClipboard />
+  </div>
+
+  <div className="stat-info">
+    <p>Total Records</p>
+    <h2>{totalRecords}</h2>
+  </div>
+
+  <div className="graph blue">
+    <svg
+      width="80"
+      height="40"
+      viewBox="0 0 90 40"
+      fill="none"
+    >
+      <path
+        d="M2 28
+           C12 28,12 10,22 18
+           S35 36,45 25
+           S58 8,68 20
+           S80 18,88 8"
+        stroke="#2d7fff"
+        strokeWidth="1"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle cx="88" cy="8" r="3" fill="#2d7fff"/>
+    </svg>
+  </div>
+</div>
 
         
+          <div className="stat-card">
+  <div className="icon-box users">
+    <FaUsers />
+  </div>
 
-          <div className="stat-card">
-            <p>Students Outside</p>
-            <h2 className="outside">
-              {studentsOutside}
-            </h2>
-          </div> 
+  <div className="stat-info">
+    <p>Students Outside</p>
+    <h2 className="outside">
+      {studentsOutside}
+    </h2>
+  </div>
+
+  <div className="graph red">
+    <svg
+      width="80"
+      height="40"
+      viewBox="0 0 90 40"
+      fill="none"
+    >
+      <path
+        d="M2 28
+           C12 28,12 10,22 18
+           S35 36,45 25
+           S58 8,68 20
+           S80 18,88 8"
+        stroke="#a13735"
+        strokeWidth="0.7"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle cx="88" cy="8" r="3" fill="#a13735"/>
+    </svg>
+  </div>
+</div>
           
-          <div className="stat-card">
-  <p>Leave / Special Purpose</p>
+          <div
+  className="stat-card"
+  onClick={() =>
+   navigate("/admin-vacations")
+  }
+  style={{ cursor: "pointer" }}
+>
+    <div className="icon-box airplane">
+    <FaPlaneDeparture />
+  </div>
+   <div className="stat-info">
+  <p>Vacation Applications</p>
+
   <h2 className="leave-count">
     {leaveCount}
   </h2>
 </div>
+  <div className="graph blue">
+    <svg
+      width="80"
+      height="40"
+      viewBox="0 0 90 40"
+      fill="none"
+    >
+      <path
+        d="M2 28
+           C12 28,12 10,22 18
+           S35 36,45 25
+           S58 8,68 20
+           S80 18,88 8"
+        stroke="#2d7fff"
+        strokeWidth="1"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle cx="88" cy="8" r="3" fill="#2d7fff"/>
+    </svg>
+  </div>
+</div>
+
+
+
         </div>
 
         <div className="filter-card">
