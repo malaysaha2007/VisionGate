@@ -84,16 +84,6 @@
   box-shadow: 0 8px 28px rgba(59, 130, 246, 0.12), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
 }
 
-.profile-card::before {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  min-width: 38px;
-  background: rgba(59, 130, 246, 0.15);
-  font-size: 18px;
-}
 
 .profile-card p {
   color: #64748b;
@@ -294,9 +284,7 @@
 .leave {
   color: #22c55e !important;
 }
-.leave-count {
-  color: #22c55e !important;
-}
+
 .outside {
   color: #ef4444 !important;
 }
@@ -321,6 +309,7 @@
 
   box-shadow:
     0 15px 40px rgba(0,0,0,0.25);
+
 }
 
 .filter-top {
@@ -423,6 +412,10 @@
   border: 1px solid rgba(255,255,255,0.08);
 
   transition: all 0.3s ease;
+
+  margin-top: 20px;
+
+  width: 100%;
 }
 
 .search-box:focus {
