@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { FaSyncAlt } from "react-icons/fa";
+import {
+  FaSyncAlt,
+  FaClock,
+  FaCheckCircle,
+  FaTimesCircle
+} from "react-icons/fa";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -53,6 +58,8 @@ const [denyReason,
 
       const response =
   await API.get("/vacation");
+
+      console.log("Vacation API Response:", response.data);
 
       setApplications(
         response.data || []
@@ -177,126 +184,106 @@ const handleGateDeny = async (applicationId) => {
 
           <div className="status-topbar">
 
-            <input
-              type="text"
-              placeholder="Search by Roll Number, Destination or Reason..."
-              value={search}
-              onChange={(e) =>
-                setSearch(
-                  e.target.value
-                )
-              }
-            />
+            <div className="status-search">
 
-            <button
-              className="icon-btn"
-              onClick={
-                loadApplications
-              }
-              disabled={
-                refreshing
-              }
-            >
-              <FaSyncAlt
+              <input
+                type="text"
+                placeholder="Search by Roll Number, Destination or Reason..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+
+              <button
+                className="icon-btn"
+                onClick={loadApplications}
+                disabled={refreshing}
+              >
+                <FaSyncAlt
+                  className={refreshing ? "spin-icon" : ""}
+                />
+              </button>
+
+            </div>
+
+          </div>
+
+          <div className="vacation-toolbar">
+
+            <div className="status-count">
+
+              Showing
+              <strong>
+                {filteredApplications.length}
+              </strong>
+              Vacation Applications
+
+            </div>
+
+            <div className="vacation-filters">
+
+              <button
                 className={
-                  refreshing
-                    ? "spin-icon"
+                  vacationFilter === "Pending"
+                    ? "active-filter"
                     : ""
                 }
-              />
-            </button>
+                onClick={() => setVacationFilter("Pending")}
+              >
+                <FaClock />
+                Pending
+              </button>
+
+              <button
+                className={
+                  vacationFilter === "Approved"
+                    ? "active-filter"
+                    : ""
+                }
+                onClick={() => setVacationFilter("Approved")}
+              >
+                <FaCheckCircle />
+                Approved
+              </button>
+
+              <button
+                className={
+                  vacationFilter === "Denied"
+                    ? "active-filter"
+                    : ""
+                }
+                onClick={() => setVacationFilter("Denied")}
+              >
+                <FaTimesCircle />
+                Denied
+              </button>
+
+            </div>
 
           </div>
-
-          <div className="status-count">
-
-            Showing {
-              filteredApplications.length
-            } Applications
-
-          </div>
-
-         <div className="vacation-filters">
-
-<button
-  className={
-    vacationFilter === "Pending"
-      ? "active-filter"
-      : ""
-  }
-  onClick={() =>
-    setVacationFilter("Pending")
-  }
->
-  Pending
-</button>
-
-
-
-  <button
-    className={
-      vacationFilter === "Approved"
-        ? "active-filter"
-        : ""
-    }
-    onClick={() =>
-      setVacationFilter("Approved")
-    }
-  >
-    Approved
-  </button>
-
-  <button
-    className={
-      vacationFilter === "Denied"
-        ? "active-filter"
-        : ""
-    }
-    onClick={() =>
-      setVacationFilter("Denied")
-    }
-  >
-    Denied
-  </button>
-
-</div>
+          <div className="toolbar-divider"></div>
           <div className="table-wrapper">
 
-            <table>
+            <table className="vacation-table">
 
               <thead>
 
-                <tr>
+              <tr>
 
-                  <th>
-                    Roll No
-                  </th>
+              <th>Roll No</th>
 
-                  <th>
-                    Destination
-                  </th>
+              <th>Destination</th>
 
-                  <th>
-                    Leave Date
-                  </th>
+              <th>Leave Date</th>
 
-                  <th>
-                    Return Date
-                  </th>
+              <th>Return Date</th>
 
-                  <th>
-                    Reason
-                  </th>
+              <th>Reason</th>
 
-                  <th>
-                    Hostel Status
-                  </th>
+              <th>Hostel Status</th>
 
-                  <th>
-                    Gate Status
-                  </th>
+              <th>Gate Status</th>
 
-                </tr>
+              </tr>
 
               </thead>
 
@@ -318,12 +305,15 @@ const handleGateDeny = async (applicationId) => {
 
                   <tr>
 
-                    <td
-                      colSpan="7"
-                    >
-                      No Applications Found
+                    <td colSpan="7" className="empty-row">
+                    <div className="empty-state">
+                    📄
+                    <h3>No Vacation Applications</h3>
+                    <p>
+                    No applications match the current filter.
+                    </p>
+                    </div>
                     </td>
-
                   </tr>
 
                 ) : (
@@ -441,8 +431,12 @@ const handleGateDeny = async (applicationId) => {
     <div className="vacation-modal">
 
       <h2>
-        {selectedRequest.roll_no}
+          Vacation Request
       </h2>
+
+      <p className="request-id">
+          {selectedRequest.roll_no}
+      </p>
 
       <div className="vacation-modal-details">
 

@@ -25,6 +25,8 @@ function CurfewMail() {
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [mailResult, setMailResult] = useState(null);
 
+  const [search, setSearch] = useState("");
+
   const fetchStudents = async () => {
     try {
       setLoading(true);
@@ -42,6 +44,19 @@ function CurfewMail() {
   useEffect(() => {
     fetchStudents();
   }, []);
+
+  const filteredStudents = students.filter((student) => {
+    const query = search.toLowerCase();
+
+    return (
+      student.name?.toLowerCase().includes(query) ||
+      student.roll?.toLowerCase().includes(query) ||
+      student.email?.toLowerCase().includes(query) ||
+      student.hostel?.toLowerCase().includes(query) ||
+      String(student.room).toLowerCase().includes(query)
+    );
+  });
+
 
   const handleSendMail = async () => {
     try {
@@ -164,7 +179,7 @@ function CurfewMail() {
 
               <div className="mail-popup-top">
 
-                <div>
+                <div className="mail-popup-info">
 
                   <h2>
                     📧 Send Curfew Alert
@@ -202,6 +217,7 @@ function CurfewMail() {
 
                 <button
                   className="send-selected-btn"
+                  disabled={selectedStudents.length === 0}
                   onClick={handleSendMail}
                 >
 
@@ -224,6 +240,8 @@ function CurfewMail() {
                   type="text"
                   placeholder="Search students..."
                   className="popup-search-box"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
 
               </div>
@@ -242,7 +260,34 @@ function CurfewMail() {
               <table className="mail-table">
                 <thead>
                   <tr>
-                    <th></th>
+                    <th>
+                      <input
+                        type="checkbox"
+                        checked={
+                          filteredStudents.length > 0 &&
+                          filteredStudents.every((student) =>
+                            selectedStudents.includes(student.email)
+                          )
+                        }
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedStudents([
+                              ...new Set([
+                                ...selectedStudents,
+                                ...filteredStudents.map((s) => s.email),
+                              ]),
+                            ]);
+                          } else {
+                            setSelectedStudents(
+                              selectedStudents.filter(
+                                (email) =>
+                                  !filteredStudents.some((s) => s.email === email)
+                              )
+                            );
+                          }
+                        }}
+                      />
+                    </th>
                     <th>Name</th>
                     <th>Roll</th>
                     <th>Email</th>
@@ -251,7 +296,21 @@ function CurfewMail() {
                   </tr>
                 </thead>
                 <tbody>
-                  {students.map((student) => (
+                  {filteredStudents.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan="6"
+                        style={{
+                          padding: "40px",
+                          textAlign: "center",
+                          color: "#9ca3af"
+                        }}
+                      >
+                        No matching students found.
+                      </td>
+                    </tr>
+                  ) : 
+                    filteredStudents.map((student) => (
                     <tr key={student.roll}>
                       <td>
                         <input
@@ -259,15 +318,10 @@ function CurfewMail() {
                           checked={selectedStudents.includes(student.email)}
                           onChange={(e) => {
                             if (e.target.checked) {
-                              setSelectedStudents([
-                                ...selectedStudents,
-                                student.email
-                              ]);
+                              setSelectedStudents((prev) => [...prev, student.email]);
                             } else {
-                              setSelectedStudents(
-                                selectedStudents.filter(
-                                  (email) => email !== student.email
-                                )
+                              setSelectedStudents((prev) =>
+                                prev.filter((email) => email !== student.email)
                               );
                             }
                           }}
