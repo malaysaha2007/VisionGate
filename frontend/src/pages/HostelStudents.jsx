@@ -143,22 +143,29 @@ const [deleteConfirmText,
       ========================= */}
       <div className="stats-grid">
         {/* CARD 1 */}
-        <div
-          className="stat-card clickable-card"
-          onClick={() =>
-            navigate("/student-status/outside", {
-              state: {
-                title: "Students Outside Campus",
-                students: outsideStudents,
-                hostel: user.hostel,
-              },
-            })
-          }
-        >
-          <p>Students Outside Campus</p>
-          <h2>{outsideCount}</h2>
-          <span className="card-sub">View Full Details</span>
-        </div>
+    <div
+  className="stat-card clickable-card"
+  onClick={() =>
+    navigate("/student-status/outside", {
+      state: {
+        title: "Students Outside Campus",
+        students: outsideStudents,
+        hostel: user.hostel,
+      },
+    })
+  }
+>
+
+   <div className="stat-left">
+    <p>Students Outside Campus</p>
+    <span className="card-sub">View Full Details</span>
+  </div>
+
+  <h2>{outsideCount}</h2>
+
+</div>
+
+
 
         {/* CARD 2 */}
         <div
@@ -173,10 +180,18 @@ const [deleteConfirmText,
             })
           }
         >
-          <p>Outside After Curfew</p>
-          <h2>{curfewCount}</h2>
-          <span className="card-sub">View Full Details</span>
+          <div className="stat-left">
+    <p>Outside After Curfew</p>
+    <span className="card-sub">
+        View Full Details
+    </span>
+</div>
+
+<h2>{curfewCount}</h2>
         </div>
+
+
+        
 
         {/* CARD 3 */}
         <div
@@ -191,9 +206,14 @@ const [deleteConfirmText,
             })
           }
         >
-          <p>Leave / Special Purpose</p>
-          <h2>{leaveCount}</h2>
-          <span className="card-sub">Hospital / Medical / Leave</span>
+         <div className="stat-left">
+    <p>Leave / Special Purpose</p>
+    <span className="card-sub">
+        Hospital / Medical / Leave
+    </span>
+</div>
+
+<h2>{leaveCount}</h2>
         </div>
 
         {/* CARD 4 */}
@@ -209,9 +229,14 @@ const [deleteConfirmText,
             })
           }
         >
-          <p>Vacation Applications</p>
-          <h2>{leaveCount}</h2>
-          <span className="card-sub">View all Vacation Applications</span>
+        <div className="stat-left">
+    <p>Vacation Applications</p>
+    <span className="card-sub">
+        View all Vacation Applications
+    </span>
+</div>
+
+<h2>{leaveCount}</h2>
         </div>
       </div>
 
