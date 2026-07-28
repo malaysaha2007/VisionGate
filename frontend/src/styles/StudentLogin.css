@@ -182,7 +182,7 @@
 
   border-radius: 14px;
 
-  font-size: 2rem;
+  font-size: 1.1rem;
 
   font-weight: 700;
 
@@ -195,35 +195,29 @@
 /* FORGOT */
 
 .forgot-btn {
-  background: rgba(249,115,22,0.15);
-
-  color: #fb923c;
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.4);
 }
 
 .forgot-btn:hover {
-  background: rgba(249,115,22,0.22);
-
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
 }
 
 /* LOGIN */
 
 .login {
-  background:
-    linear-gradient(
-      135deg,
-      #229177,
-      #13706e
-    );
-
+  background: #2563eb;
   color: white;
 }
 
 .login:hover {
+  background: #3b82f6;
   transform: translateY(-2px);
-
-  box-shadow:
-    0 0 22px rgba(32, 73, 160, 0.45);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
 }
 
 /* ==================================================
