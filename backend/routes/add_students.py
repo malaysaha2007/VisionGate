@@ -1,6 +1,9 @@
 from fastapi import APIRouter
 from fastapi import UploadFile
 from fastapi import File
+from io import BytesIO
+from database.mongodb import db
+from datetime import datetime, timezone
 
 from database.mongodb import db
 
@@ -15,9 +18,11 @@ async def add_students(
     file: UploadFile = File(...)
 ):
 
+    contents = await file.read()
+
     workbook = load_workbook(
-        file.file
-    )
+    BytesIO(contents)
+)
 
     sheet = workbook.active
 
@@ -95,7 +100,7 @@ async def add_students(
                     "Unknown Branch"
                 )
 
-        existing = db.student_data.find_one({
+        existing = db.students_excel.find_one({
 
             "roll_no": roll
 
@@ -124,7 +129,7 @@ async def add_students(
 
             continue
 
-        db.student_data.insert_one({
+        db.students_excel.insert_one({
 
             "name": name,
 
@@ -138,8 +143,7 @@ async def add_students(
 
             "email": email,
 
-            "created_at":
-                "21 : 48 : 50   28 : 05 : 2026"
+            "created_at": datetime.now().strftime("%H:%M:%S %d-%m-%Y")
 
         })
 
