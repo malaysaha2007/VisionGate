@@ -9,10 +9,13 @@ import Footer from "../components/Footer";
 import StudentPortalHeader from "../components/StudentPortalHeader";
 
 import {
+  FaUser,
+  FaIdCard,
   FaBriefcase,
   FaClock,
   FaCheckCircle,
   FaTimesCircle,
+  FaUmbrellaBeach,
   FaMapMarkerAlt,
   FaCalendarAlt,
   FaChevronDown,
@@ -24,6 +27,7 @@ import {
   FaPlay
 } from "react-icons/fa";
 
+
 function VacationStatus() {
   const navigate = useNavigate();
   const rollNo = localStorage.getItem("roll_no");
@@ -33,44 +37,64 @@ function VacationStatus() {
   const [loading, setLoading] = useState(true);
   const [openIndex, setOpenIndex] = useState(null);
 
-  const getVacationStatusClass = (vac) => {
-    if (vac.hostel_status === "Denied" || vac.gate_status === "Denied") {
+
+      const getVacationStatusClass = (vac) => {
+  // Denied
+  if (
+    vac.hostel_status === "Denied" ||
+    vac.gate_status === "Denied"
+  ) {
+    return "denied";
+  }
+
+  // Active (Student is currently on vacation)
+  if (vac.vacation_status === "ACTIVE") {
+    return "active";
+  }
+
+  // Completed
+  if (vac.vacation_status === "COMPLETED") {
+    return "completed";
+  }
+
+  // Pending
+  return "pending";
+};
+
+
+
+const getHostelStatusClass = (status) => {
+  switch (status) {
+    case "Approved":
+      return "approved";
+
+    case "Denied":
       return "denied";
-    }
-    if (vac.vacation_status === "ACTIVE") {
-      return "active";
-    }
-    if (vac.vacation_status === "COMPLETED") {
-      return "completed";
-    }
-    return "pending";
-  };
 
-  const getHostelStatusClass = (status) => {
-    switch (status) {
-      case "Approved":
-        return "approved";
-      case "Denied":
-        return "denied";
-      case "Pending":
-      default:
-        return "pending";
-    }
-  };
+    case "Pending":
+    default:
+      return "pending";
+  }
+};
 
-  const getGateStatusClass = (status) => {
-    switch (status) {
-      case "Approved":
-        return "approved";
-      case "Denied":
-        return "denied";
-      case "Not Requested":
-        return "not-requested";
-      case "Pending":
-      default:
-        return "pending";
-    }
-  };
+const getGateStatusClass = (status) => {
+  switch (status) {
+    case "Approved":
+      return "approved";
+
+    case "Denied":
+      return "denied";
+
+    case "Not Requested":
+      return "not-requested";
+
+    case "Pending":
+      return "pending";
+
+    default:
+      return "pending";
+  }
+};
 
   useEffect(() => {
     const fetchData = async () => {
