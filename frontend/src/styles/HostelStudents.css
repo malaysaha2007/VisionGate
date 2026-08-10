@@ -248,28 +248,15 @@
   color: #9aa8c7;
 }
 
-
-
-
-
-
-
-
-
-
-
 /* =========================================
    STUDENT TABLE
 ========================================= */
 
 .table-wrapper table {
   width: 100%;
-
   border-collapse: separate;
   border-spacing: 0;
-
   overflow: hidden;
-
   border-radius: 18px;
 }
 
@@ -283,14 +270,10 @@
 
 .table-wrapper th {
   padding: 16px 18px;
-
   color: #e2e8f0;
-
   font-size: 0.95rem;
   font-weight: 700;
-
   text-align: left;
-
   letter-spacing: 0.4px;
 }
 
@@ -305,30 +288,22 @@
 
 .table-wrapper tbody tr {
   background: rgba(24, 40, 89, 0.95);
-
   cursor: pointer;
-
   transition: all 0.25s ease;
-
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .table-wrapper tbody tr:hover {
   background: rgba(37, 99, 235, 0.12);
-
   transform: translateY(-1px);
-
   box-shadow:
     inset 0 0 0 1px rgba(59,130,246,.15);
 }
 
 .table-wrapper td {
   padding: 18px 20px;
-
   color: #ffffff;
-
   font-size: 1rem;
-
   vertical-align: middle;
 }
 
@@ -347,22 +322,16 @@
 .student-table-avatar {
   width: 56px;
   height: 56px;
-
   object-fit: cover;
-
   border-radius: 50%;
-
   border: 2px solid rgba(59,130,246,.35);
-
   box-shadow:
     0 0 18px rgba(59,130,246,.25);
-
   transition: all 0.3s ease;
 }
 
 tbody tr:hover .student-table-avatar {
   transform: scale(1.08);
-
   box-shadow:
     0 0 22px rgba(59,130,246,.4);
 }
@@ -374,30 +343,22 @@ tbody tr:hover .student-table-avatar {
 .student-table-avatar-fallback {
   width: 56px;
   height: 56px;
-
   margin: auto;
-
   border-radius: 50%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 1.15rem;
   font-weight: 700;
-
   color: white;
-
   background:
     linear-gradient(
       135deg,
       #3b82f6,
       #2563eb
     );
-
   box-shadow:
     0 0 18px rgba(59,130,246,.25);
-
   transition: all 0.3s ease;
 }
 
@@ -411,7 +372,6 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .table-wrapper td:nth-child(2) {
   font-weight: 600;
-
   color: #ffffff;
 }
 
@@ -421,7 +381,6 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .table-wrapper td:nth-child(3) {
   color: #dbeafe;
-
   font-weight: 500;
 }
 
@@ -431,7 +390,6 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .table-wrapper td:nth-child(4) {
   color: #e2e8f0;
-
   font-weight: 600;
 }
 
@@ -441,21 +399,10 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .table-wrapper tbody tr td[colspan] {
   text-align: center;
-
   padding: 40px;
-
   color: #94a3b8;
-
   font-size: 1rem;
 }
-
-
-
-
-
-
-
-
 
 /* ==================================================
    OVERLAY
@@ -464,20 +411,14 @@ tbody tr:hover .student-table-avatar-fallback {
 .modal-overlay {
   position: fixed;
   inset: 0;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 30px;
-
   background: rgba(1, 8, 25, 0.85);
-
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-
   z-index: 9999;
-
   animation: overlayFade 0.25s ease;
 }
 
@@ -488,33 +429,21 @@ tbody tr:hover .student-table-avatar-fallback {
 .view-modal {
   width: 100%;
   max-width: 950px;
-
-
   position: relative;
-
   padding: 35px;
-
   border-radius: 22px;
-
   background:
     linear-gradient(
       180deg,
       rgba(8, 18, 45, 0.98),
       rgba(5, 15, 35, 0.98)
     );
-
   border: 1px solid rgba(59, 130, 246, 0.18);
-
   box-shadow:
     0 30px 70px rgba(0, 0, 0, 0.55),
     0 0 40px rgba(37, 99, 235, 0.08);
-
   animation: modalEnter 0.3s ease;
 }
-
-
-
-
 
 /* ==================================================
    TOP GLOW
@@ -522,43 +451,28 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .view-modal::before {
   content: "";
-
   position: absolute;
-
   top: -200px;
   left: 50%;
-
   transform: translateX(-50%);
-
   width: 500px;
   height: 500px;
-
   border-radius: 50%;
-
   background: rgba(59, 130, 246, 0.08);
-
   filter: blur(120px);
-
   pointer-events: none;
 }
 
 .view-modal::after {
   content: "";
-
   position: absolute;
-
   right: -150px;
   bottom: -150px;
-
   width: 300px;
   height: 300px;
-
   border-radius: 50%;
-
   background: rgba(14, 165, 233, 0.05);
-
   filter: blur(100px);
-
   pointer-events: none;
 }
 
@@ -569,86 +483,58 @@ tbody tr:hover .student-table-avatar-fallback {
 .student-avatar {
   width: 120px;
   height: 120px;
-
   margin: 0 auto 20px;
-
   position: relative;
-
   border-radius: 50%;
-
   overflow: hidden;
-
   border: 4px solid rgba(59,130,246,.25);
-
   box-shadow:
     0 0 25px rgba(59,130,246,.35);
-
   z-index: 2;
 }
 
 .student-avatar img {
   width: 100%;
   height: 100%;
-
   object-fit: cover;
-
   display: block;
 }
 
 .student-badge::before {
   content: "";
-
   position: absolute;
-
   width: 180px;
   height: 180px;
-
   border-radius: 50%;
-
   background: rgba(59,130,246,0.45);
-
   filter: blur(60px);
-
   z-index: -1;
-
   animation: avatarGlow 4s ease-in-out infinite;
 }
 
 .student-avatar::before {
   content: "";
-
   position: absolute;
-
   top: 50%;
   left: 50%;
-
   transform: translate(-50%, -50%);
-
   width: 180px;
   height: 180px;
-
   border-radius: 50%;
-
   background: rgba(59,130,246,.35);
-
   filter: blur(60px);
-
   z-index: -1;
 }
 
 .student-avatar-fallback {
   width: 100%;
   height: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 2.5rem;
   font-weight: 800;
-
   color: white;
-
   background:
     linear-gradient(
       135deg,
@@ -662,12 +548,10 @@ tbody tr:hover .student-table-avatar-fallback {
     transform: scale(0.9);
     opacity: 0.5;
   }
-
   50% {
     transform: scale(1.1);
     opacity: 0.8;
   }
-
   100% {
     transform: scale(0.9);
     opacity: 0.5;
@@ -676,15 +560,10 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .student-badge::after {
   content: "";
-
   position: absolute;
-
   inset: -8px;
-
   border-radius: 50%;
-
   border: 1px solid rgba(59,130,246,0.4);
-
   animation: ringRotate 8s linear infinite;
 }
 
@@ -692,7 +571,6 @@ tbody tr:hover .student-table-avatar-fallback {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
@@ -704,19 +582,12 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .student-status-pill {
   width: fit-content;
-
   margin: 0 auto 30px;
-
   padding: 8px 18px;
-
   border-radius: 999px;
-
   background: rgba(59, 130, 246, 0.12);
-
   border: 1px solid rgba(59, 130, 246, 0.25);
-
   color: #60a5fa;
-
   font-size: 0.85rem;
   font-weight: 600;
 }
@@ -727,29 +598,20 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .modal-title {
   text-align: center;
-
   color: #ffffff;
-
   font-size: 2rem;
   font-weight: 700;
-
   margin-bottom: 8px;
-
   letter-spacing: -0.5px;
-
   position: relative;
   z-index: 2;
 }
 
 .modal-subtitle {
   text-align: center;
-
   color: #94a3b8;
-
   font-size: 0.95rem;
-
   margin-bottom: 35px;
-
   position: relative;
   z-index: 2;
 }
@@ -760,12 +622,8 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .student-details-grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 22px;
-
   position: relative;
   z-index: 2;
 }
@@ -781,23 +639,16 @@ tbody tr:hover .student-table-avatar-fallback {
       rgba(255, 255, 255, 0.03),
       rgba(255, 255, 255, 0.01)
     );
-
   border: 1px solid rgba(59, 130, 246, 0.12);
-
   border-radius: 16px;
-
   padding: 18px;
-
   backdrop-filter: blur(12px);
-
   transition: all 0.3s ease;
 }
 
 .detail-card:hover {
   transform: translateY(-4px);
-
   border-color: rgba(59, 130, 246, 0.35);
-
   box-shadow:
     0 12px 25px rgba(0, 0, 0, 0.25),
     0 0 20px rgba(37, 99, 235, 0.12);
@@ -809,16 +660,11 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .detail-card label {
   display: block;
-
   color: #60a5fa;
-
   font-size: 0.78rem;
   font-weight: 600;
-
   text-transform: uppercase;
-
   letter-spacing: 1px;
-
   margin-bottom: 10px;
 }
 
@@ -828,15 +674,13 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .detail-card span {
   display: block;
-
   color: #ffffff;
-
   font-size: 1.05rem;
   font-weight: 600;
-
   line-height: 1.5;
-
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ==================================================
@@ -850,77 +694,39 @@ tbody tr:hover .student-table-avatar-fallback {
       rgba(34,197,94,0.08),
       rgba(34,197,94,0.04)
     );
-
   border-radius: 16px;
-
   padding: 18px;
-
   border: 1px solid rgba(34,197,94,0.18);
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-
-  min-height: auto;}
+  min-height: auto;
+}
 
 .face-status label {
   color: #22c55e;
-
   font-size: 0.8rem;
-
   font-weight: 600;
-
   letter-spacing: 1px;
-
   text-transform: uppercase;
-
   margin-bottom: 10px;
 }
 
 .face-status span {
   color: #ffffff;
-
   font-size: 1.05rem;
-
-  font-weight: 700;
-}
-
-.face-status label {
-  color: #22c55e;
-
-  font-size: 0.8rem;
-
-  font-weight: 600;
-
-  letter-spacing: 1px;
-
-  text-transform: uppercase;
-
-  margin-bottom: 10px;
-}
-
-.face-status span {
-  color: #ffffff;
-
-  font-size: 1.05rem;
-
   font-weight: 700;
 }
 
 .face-status.yes {
   background: rgba(34, 197, 94, 0.1);
-
   border: 1px solid rgba(34, 197, 94, 0.2);
-
   color: #22c55e;
 }
 
 .face-status.no {
   background: rgba(239, 68, 68, 0.1);
-
   border: 1px solid rgba(239, 68, 68, 0.2);
-
   color: #ef4444;
 }
 
@@ -930,35 +736,25 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .modal-close-btn {
   width: 100%;
-
   height: 56px;
-
   margin-top: 28px;
-
   border: none;
-
   border-radius: 14px;
-
   background:
     linear-gradient(
       135deg,
       #2563eb,
       #3b82f6
     );
-
   color: white;
-
   font-size: 1rem;
   font-weight: 700;
-
   cursor: pointer;
-
   transition: all 0.3s ease;
 }
 
 .modal-close-btn:hover {
   transform: translateY(-2px);
-
   box-shadow:
     0 12px 24px rgba(37, 99, 235, 0.35);
 }
@@ -973,34 +769,23 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .modal-x-btn {
   position: absolute;
-
   top: 18px;
   right: 18px;
-
   width: 42px;
   height: 42px;
-
   border: 1px solid rgba(255, 255, 255, 0.08);
-
   background: rgba(255, 255, 255, 0.04);
-
   border-radius: 12px;
-
   color: #cbd5e1;
-
   cursor: pointer;
-
   transition: all 0.3s ease;
 }
 
 .modal-x-btn:hover {
   background: rgba(59, 130, 246, 0.15);
-
   color: white;
-
   border-color: rgba(59, 130, 246, 0.3);
 }
-
 
 /* ==================================================
    MODAL ACTIONS
@@ -1008,11 +793,8 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .modal-actions {
   display: flex;
-
   gap: 14px;
-
   margin-top: 30px;
-
   position: relative;
   z-index: 2;
 }
@@ -1023,33 +805,24 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .modal-edit-btn {
   flex: 1;
-
   height: 56px;
-
   border: none;
-
   border-radius: 14px;
-
   cursor: pointer;
-
   font-size: 1rem;
   font-weight: 700;
-
   color: #ffffff;
-
   background:
     linear-gradient(
       135deg,
       #0f766e,
       #14b8a6
     );
-
   transition: all 0.3s ease;
 }
 
 .modal-edit-btn:hover {
   transform: translateY(-2px);
-
   box-shadow:
     0 12px 24px rgba(20, 184, 166, 0.35);
 }
@@ -1064,33 +837,24 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .modal-delete-btn {
   flex: 1;
-
   height: 56px;
-
   border: none;
-
   border-radius: 14px;
-
   cursor: pointer;
-
   font-size: 1rem;
   font-weight: 700;
-
   color: #ffffff;
-
   background:
     linear-gradient(
       135deg,
       #b91c1c,
       #ef4444
     );
-
   transition: all 0.3s ease;
 }
 
 .modal-delete-btn:hover {
   transform: translateY(-2px);
-
   box-shadow:
     0 12px 24px rgba(239, 68, 68, 0.35);
 }
@@ -1105,10 +869,8 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .modal-close-btn {
   flex: 1;
-
   margin-top: 0;
 }
-
 
 /* ==================================================
    DELETE MODAL
@@ -1117,28 +879,20 @@ tbody tr:hover .student-table-avatar-fallback {
 .delete-modal {
   width: 100%;
   max-width: 520px;
-
   position: relative;
-
   padding: 32px;
-
   border-radius: 22px;
-
   background:
     linear-gradient(
       180deg,
       rgba(8, 18, 45, 0.98),
       rgba(5, 15, 35, 0.98)
     );
-
   border: 1px solid rgba(239, 68, 68, 0.18);
-
   box-shadow:
     0 30px 70px rgba(0, 0, 0, 0.55),
     0 0 40px rgba(239, 68, 68, 0.08);
-
   animation: modalEnter 0.3s ease;
-
   overflow: hidden;
 }
 
@@ -1148,23 +902,15 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .delete-modal::before {
   content: "";
-
   position: absolute;
-
   top: -120px;
   left: 50%;
-
   transform: translateX(-50%);
-
   width: 280px;
   height: 280px;
-
   border-radius: 50%;
-
   background: rgba(239, 68, 68, 0.12);
-
   filter: blur(90px);
-
   pointer-events: none;
 }
 
@@ -1174,12 +920,9 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .delete-modal-title {
   color: #ffffff;
-
   font-size: 1.8rem;
   font-weight: 700;
-
   text-align: center;
-
   margin-bottom: 12px;
 }
 
@@ -1189,13 +932,9 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .delete-modal-text {
   text-align: center;
-
   color: #94a3b8;
-
   font-size: 0.95rem;
-
   line-height: 1.6;
-
   margin-bottom: 28px;
 }
 
@@ -1210,20 +949,13 @@ tbody tr:hover .student-table-avatar-fallback {
       rgba(255,255,255,0.03),
       rgba(255,255,255,0.01)
     );
-
   border: 1px solid rgba(59, 130, 246, 0.12);
-
   border-radius: 16px;
-
   padding: 18px;
-
   margin-bottom: 22px;
-
   display: flex;
   flex-direction: column;
-
   gap: 12px;
-
   color: #ffffff;
 }
 
@@ -1237,13 +969,9 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .delete-label {
   display: block;
-
   color: #cbd5e1;
-
   font-size: 0.9rem;
-
   margin-bottom: 10px;
-
   font-weight: 600;
 }
 
@@ -1253,29 +981,19 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .delete-input {
   width: 100%;
-
   height: 56px;
-
   border-radius: 14px;
-
   border: 1px solid rgba(59, 130, 246, 0.18);
-
   background: rgba(255,255,255,0.03);
-
   color: white;
-
   padding: 0 16px;
-
   font-size: 1rem;
-
   outline: none;
-
   transition: all 0.3s ease;
 }
 
 .delete-input:focus {
   border-color: rgba(59,130,246,0.5);
-
   box-shadow:
     0 0 0 3px rgba(59,130,246,0.12);
 }
@@ -1290,9 +1008,7 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .delete-actions {
   display: flex;
-
   gap: 14px;
-
   margin-top: 28px;
 }
 
@@ -1302,33 +1018,24 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .delete-cancel-btn {
   flex: 1;
-
   height: 56px;
-
   border: none;
-
   border-radius: 14px;
-
   cursor: pointer;
-
   font-size: 1rem;
   font-weight: 700;
-
   color: white;
-
   background:
     linear-gradient(
       135deg,
       #334155,
       #475569
     );
-
   transition: all 0.3s ease;
 }
 
 .delete-cancel-btn:hover {
   transform: translateY(-2px);
-
   box-shadow:
     0 12px 24px rgba(71, 85, 105, 0.35);
 }
@@ -1339,102 +1046,69 @@ tbody tr:hover .student-table-avatar-fallback {
 
 .delete-confirm-btn {
   flex: 1;
-
   height: 56px;
-
   border: none;
-
   border-radius: 14px;
-
   cursor: pointer;
-
   font-size: 1rem;
   font-weight: 700;
-
   color: white;
-
   background:
     linear-gradient(
       135deg,
       #dc2626,
       #ef4444
     );
-
   transition: all 0.3s ease;
 }
 
 .delete-confirm-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-
   box-shadow:
     0 12px 24px rgba(239, 68, 68, 0.35);
 }
 
 .delete-confirm-btn:disabled {
   opacity: 0.45;
-
   cursor: not-allowed;
-
   transform: none;
-
   box-shadow: none;
 }
-
-
-
-
 
 /* ==================================================
    MOBILE
 ================================================== */
 
 @media (max-width: 768px) {
-
   .modal-actions {
     flex-direction: column;
   }
-
   .modal-edit-btn,
   .modal-delete-btn,
   .modal-close-btn {
     width: 100%;
   }
-
-}
-
-@media (max-width: 768px) {
-
   .modal-overlay {
     padding: 15px;
   }
-
   .view-modal {
     padding: 22px;
-
     max-height: 95vh;
   }
-
   .modal-title {
     font-size: 1.6rem;
   }
-
   .modal-subtitle {
     font-size: 0.9rem;
   }
-
   .student-badge {
     width: 75px;
     height: 75px;
-
     font-size: 1.8rem;
   }
-
   .student-details-grid {
     grid-template-columns: 1fr;
   }
-
-  
-
   .detail-card span {
     font-size: 1rem;
   }
@@ -1449,7 +1123,6 @@ tbody tr:hover .student-table-avatar-fallback {
     opacity: 0;
     transform: translateY(15px) scale(0.97);
   }
-
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -1460,7 +1133,6 @@ tbody tr:hover .student-table-avatar-fallback {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
