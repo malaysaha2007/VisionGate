@@ -1075,6 +1075,27 @@ tbody tr:hover .student-table-avatar-fallback {
   box-shadow: none;
 }
 
+
+
+/* FORCE STUDENT PROFILE PHOTO SIZE */
+.view-modal .student-avatar {
+  width: 150px !important;
+  height: 150px !important;
+  margin: 0 auto 20px !important;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.35);
+}
+
+.view-modal .student-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+}
+
 /* ==================================================
    MOBILE
 ================================================== */
